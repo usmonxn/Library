@@ -1,0 +1,890 @@
+  <!DOCTYPE html>
+  <html lang="uz">
+  <head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>MakeWebApp — Premium Telegram Mini App & WebApp Platformasi</title>
+  <meta name="description" content="Restoran, dorixona, turizm va e-commerce bizneslari uchun premium Telegram Mini App va WebApp dizayn platformasi."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet"/>
+  <style>
+  :root{
+    --brand:#f97316;--brand-dark:#c2410c;--brand-light:#fed7aa;
+    --bg:#060608;--surface:#0e0e12;--surface2:#16161c;
+    --border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.14);
+    --text:#f0f0f2;--muted:#7a7a8c;--muted2:#555566;
+    --green:#10b981;--blue:#3b82f6;--radius-card:28px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;font-size:16px}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;line-height:1.6}
+  h1,h2,h3,h4,.heading{font-family:'Syne',sans-serif;font-weight:800;line-height:1.05;letter-spacing:-.04em}
+
+  /* NOISE OVERLAY */
+  body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.022;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px 200px}
+
+  /* GRADIENTS */
+  .bg-radial{position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:
+      radial-gradient(ellipse 70% 50% at -5% 0%,rgba(249,115,22,.18) 0%,transparent 60%),
+      radial-gradient(ellipse 50% 40% at 100% 0%,rgba(59,130,246,.12) 0%,transparent 55%),
+      radial-gradient(ellipse 60% 60% at 50% 100%,rgba(249,115,22,.07) 0%,transparent 70%),
+      linear-gradient(180deg,#080810 0%,var(--bg) 100%);
+  }
+  .bg-grid{position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+    background-size:52px 52px;
+  }
+
+  /* HEADER */
+  header{position:sticky;top:0;z-index:100;border-bottom:1px solid var(--border);
+    background:rgba(6,6,8,.82);backdrop-filter:blur(20px) saturate(1.5)}
+  .header-inner{max-width:1280px;margin:0 auto;padding:0 24px;height:76px;display:flex;align-items:center;justify-content:space-between}
+  .logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+  .logo-mark{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--brand),#fbbf24);display:grid;place-items:center;font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:#111;box-shadow:0 0 30px rgba(249,115,22,.35),0 4px 12px rgba(0,0,0,.4)}
+  .logo-text b{display:block;font-family:'Syne',sans-serif;font-size:19px;font-weight:800;letter-spacing:-.03em}
+  .logo-text small{display:block;font-size:10px;font-weight:600;letter-spacing:.22em;color:var(--muted);text-transform:uppercase}
+  nav{display:flex;gap:32px}
+  nav a{font-size:14px;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s}
+  nav a:hover{color:var(--text)}
+  .btn-outline{padding:10px 22px;border:1px solid var(--border2);border-radius:999px;font-size:13px;font-weight:700;color:var(--text);background:transparent;text-decoration:none;transition:background .2s}
+  .btn-outline:hover{background:rgba(255,255,255,.08)}
+  .btn-cta{padding:11px 24px;border-radius:999px;background:linear-gradient(135deg,var(--brand),#f59e0b);font-size:13px;font-weight:800;color:#111;text-decoration:none;box-shadow:0 0 28px rgba(249,115,22,.4);transition:transform .2s,box-shadow .2s}
+  .btn-cta:hover{transform:scale(1.03);box-shadow:0 0 42px rgba(249,115,22,.55)}
+
+  /* HERO */
+  .hero{max-width:1280px;margin:0 auto;padding:80px 24px 60px;display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center;position:relative;z-index:1}
+  .badge{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border:1px solid rgba(249,115,22,.3);background:rgba(249,115,22,.09);border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#fb923c;margin-bottom:28px}
+  .badge .dot{width:8px;height:8px;border-radius:50%;background:#34d399;box-shadow:0 0 10px #34d399}
+  h1{font-size:clamp(38px,5vw,68px);max-width:700px;margin-bottom:22px}
+  h1 .grad{background:linear-gradient(90deg,#fb923c,#fbbf24,#fde68a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .hero-sub{font-size:16px;color:var(--muted);max-width:520px;line-height:1.75;margin-bottom:36px}
+  .hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:48px}
+  .btn-white{padding:14px 28px;border-radius:16px;background:var(--text);color:#111;font-size:14px;font-weight:800;text-decoration:none;transition:background .2s}
+  .btn-white:hover{background:#ddd}
+  .btn-ghost{padding:14px 28px;border-radius:16px;border:1px solid var(--border2);background:rgba(255,255,255,.04);font-size:14px;font-weight:800;color:var(--text);text-decoration:none;transition:background .2s}
+  .btn-ghost:hover{background:rgba(255,255,255,.1)}
+  .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:460px}
+  .stat{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:20px;padding:16px}
+  .stat b{display:block;font-family:'Syne',sans-serif;font-size:26px;font-weight:800}
+  .stat span{display:block;font-size:11px;color:var(--muted);margin-top:2px;font-weight:600;letter-spacing:.05em}
+
+  /* HERO CARDS */
+  .hero-visual{position:relative}
+  .hero-visual::before{content:'';position:absolute;inset:-40px;background:linear-gradient(135deg,rgba(249,115,22,.15),rgba(59,130,246,.12));border-radius:40px;blur:60px;filter:blur(60px)}
+  .card-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;position:relative;z-index:1}
+  .card-grid .col{display:flex;flex-direction:column;gap:16px}
+  .card-grid .col:last-child{margin-top:48px}
+  .hero-card{border-radius:26px;border:1px solid var(--border);background:rgba(255,255,255,.05);padding:16px;backdrop-filter:blur(8px);overflow:hidden;transition:transform .3s,border-color .3s}
+  .hero-card:hover{transform:translateY(-4px);border-color:var(--border2)}
+  .hero-card-inner{border-radius:18px;overflow:hidden;position:relative;display:flex;flex-direction:column;justify-content:flex-end}
+  .hero-card-inner img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0}
+  .hero-card-inner .overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.75) 0%,transparent 55%)}
+  .hero-card-inner .info{position:relative;z-index:1;padding:14px}
+  .hero-card-inner .tag{display:inline-block;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.15);backdrop-filter:blur(8px);font-size:9px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;margin-bottom:6px}
+  .hero-card-inner h3{font-size:15px;font-family:'Syne',sans-serif;font-weight:800}
+  .hero-card-inner p{font-size:10px;opacity:.7;margin-top:2px}
+
+  /* SECTION HEADER */
+  .section-wrap{max-width:1280px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+  .section-label{font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--brand);margin-bottom:10px}
+  .section-title{font-size:clamp(28px,4vw,52px);margin-bottom:16px}
+  .section-sub{color:var(--muted);font-size:15px;max-width:560px;line-height:1.8}
+
+  /* APPS SECTION */
+  #solutions{padding:40px 0 80px}
+  .solutions-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px;gap:24px;flex-wrap:wrap}
+  .app-block{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:var(--radius-card);padding:28px;margin-bottom:16px;overflow:hidden}
+  .app-block-header{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-bottom:24px;margin-bottom:28px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+  .app-meta .tag{display:inline-block;padding:5px 12px;border-radius:999px;font-size:10px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px}
+  .app-meta .tag.orange{background:rgba(249,115,22,.12);color:#fb923c}
+  .app-meta .tag.green{background:rgba(16,185,129,.12);color:#34d399}
+  .app-meta .tag.blue{background:rgba(59,130,246,.12);color:#60a5fa}
+  .app-meta h3{font-size:clamp(20px,3vw,28px);font-family:'Syne',sans-serif;font-weight:800}
+  .app-meta p{color:var(--muted);font-size:13px;margin-top:6px}
+  .btn-app{padding:11px 22px;border-radius:14px;font-size:12px;font-weight:900;color:white;text-decoration:none;white-space:nowrap;transition:filter .2s}
+  .btn-app:hover{filter:brightness(1.15)}
+  .btn-app.orange{background:linear-gradient(135deg,#ea580c,#d97706);box-shadow:0 8px 24px rgba(234,88,12,.25)}
+  .btn-app.green{background:linear-gradient(135deg,#059669,#0d9488);box-shadow:0 8px 24px rgba(5,150,105,.25)}
+  .btn-app.blue{background:linear-gradient(135deg,#2563eb,#4f46e5);box-shadow:0 8px 24px rgba(37,99,235,.25)}
+
+  /* SCROLLBAR */
+  .apps-scrollbar{display:flex;gap:20px;overflow-x:auto;padding-bottom:12px;scroll-snap-type:x mandatory}
+  .apps-scrollbar::-webkit-scrollbar{height:6px}
+  .apps-scrollbar::-webkit-scrollbar-track{background:rgba(255,255,255,.05);border-radius:999px}
+  .apps-scrollbar::-webkit-scrollbar-thumb{background:linear-gradient(90deg,var(--brand),#f59e0b);border-radius:999px}
+
+  /* PHONE MOCKUP */
+  .phone{scroll-snap-align:start;flex:0 0 290px;height:560px;background:#f8fafc;color:#171717;border:7px solid #111827;border-radius:40px;overflow:hidden;display:flex;flex-direction:column;font-family:'DM Sans',sans-serif;box-shadow:0 32px 80px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.06);transition:transform .3s}
+  .phone:hover{transform:translateY(-6px)}
+  .pbar{height:56px;padding:16px 14px 10px;background:white;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;font-size:11px;font-weight:800;flex-shrink:0}
+  .pbody{padding:12px;overflow-y:auto;flex:1;font-size:11px}
+  .pbody::-webkit-scrollbar{display:none}
+
+  /* PHONE ELEMENTS */
+  .pimg{width:100%;border-radius:16px;object-fit:cover;display:block}
+  .p-tag{display:inline-block;padding:3px 9px;border-radius:999px;font-size:8px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
+  .p-hero{position:relative;border-radius:18px;overflow:hidden;margin-bottom:12px}
+  .p-hero img{width:100%;height:120px;object-fit:cover}
+  .p-hero .p-hero-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 100%);padding:12px;display:flex;flex-direction:column;justify-content:flex-end}
+  .p-hero .p-tag{background:#fbbf24;color:#111}
+  .p-hero h4{font-size:13px;font-family:'Syne',sans-serif;font-weight:800;color:white}
+  .p-hero small{font-size:9px;color:#e5e7eb}
+  .chips{display:flex;gap:6px;margin:10px 0;overflow-x:auto}
+  .chips::-webkit-scrollbar{display:none}
+  .chip,.chip-a{white-space:nowrap;border-radius:999px;padding:6px 12px;font-size:9px;font-weight:900}
+  .chip-a{background:#ea580c;color:white}
+  .chip{background:#e5e7eb;color:#525252}
+  .pitem{background:white;border:1px solid #e5e7eb;border-radius:14px;padding:9px;display:flex;align-items:center;gap:8px;margin-bottom:8px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+  .pitem-img{width:44px;height:44px;border-radius:12px;object-fit:cover;flex-shrink:0}
+  .pitem-icon{width:44px;height:44px;border-radius:12px;background:#ffedd5;display:grid;place-items:center;font-size:18px;flex-shrink:0}
+  .pitem p{flex:1}
+  .pitem b{display:block;font-size:11px;color:#171717;font-weight:800}
+  .pitem small{font-size:9px;color:#737373}
+  .pitem strong{color:#ea580c;font-size:11px;font-weight:900;white-space:nowrap}
+  .pitem .green-price{color:#059669}
+  .pitem .blue-price{color:#2563eb}
+  .pmap{height:120px;border-radius:18px;overflow:hidden;position:relative;margin-bottom:10px;border:1px solid #e5e7eb}
+  .pmap img{width:100%;height:100%;object-fit:cover}
+  .pmap .map-overlay{position:absolute;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:flex-start;padding:10px}
+  .pmap .map-label{background:#111827;color:white;font-size:9px;font-weight:900;padding:4px 8px;border-radius:8px}
+  .pmap .bike{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#ea580c;color:white;border-radius:999px;padding:5px 7px;font-size:14px;box-shadow:0 0 0 10px rgba(249,115,22,.2)}
+  .pcourier{background:white;border:1px solid #e5e7eb;border-radius:14px;padding:10px;display:flex;align-items:center;gap:10px;margin-bottom:8px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+  .pcourier-av{width:36px;height:36px;border-radius:999px;background:#ea580c;color:white;display:grid;place-items:center;font-weight:900;font-size:11px;flex-shrink:0}
+  .pcourier p{flex:1}
+  .pcourier b{display:block;font-size:11px}
+  .pcourier small{font-size:8px;color:#737373}
+  .pcourier button{background:#ffedd5;color:#ea580c;border-radius:999px;padding:8px;border:none;cursor:pointer}
+  .timeline{background:white;border:1px solid #e5e7eb;border-radius:14px;padding:10px}
+  .tline{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:10px;color:#525252}
+  .tline .dot-done{width:16px;height:16px;border-radius:50%;background:#dcfce7;border:2px solid #16a34a;display:grid;place-items:center;font-size:7px;color:#16a34a;flex-shrink:0}
+  .tline .dot-active{width:16px;height:16px;border-radius:50%;background:#fef3c7;border:2px solid #d97706;flex-shrink:0}
+  .pbranch{position:relative;background:white;border:1px solid #e5e7eb;border-radius:14px;padding:12px;margin-bottom:8px}
+  .pbranch b{display:block;font-size:11px}
+  .pbranch small{color:#737373;font-size:9px}
+  .pbranch em{position:absolute;right:10px;top:12px;background:#dcfce7;color:#166534;border-radius:999px;padding:2px 8px;font-size:9px;font-weight:900;font-style:normal}
+  .pcart{background:white;border:1px solid #e5e7eb;border-radius:14px;padding:10px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+  .pcart b{font-size:11px}
+  .pcart span{font-size:11px;color:#ea580c;font-weight:900}
+  .pcart .green-sp{color:#059669}
+  .pcart .blue-sp{color:#2563eb}
+  .ptotal{background:#f9fafb;border:1px solid #e5e7eb;border-radius:16px;padding:12px;margin:10px 0}
+  .ptotal-row{display:flex;justify-content:space-between;color:#737373;font-size:10px;margin:5px 0}
+  .ptotal-row b{color:#171717}
+  .ptotal-final{display:flex;justify-content:space-between;border-top:1px dashed #d4d4d4;padding-top:9px;margin-top:9px;font-weight:900;font-size:11px;color:#171717}
+  .pbtn{width:100%;padding:11px;border-radius:14px;font-size:12px;font-weight:900;color:white;border:none;cursor:pointer;margin-top:8px}
+  .pbtn-o{background:linear-gradient(135deg,#ea580c,#d97706);box-shadow:0 8px 18px rgba(234,88,12,.3)}
+  .pbtn-g{background:linear-gradient(135deg,#059669,#0d9488);box-shadow:0 8px 18px rgba(5,150,105,.3)}
+  .pbtn-b{background:linear-gradient(135deg,#2563eb,#4f46e5);box-shadow:0 8px 18px rgba(37,99,235,.3)}
+  .pbar-g{background:#059669;color:white}
+  .pbar-b{background:#2563eb;color:white}
+  .notice{background:#ecfdf5;border:1px solid #a7f3d0;color:#064e3b;border-radius:14px;padding:12px;margin-bottom:10px;font-size:11px}
+  .notice small{display:block;color:#475569;margin-top:4px;font-size:9px}
+  .scanner-box{height:200px;margin:10px 0;background:#111827;border-radius:18px;color:#10b981;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}
+  .scanner-box::after{content:'';position:absolute;left:15px;right:15px;top:50%;height:2px;background:#34d399;box-shadow:0 0 14px #34d399;animation:scan 2s ease-in-out infinite}
+  @keyframes scan{0%,100%{top:30%}50%{top:70%}}
+  .scanner-box .s-icon{font-size:28px;margin-bottom:6px;position:relative;z-index:1}
+  .scanner-box b{font-size:9px;letter-spacing:.18em;position:relative;z-index:1}
+  .pdose{position:relative;background:white;border:1px solid #e5e7eb;border-left:4px solid #10b981;border-radius:14px;padding:11px;margin-bottom:8px}
+  .pdose.am{border-left-color:#f59e0b}
+  .pdose b{display:block;font-size:11px}
+  .pdose small{color:#737373;font-size:9px}
+  .pdose em{position:absolute;right:10px;top:11px;background:#dcfce7;color:#166534;border-radius:8px;padding:4px 6px;font-size:9px;font-weight:900;font-style:normal}
+  .med-item{background:white;border:1px solid #e5e7eb;border-radius:14px;padding:10px;margin-bottom:8px}
+  .med-item b{display:block;font-size:11px}
+  .med-item small{font-size:9px;color:#737373}
+  .med-item strong{display:block;color:#059669;font-size:11px;font-weight:900;margin-top:4px}
+  .med-item button{float:right;background:#ecfdf5;color:#059669;border:1px solid #a7f3d0;border-radius:8px;padding:3px 8px;font-size:9px;font-weight:900;cursor:pointer;margin-top:-22px}
+  .phero-travel{border-radius:18px;overflow:hidden;position:relative;margin-bottom:12px}
+  .phero-travel img{width:100%;height:130px;object-fit:cover}
+  .phero-travel .ov{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.8),rgba(0,0,0,.2));padding:12px;display:flex;flex-direction:column;justify-content:flex-end}
+  .phero-travel .p-tag{background:#facc15;color:#111}
+  .phero-travel h4{font-size:14px;font-family:'Syne',sans-serif;font-weight:800;color:white}
+  .phero-travel small{font-size:9px;color:#bfdbfe}
+  .ptour{background:white;border:1px solid #e5e7eb;border-radius:14px;padding:9px;display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .ptour-img{width:46px;height:46px;border-radius:12px;object-fit:cover;flex-shrink:0}
+  .ptour p{flex:1}
+  .ptour b{display:block;font-size:11px}
+  .ptour small{font-size:9px;color:#737373}
+  .ptour strong{color:#2563eb;font-size:11px;font-weight:900;white-space:nowrap}
+  .pdetail-hero{border-radius:18px;overflow:hidden;position:relative;margin-bottom:12px;height:100px}
+  .pdetail-hero img{width:100%;height:100%;object-fit:cover}
+  .pdetail-hero .ov{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.85),transparent);display:flex;align-items:flex-end;padding:12px}
+  .pdetail-hero h4{font-size:14px;font-family:'Syne',sans-serif;font-weight:800;color:white}
+  .pfeat{list-style:none;color:#525252;line-height:2.2;font-size:10px;margin:8px 0}
+  .pticket{background:white;border:2px dashed #d4d4d4;border-radius:18px;overflow:hidden}
+  .pticket-top{background:#1e3a8a;color:white;padding:14px}
+  .pticket-top small{display:block;color:#bfdbfe;font-size:8px;letter-spacing:.1em}
+  .pticket-top b{font-size:13px}
+  .pticket-row{display:flex;justify-content:space-between;padding:0 12px;font-size:10px;margin:5px 0;color:#525252}
+  .pticket-row b{color:#171717}
+  .barcode{height:36px;margin:10px 12px 12px;background:repeating-linear-gradient(90deg,#111 0 3px,transparent 3px 6px);border-radius:6px}
+  .ppay{background:#dbeafe;color:#1e3a8a;border:1px solid #bfdbfe;border-radius:14px;padding:11px;text-align:center;font-weight:900;font-size:10px;margin:10px 0}
+  .pproduct-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .pproduct{background:white;border:1px solid #e5e7eb;border-radius:16px;padding:9px}
+  .pproduct-img{border-radius:12px;overflow:hidden;height:80px;margin-bottom:8px}
+  .pproduct-img img{width:100%;height:100%;object-fit:cover}
+  .pproduct b{display:block;font-size:11px;font-weight:800}
+  .pproduct span{color:#ea580c;font-size:11px;font-weight:900}
+  .pshoe-hero{border-radius:18px;overflow:hidden;position:relative;margin-bottom:10px;height:120px}
+  .pshoe-hero img{width:100%;height:100%;object-fit:cover}
+  .pshoe-hero .ov{position:absolute;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;flex-direction:column}
+  .pshoe-hero .ov b{font-family:'Syne',sans-serif;font-size:15px;color:#f97316}
+  .pshoe-hero .ov span{font-size:28px}
+  .prow-price{display:flex;justify-content:space-between;align-items:center;margin:8px 0}
+  .prow-price b{font-family:'Syne',sans-serif;font-size:13px}
+  .prow-price strong{font-size:16px;color:#ea580c;font-weight:900}
+  .psizes{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:8px 0}
+  .psizes span,.psizes b{border-radius:8px;padding:7px 0;text-align:center;font-size:9px;font-weight:900;border:1px solid #e5e7eb}
+  .psizes span{background:white;color:#171717}
+  .psizes b{background:#ea580c;color:white;border-color:#ea580c}
+  .pqty{background:#f5f5f5;color:#171717;border-radius:10px;padding:6px 12px;font-weight:900;width:max-content;font-size:11px}
+  .paddress{background:white;border:1px solid #e5e7eb;border-radius:14px;padding:12px;margin-bottom:10px}
+  .paddress b{display:block;font-size:11px;margin-bottom:4px}
+  .paddress small{font-size:9px;color:#737373}
+
+  /* PROCESS */
+  #process{padding:40px 0 80px}
+  .process-box{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--radius-card);padding:40px;overflow:hidden;position:relative;z-index:1}
+  .process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:40px}
+  .step-card{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:22px;padding:22px;transition:border-color .3s,background .3s}
+  .step-card:hover{border-color:rgba(249,115,22,.3);background:rgba(249,115,22,.04)}
+  .step-num{font-family:'Syne',sans-serif;font-size:12px;font-weight:800;color:var(--brand);margin-bottom:12px}
+  .step-card b{display:block;font-family:'Syne',sans-serif;font-size:18px;font-weight:800;margin-bottom:8px}
+  .step-card p{color:var(--muted);font-size:13px;line-height:1.7}
+
+  /* PRICING */
+  #pricing{padding:40px 0 80px}
+  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+  .price-card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--radius-card);padding:28px;display:flex;flex-direction:column;transition:transform .3s}
+  .price-card:hover{transform:translateY(-4px)}
+  .price-card.feat{background:linear-gradient(160deg,rgba(249,115,22,.14),rgba(255,255,255,.035));border-color:rgba(249,115,22,.4);box-shadow:0 0 70px rgba(249,115,22,.12)}
+  .price-card .badge-feat{display:inline-block;background:var(--brand);color:#fff;border-radius:999px;padding:5px 12px;font-size:10px;font-weight:900;margin-bottom:16px}
+  .price-card h3{font-family:'Syne',sans-serif;font-size:24px;font-weight:800}
+  .price-card .desc{color:var(--muted);font-size:13px;margin-top:6px}
+  .price-card .amt{font-family:'Syne',sans-serif;font-size:42px;font-weight:800;margin:24px 0;color:var(--text)}
+  .price-card ul{list-style:none;flex:1;margin-bottom:24px}
+  .price-card li{font-size:13px;color:#c4c4d4;padding:6px 0;border-bottom:1px solid var(--border)}
+  .price-card li::before{content:'✓ ';color:#22c55e;font-weight:900}
+  .price-card a{display:block;border-radius:16px;padding:13px;text-align:center;font-weight:900;font-size:13px;text-decoration:none;background:rgba(255,255,255,.1);color:var(--text);transition:background .2s}
+  .price-card a:hover{background:rgba(255,255,255,.18)}
+  .feat a{background:linear-gradient(135deg,#ea580c,#d97706)!important;color:white!important;box-shadow:0 8px 24px rgba(234,88,12,.3)}
+
+  /* FAQ */
+  #faq{padding:40px 0 80px}
+  .faq-list{margin-top:32px;display:flex;flex-direction:column;gap:8px}
+  details.faq{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:20px;padding:18px 22px;cursor:pointer;transition:border-color .2s,background .2s}
+  details.faq:hover{border-color:var(--border2)}
+  details.faq[open]{border-color:rgba(249,115,22,.3);background:rgba(249,115,22,.04)}
+  details.faq summary{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center}
+  details.faq summary::after{content:'↓';font-size:14px;color:var(--muted);transition:transform .3s}
+  details.faq[open] summary::after{transform:rotate(180deg)}
+  details.faq p{margin-top:12px;color:var(--muted);line-height:1.8;font-size:14px}
+
+  /* CTA */
+  #contact{padding:40px 0 100px}
+  .cta-box{border-radius:36px;background:linear-gradient(135deg,#c2410c,#ea580c,#d97706);padding:60px 40px;text-align:center;position:relative;overflow:hidden;box-shadow:0 0 80px rgba(249,115,22,.3)}
+  .cta-box::before{content:'';position:absolute;right:-100px;top:-100px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.12);filter:blur(40px)}
+  .cta-box::after{content:'';position:absolute;left:-80px;bottom:-80px;width:220px;height:220px;border-radius:50%;background:rgba(0,0,0,.15);filter:blur(40px)}
+  .cta-box h2{font-size:clamp(24px,4vw,46px);position:relative;z-index:1;max-width:700px;margin:0 auto}
+  .cta-box p{color:rgba(255,255,255,.8);margin-top:14px;position:relative;z-index:1;font-size:16px;max-width:500px;margin-left:auto;margin-right:auto}
+  .cta-btns{display:flex;justify-content:center;gap:12px;margin-top:32px;position:relative;z-index:1;flex-wrap:wrap}
+  .cta-btn-dark{background:#111;color:white;padding:14px 30px;border-radius:18px;font-weight:900;font-size:14px;text-decoration:none;transition:background .2s}
+  .cta-btn-dark:hover{background:#222}
+  .cta-btn-white{background:white;color:#111;padding:14px 30px;border-radius:18px;font-weight:900;font-size:14px;text-decoration:none;transition:filter .2s}
+  .cta-btn-white:hover{filter:brightness(.93)}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center;font-size:12px;font-weight:600;color:var(--muted2);position:relative;z-index:1}
+
+  /* SCROLLBAR GLOBAL */
+  ::-webkit-scrollbar{width:8px;height:8px}
+  ::-webkit-scrollbar-track{background:var(--surface)}
+  ::-webkit-scrollbar-thumb{background:var(--surface2);border-radius:999px}
+
+  /* RESPONSIVE */
+  @media(max-width:1024px){
+    .hero{grid-template-columns:1fr;text-align:center}
+    .hero-sub{margin:0 auto 36px}
+    .hero-btns{justify-content:center}
+    .hero-stats{margin:0 auto}
+    nav{display:none}
+    .process-grid{grid-template-columns:1fr 1fr}
+    .pricing-grid{grid-template-columns:1fr}
+  }
+  @media(max-width:640px){
+    .hero{padding:48px 20px 40px}
+    .process-grid{grid-template-columns:1fr}
+    .cta-box{padding:40px 20px}
+    .app-block{padding:20px}
+    .app-block-header{flex-direction:column;align-items:flex-start}
+  }
+  </style>
+  </head>
+  <body>
+  <div class="bg-radial"></div>
+  <div class="bg-grid"></div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <a href="#" class="logo">
+        <div class="logo-mark">MW</div>
+        <div class="logo-text">
+          <b>MakeWebApp</b>
+          <small>Premium Mini Apps</small>
+        </div>
+      </a>
+      <nav>
+        <a href="#solutions">Yo'nalishlar</a>
+        <a href="#process">Jarayon</a>
+        <a href="#pricing">Paketlar</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div style="display:flex;gap:10px;align-items:center">
+        <a href="#signin" class="btn-outline">Kirish</a>
+        <a href="#contact" class="btn-cta">Demo olish</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section style="position:relative;z-index:1">
+    <div class="hero">
+      <div>
+        <div class="badge"><span class="dot"></span>Telegram Mini App + WebApp</div>
+        <h1>Biznesingiz uchun <span class="grad">tayyor sotadigan</span> premium web ilova.</h1>
+        <p class="hero-sub">Restoran, dorixona, turizm va marketplace uchun real mahsulotlar, savat, buyurtma, filial va to'lov jarayonlariga moslangan chiroyli interfeyslar.</p>
+        <div class="hero-btns">
+          <a href="#solutions" class="btn-white">Dizaynlarni ko'rish</a>
+          <a href="#pricing" class="btn-ghost">Paket tanlash</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><b>4+</b><span>Yo'nalish</span></div>
+          <div class="stat"><b>16</b><span>Ekran mockup</span></div>
+          <div class="stat"><b>100%</b><span>Responsive</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="card-grid">
+          <div class="col">
+            <div class="hero-card">
+              <div class="hero-card-inner" style="height:200px">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Plov_Uzbekistan.jpg/1200px-Plov_Uzbekistan.jpg" alt="Uzbek plov food" loading="lazy"/>
+                <div class="overlay"></div>
+                <div class="info"><span class="tag">🍛 Food App</span><h3>Rayxon Menu</h3><p>Buyurtma va kuryer</p></div>
+              </div>
+            </div>
+            <div class="hero-card">
+              <div class="hero-card-inner" style="height:160px">
+                <img src="https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=400&q=80" alt="Pharmacy medicine" loading="lazy"/>
+                <div class="overlay"></div>
+                <div class="info"><span class="tag">💊 MedTech</span><h3>Dorixona</h3><p>Qidiruv + savat</p></div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="hero-card">
+              <div class="hero-card-inner" style="height:170px">
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80" alt="Maldives beach resort" loading="lazy"/>
+                <div class="overlay"></div>
+                <div class="info"><span class="tag">✈️ Travel</span><h3>Travel CRM</h3><p>Tur + avia + bron</p></div>
+              </div>
+            </div>
+            <div class="hero-card">
+              <div class="hero-card-inner" style="height:190px">
+                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80" alt="Sneakers ecommerce" loading="lazy"/>
+                <div class="overlay"></div>
+                <div class="info"><span class="tag">🛒 Market</span><h3>VibrantShop</h3><p>Mahsulot + checkout</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTIONS -->
+  <section id="solutions" style="position:relative;z-index:1">
+    <div class="section-wrap">
+      <div class="solutions-header">
+        <div>
+          <p class="section-label">Solutions</p>
+          <h2 class="section-title">Har bir biznes uchun alohida tayyorlangan UI.</h2>
+        </div>
+        <p class="section-sub">Pastdagi ekranlar faqat rasm emas — real ilova logikasiga mos: mahsulot, savat, buyurtma, manzil va CTA.</p>
+      </div>
+
+      <!-- FOOD -->
+      <div class="app-block">
+        <div class="app-block-header">
+          <div class="app-meta">
+            <span class="tag orange">🍛 Food Delivery Tech</span>
+            <h3>Rayxon Milliy Taomlar</h3>
+            <p>Menyu, filiallar, kuryer tracking va savatcha uchun 4 ta premium ekran.</p>
+          </div>
+          <a href="#contact" class="btn-app orange">Demo botni sinash →</a>
+        </div>
+        <div class="apps-scrollbar">
+
+          <!-- Phone 1: Menu -->
+          <div class="phone">
+            <div class="pbar"><span>☰ Rayxon Menu</span><span>🔍</span></div>
+            <div class="pbody">
+              <div class="p-hero">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Plov_Uzbekistan.jpg/1200px-Plov_Uzbekistan.jpg" alt="Rayxon" loading="lazy"/>
+                <div class="p-hero-overlay">
+                  <span class="p-tag">TOSHKENT</span>
+                  <h4>Rayxon Milliy Taomlar</h4>
+                  <small>★ 4.9 • Chilonzor filiali</small>
+                </div>
+              </div>
+              <div class="chips">
+                <span class="chip-a">Asosiy</span>
+                <span class="chip">Kabob</span>
+                <span class="chip">Ichimlik</span>
+              </div>
+              <div class="pitem">
+                <img class="pitem-img" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=100&q=80" alt="Salad"/>
+                <p><b>Baqlajonli Rulet</b><small>Yangi rayhon bilan</small></p>
+                <strong>35,000</strong>
+              </div>
+              <div class="pitem">
+                <img class="pitem-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Plov_Uzbekistan.jpg/1200px-Plov_Uzbekistan.jpg" alt="Osh"/>
+                <p><b>Bayram Oshi</b><small>Qo'y go'shti</small></p>
+                <strong>55,000</strong>
+              </div>
+              <div class="pitem">
+                <img class="pitem-img" src="https://images.unsplash.com/photo-1544025162-d76694265947?w=100&q=80" alt="Jiz biz"/>
+                <p><b>Jiz Biz</b><small>Issiq tortiladi</small></p>
+                <strong>68,000</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phone 2: Courier -->
+          <div class="phone">
+            <div class="pbar"><span>← Kuryer</span><span style="font-size:10px;color:#737373">#RX-772</span></div>
+            <div class="pbody">
+              <div class="pmap">
+                <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=400&q=80" alt="Map Toshkent"/>
+                <div class="map-overlay"><span class="map-label">📡 Jonli xarita</span></div>
+                <span class="bike">🛵</span>
+              </div>
+              <div class="pcourier">
+                <div class="pcourier-av">FE</div>
+                <p><b>Farhod Ergashev</b><small>Kuryer yo'lda • 12 daqiqa qoldi</small></p>
+                <button>📞</button>
+              </div>
+              <div class="timeline">
+                <div class="tline"><div class="dot-done">✓</div><span>Buyurtma qabul qilindi</span></div>
+                <div class="tline"><div class="dot-done">✓</div><span>Oshxonada tayyorlandi</span></div>
+                <div class="tline"><div class="dot-active"></div><span style="color:#d97706;font-weight:700">Yetkazilmoqda…</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phone 3: Branches -->
+          <div class="phone">
+            <div class="pbar"><span>Rayxon Filiallari</span><span>☰</span></div>
+            <div class="pbody">
+              <div style="background:linear-gradient(135deg,#7c2d12,#92400e);color:white;border-radius:16px;padding:14px;margin-bottom:12px">
+                <b style="display:block;font-size:13px">Eng yaqin filialni tanlang</b>
+                <small style="font-size:9px;color:#fed7aa;margin-top:4px;display:block">Tezkor yetkazib berish kafolati</small>
+              </div>
+              <div class="pbranch"><b>Chilonzor-9 Filiali</b><small>⏱ 15–25 daqiqa • 1.2 km</small><em>Ochiq</em></div>
+              <div class="pbranch"><b>G'ofur G'ulom</b><small>⏱ 30–40 daqiqa • 4.5 km</small><em>Ochiq</em></div>
+              <div class="pbranch"><b>Yunusobod</b><small>⏱ 35–45 daqiqa • 6.1 km</small><em>Ochiq</em></div>
+            </div>
+          </div>
+
+          <!-- Phone 4: Cart -->
+          <div class="phone">
+            <div class="pbar"><span>Savatcham</span><span style="background:#ffedd5;color:#ea580c;padding:2px 8px;border-radius:999px;font-size:9px">2 ta</span></div>
+            <div class="pbody">
+              <div class="pcart"><b>🍛 To'y Oshi x2</b><span>110,000 UZS</span></div>
+              <div class="pcart"><b>🥗 Salat x1</b><span>18,000 UZS</span></div>
+              <div class="ptotal">
+                <div class="ptotal-row"><span>Taomlar narxi</span><b>128,000 UZS</b></div>
+                <div class="ptotal-row"><span>Yetkazish haqi</span><b style="color:#059669">BEPUL</b></div>
+                <div class="ptotal-final"><span>Jami Summa</span><b style="color:#ea580c">128,000 UZS</b></div>
+              </div>
+              <button class="pbtn pbtn-o">Buyurtmani Tasdiqlash</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PHARMACY -->
+      <div class="app-block">
+        <div class="app-block-header">
+          <div class="app-meta">
+            <span class="tag green">💊 MedTech App</span>
+            <h3>Dorixona WebApp Tizimi</h3>
+            <p>Dori qidirish, retsept skaner, kunlik eslatma va buyurtma sahifalari.</p>
+          </div>
+          <a href="#contact" class="btn-app green">Demo botni ochish →</a>
+        </div>
+        <div class="apps-scrollbar">
+
+          <!-- Phone 1: Search -->
+          <div class="phone">
+            <div class="pbar pbar-g"><span>☰ Markaziy Dorixona</span><span>🎛️</span></div>
+            <div class="pbody">
+              <div style="display:flex;gap:6px;margin-bottom:12px">
+                <input value="Amoksitsillin" style="width:100%;border:1px solid #d4d4d4;border-radius:12px;padding:8px;font-size:11px;font-family:inherit"/>
+                <button style="background:#059669;color:white;border-radius:12px;padding:8px 10px;font-weight:900;font-size:10px;border:none;cursor:pointer;white-space:nowrap">Topish</button>
+              </div>
+              <p style="font-weight:900;font-size:11px;margin-bottom:10px;color:#262626">Qidiruv natijalari (3)</p>
+              <div class="med-item">
+                <b>Amoksitsillin 500mg</b><small>Antibiotik • 20 kapsula</small>
+                <button>+ Qo'shish</button>
+                <strong>42,000 UZS</strong>
+              </div>
+              <div class="med-item">
+                <b>Kardiomagnil 75mg</b><small>Yurak uchun • 30 tabletka</small>
+                <button>+ Qo'shish</button>
+                <strong>38,000 UZS</strong>
+              </div>
+              <div class="med-item">
+                <b>Vitamin D3 (1000 ME)</b><small>60 tabletka • Immunitet</small>
+                <button>+ Qo'shish</button>
+                <strong>55,000 UZS</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phone 2: Scanner -->
+          <div class="phone">
+            <div class="pbar pbar-g"><span>← Retsept tahlili</span><span>📷</span></div>
+            <div class="pbody">
+              <div class="notice"><b>Retseptni skanerlang</b><small>Tizim dorilarni avtomatik savatga yig'adi.</small></div>
+              <div class="scanner-box">
+                <div class="s-icon">📄</div>
+                <b>AI SCANNER ACTIVE</b>
+              </div>
+              <button class="pbtn pbtn-g">📷 Rasmga Olish</button>
+            </div>
+          </div>
+
+          <!-- Phone 3: Schedule -->
+          <div class="phone">
+            <div class="pbar pbar-g"><span>Dorilar Vaqti</span><span>🔔</span></div>
+            <div class="pbody">
+              <p style="font-weight:900;font-size:11px;margin-bottom:10px;color:#262626">Bugungi Reja</p>
+              <div class="pdose am"><b>💊 Vitamin D3 (1000 ME)</b><small>Ertalab • ovqatdan keyin</small><em>09:00</em></div>
+              <div class="pdose"><b>🧪 Magniy B6 Kompleks</b><small>Tushlikdan keyin</small><em>14:00</em></div>
+              <div class="pdose"><b>🩺 Omega-3 Fishki</b><small>Kechki payt • uyqudan oldin</small><em>21:00</em></div>
+            </div>
+          </div>
+
+          <!-- Phone 4: Order -->
+          <div class="phone">
+            <div class="pbar pbar-g"><span>Mening Buyurtmam</span><span style="background:white;color:#059669;padding:2px 8px;border-radius:999px;font-size:9px">2 ta</span></div>
+            <div class="pbody">
+              <div class="pcart"><b>Amoksitsillin (1x)</b><span class="green-sp">42,000</span></div>
+              <div class="pcart"><b>Kardiomagnil (1x)</b><span class="green-sp">38,000</span></div>
+              <div class="ptotal">
+                <div class="ptotal-row"><span>Dori-darmonlar</span><b>80,000 UZS</b></div>
+                <div class="ptotal-row"><span>Yetkazib berish</span><b>15,000 UZS</b></div>
+                <div class="ptotal-final"><span>Jami To'lov</span><b style="color:#059669">95,000 UZS</b></div>
+              </div>
+              <button class="pbtn pbtn-g">Rasmiylashtirish</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TRAVEL -->
+      <div class="app-block">
+        <div class="app-block-header">
+          <div class="app-meta">
+            <span class="tag blue">✈️ Travel Ecosystem</span>
+            <h3>Sayohat Agentligi Platformasi</h3>
+            <p>Tur paketlari, avia chipta, bron va invoice sahifalari.</p>
+          </div>
+          <a href="#contact" class="btn-app blue">Demo tur ilovasi →</a>
+        </div>
+        <div class="apps-scrollbar">
+
+          <!-- Phone 1: Tours -->
+          <div class="phone">
+            <div class="pbar"><span style="color:#1e40af;font-weight:900">SayohatUz Global</span><span>🔍</span></div>
+            <div class="pbody">
+              <div class="phero-travel">
+                <img src="https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=400&q=80" alt="Maldives beach"/>
+                <div class="ov">
+                  <span class="p-tag" style="background:#facc15;color:#111">PREMIUM TUR</span>
+                  <h4>Maldiv Orollari</h4>
+                  <small>5★ All Inclusive • 7 kun</small>
+                </div>
+              </div>
+              <p style="font-weight:900;font-size:11px;margin-bottom:10px;color:#262626">Mavsumiy Takliflar</p>
+              <div class="ptour">
+                <img class="ptour-img" src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=100&q=80" alt="Antalya hotel"/>
+                <p><b>Antalya Sohillari</b><small>Hotel + parvoz + sug'urta</small></p>
+                <strong>$720</strong>
+              </div>
+              <div class="ptour">
+                <img class="ptour-img" src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=100&q=80" alt="Dubai skyline"/>
+                <p><b>Dubay Ultra Tur</b><small>5★ hotel + city tour</small></p>
+                <strong>$1,250</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phone 2: Detail -->
+          <div class="phone">
+            <div class="pbar"><span>← Tur tafsilotlari</span><span>⭐ 4.9</span></div>
+            <div class="pbody">
+              <div class="pdetail-hero">
+                <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400&q=80" alt="Dubai luxury tour"/>
+                <div class="ov"><h4>Dubay Shahri Ultra Tur</h4></div>
+              </div>
+              <p style="font-weight:900;font-size:11px;margin-bottom:8px;color:#262626">Paket ichiga kiradi:</p>
+              <ul class="pfeat">
+                <li>✈️ Borish-qaytish aviachipta</li>
+                <li>🏨 Hilton Luxury 5★ mehmonxona</li>
+                <li>🍳 Nonushta va transfer xizmati</li>
+                <li>🗺️ Professional gid hamrohligi</li>
+              </ul>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin:10px 0">
+                <b style="font-family:'Syne',sans-serif;font-size:20px;color:#2563eb">$1,250</b>
+                <button class="pbtn pbtn-b" style="width:auto;margin:0;padding:9px 16px">Hozir Band Qilish</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phone 3: Ticket -->
+          <div class="phone">
+            <div class="pbar"><span>Mening Chiptalarim</span><span>✈️</span></div>
+            <div class="pbody">
+              <div class="pticket">
+                <div class="pticket-top">
+                  <small>REYS RAQAMI</small>
+                  <b>HY-301 • TAS ➔ DXB</b>
+                </div>
+                <div class="pticket-row"><span>Yo'lovchi:</span><b>Asadbek Alimov</b></div>
+                <div class="pticket-row"><span>Uchish sanasi:</span><b>12 IYUL, 06:40</b></div>
+                <div class="pticket-row"><span>O'rindiq:</span><b>12A (Business)</b></div>
+                <div class="barcode"></div>
+                <div style="text-align:center;font-size:8px;color:#a3a3a3;padding-bottom:10px;letter-spacing:.1em">ELECTRONIC BARCODE</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phone 4: Invoice -->
+          <div class="phone">
+            <div class="pbar"><span>Hisob-Kitob</span><span style="background:#dbeafe;color:#2563eb;padding:2px 8px;border-radius:999px;font-size:9px">Faol</span></div>
+            <div class="pbody">
+              <div class="ptotal">
+                <div class="ptotal-row"><span>Antalya Premium Tur</span><b>$720.00</b></div>
+                <div class="ptotal-row"><span>Xalqaro Sug'urta</span><b>$30.00</b></div>
+                <div class="ptotal-final"><span>Umumiy Summa</span><b style="color:#2563eb">$750.00</b></div>
+              </div>
+              <div class="ppay">💳 Visa / MasterCard / Naqd to'lov</div>
+              <button class="pbtn pbtn-b">Invoice Yuklab Olish</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ECOMMERCE -->
+      <div class="app-block">
+        <div class="app-block-header">
+          <div class="app-meta">
+            <span class="tag orange">🛒 E-Commerce System</span>
+            <h3>VibrantShop Marketplace</h3>
+            <p>Mahsulot katalogi, product detail, savat va checkout sahifalari.</p>
+          </div>
+          <a href="#contact" class="btn-app orange">Demo do'kon →</a>
+        </div>
+        <div class="apps-scrollbar">
+
+          <!-- Phone 1: Catalog -->
+          <div class="phone">
+            <div class="pbar"><span style="color:#ea580c;font-weight:900">VibrantShop</span><span>🛒</span></div>
+            <div class="pbody">
+              <div class="pproduct-grid">
+                <div class="pproduct">
+                  <div class="pproduct-img"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200&q=80" alt="Velocita Pro sneaker"/></div>
+                  <b>Velocita Pro</b><span>$129</span>
+                </div>
+                <div class="pproduct">
+                  <div class="pproduct-img"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200&q=80" alt="Headphones"/></div>
+                  <b>Zenith ANC</b><span>$199</span>
+                </div>
+                <div class="pproduct">
+                  <div class="pproduct-img"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&q=80" alt="Watch"/></div>
+                  <b>Nova Watch</b><span>$149</span>
+                </div>
+                <div class="pproduct">
+                  <div class="pproduct-img"><img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=200&q=80" alt="Bag"/></div>
+                  <b>Urban Bag</b><span>$89</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phone 2: Product Detail -->
+          <div class="phone">
+            <div class="pbar"><span>← AeroStride</span><span>♥</span></div>
+            <div class="pbody">
+              <div class="pshoe-hero">
+                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80" alt="AeroStride shoe"/>
+                <div class="ov"><b>AEROSTRIDE MAX</b></div>
+              </div>
+              <div class="prow-price"><b>AeroStride Pro</b><strong>$189.00</strong></div>
+              <p style="font-weight:900;font-size:10px;color:#525252;margin:6px 0">O'lchamni tanlang:</p>
+              <div class="psizes">
+                <span>US 8</span><b>US 9</b><span>US 10</span><span>US 11</span>
+              </div>
+              <button class="pbtn pbtn-o">Savatga Qo'shish</button>
+            </div>
+          </div>
+
+          <!-- Phone 3: Cart -->
+          <div class="phone">
+            <div class="pbar"><span>Savatcham</span><span style="color:#ea580c;font-size:10px">2 ta mahsulot</span></div>
+            <div class="pbody">
+              <div class="pcart"><b>Velocita Pro (1x)</b><span>$129.00</span></div>
+              <div class="pcart"><b>Zenith ANC (1x)</b><span>$199.00</span></div>
+              <div class="pqty" style="margin:8px 0">— &nbsp; 1 &nbsp; +</div>
+              <div class="ptotal">
+                <div class="ptotal-row"><span>Mahsulotlar</span><b>$328.00</b></div>
+                <div class="ptotal-final"><span>Subtotal</span><b>$328.00</b></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phone 4: Checkout -->
+          <div class="phone">
+            <div class="pbar"><span>Checkout</span><span style="font-size:10px;color:#737373">Bosqich 3/3</span></div>
+            <div class="pbody">
+              <div class="paddress">
+                <b>Yetkazib berish manzili</b>
+                <small>Toshkent, Yunusobod tumani, 4-kvartal, 14-uy</small>
+              </div>
+              <div class="ptotal">
+                <div class="ptotal-row"><span>Mahsulotlar summasi</span><b>$328.00</b></div>
+                <div class="ptotal-row"><span>Kuryer xizmati</span><b>$10.00</b></div>
+                <div class="ptotal-final"><span>Jami summa</span><b style="color:#ea580c">$338.00</b></div>
+              </div>
+              <button class="pbtn pbtn-o">Sotib Olish ($338.00)</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" style="position:relative;z-index:1">
+    <div class="section-wrap">
+      <div class="process-box">
+        <p class="section-label">Workflow</p>
+        <h2 class="section-title" style="max-width:600px">G'oyadan ishga tushguncha aniq jarayon.</h2>
+        <div class="process-grid">
+          <div class="step-card"><div class="step-num">01</div><b>Brief</b><p>Biznes turi, mahsulotlar, filiallar va buyurtma jarayoni aniqlanadi.</p></div>
+          <div class="step-card"><div class="step-num">02</div><b>UX Structure</b><p>Asosiy sahifalar, savat, checkout va admin oqimi chiziladi.</p></div>
+          <div class="step-card"><div class="step-num">03</div><b>Premium UI</b><p>Brend ranglari, mobil dizayn, komponentlar va mockuplar tayyorlanadi.</p></div>
+          <div class="step-card"><div class="step-num">04</div><b>Launch Ready</b><p>Frontend, backend, bot va to'lov integratsiyasiga tayyor holatga keladi.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" style="position:relative;z-index:1">
+    <div class="section-wrap">
+      <div style="text-align:center;margin-bottom:0">
+        <p class="section-label">Pricing</p>
+        <h2 class="section-title">Paketlar</h2>
+        <p style="color:var(--muted);max-width:480px;margin:14px auto 0;font-size:14px">Narxlar real loyihaga qarab o'zgarishi mumkin. Bepul maslahat uchun yozing.</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <h3>Start</h3><p class="desc">Oddiy mini app MVP</p>
+          <div class="amt">$300<span style="font-size:16px;color:var(--muted)">+</span></div>
+          <ul><li>4–6 ekran UI dizayni</li><li>Responsive HTML struktura</li><li>Savat va CTA bloklari</li></ul>
+          <a href="#contact">Tanlash</a>
+        </div>
+        <div class="price-card feat">
+          <span class="badge-feat">✦ Eng ommabop</span>
+          <h3>Business</h3><p class="desc">Real biznes uchun tayyor flow</p>
+          <div class="amt">$700<span style="font-size:16px;color:var(--muted)">+</span></div>
+          <ul><li>10–16 ekran UI dizayni</li><li>Telegram Mini App flow</li><li>Checkout, manzil, order status</li><li>Brend ranglar va animatsiyalar</li></ul>
+          <a href="#contact">Boshlash</a>
+        </div>
+        <div class="price-card">
+          <h3>Pro</h3><p class="desc">CRM / admin bilan to'liq tizim</p>
+          <div class="amt">$1500<span style="font-size:16px;color:var(--muted)">+</span></div>
+          <ul><li>Admin panel dizayni</li><li>CRM va lead flow</li><li>Backend integratsiyaga tayyor</li></ul>
+          <a href="#contact">Maslahat olish</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" style="position:relative;z-index:1">
+    <div class="section-wrap" style="max-width:860px">
+      <div style="text-align:center">
+        <p class="section-label">FAQ</p>
+        <h2 class="section-title">Ko'p so'raladigan savollar</h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq" open>
+          <summary>Bu dizayn Telegram Mini App uchun mosmi?</summary>
+          <p>Ha. Layout mobil ekranlarga moslangan, sticky CTA, savat, manzil va buyurtma flowlari Telegram Mini App uchun qulay tarzda loyihalashtirilgan.</p>
+        </details>
+        <details class="faq">
+          <summary>Backend bilan ulash mumkinmi?</summary>
+          <p>Ha. HTML struktura keyinchalik Spring Boot, PostgreSQL, Telegram bot va to'lov tizimlari bilan ulashga qulay qilib ajratilgan.</p>
+        </details>
+        <details class="faq">
+          <summary>Rang va brendni o'zgartirish mumkinmi?</summary>
+          <p>Ha. Tailwind va CSS variables orqali ranglar, gradientlar, buttonlar va kartalar bir zumda moslanadi.</p>
+        </details>
+        <details class="faq">
+          <summary>Qancha vaqt ichida tayyor bo'ladi?</summary>
+          <p>Start paketi 3–5 kun, Business paketi 7–12 kun, Pro paket 14–21 kun ichida topshiriladi. Muddatlar brief aniqligiga qarab o'zgarishi mumkin.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="contact" style="position:relative;z-index:1">
+    <div class="section-wrap">
+      <div class="cta-box">
+        <h2>Biznesingizga mos premium mini app tayyorlaymiz.</h2>
+        <p>Restoran, dorixona, turizm yoki e-commerce — sotishga yordam beradigan chiroyli interfeys.</p>
+        <div class="cta-btns">
+          <a href="https://t.me/ajvadates" class="cta-btn-dark">📱 Telegram orqali yozish</a>
+          <a href="tel:+998981987040" class="cta-btn-white">📞 +998 98 198 70 40</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div style="max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+      <span>© 2026 MakeWebApp. Premium Telegram Mini App va WebApp dizayn platformasi.</span>
+      <span style="display:flex;gap:20px">
+        <a href="#solutions" style="color:inherit;text-decoration:none">Yo'nalishlar</a>
+        <a href="#pricing" style="color:inherit;text-decoration:none">Paketlar</a>
+        <a href="#contact" style="color:inherit;text-decoration:none">Aloqa</a>
+      </span>
+    </div>
+  </footer>
+
+  </body>
+  </html>

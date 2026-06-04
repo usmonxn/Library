@@ -1,0 +1,715 @@
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="uz">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>MakeWebApp - Premium WebApp Platformasi</title>-->
+<!--    <script src="https://cdn.tailwindcss.com"></script>-->
+<!--    <style>-->
+<!--        /* Silliq gorizontal skroll paneli uchun maxsus uslub */-->
+<!--        .apps-scrollbar::-webkit-scrollbar { height: 6px; }-->
+<!--        .apps-scrollbar::-webkit-scrollbar-track { background: #0a0a0a; border-radius: 10px; }-->
+<!--        .apps-scrollbar::-webkit-scrollbar-thumb { background: #262626; border-radius: 10px; }-->
+<!--        .apps-scrollbar::-webkit-scrollbar-thumb:hover { background: #f97316; }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body class="bg-neutral-950 text-white font-sans antialiased selection:bg-orange-500 selection:text-white">-->
+
+<!--<header class="border-b border-neutral-900 bg-neutral-950/80 backdrop-blur sticky top-0 z-50">-->
+<!--    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">-->
+<!--        <div class="text-2xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500">-->
+<!--            MakeWebApp-->
+<!--        </div>-->
+<!--        <div class="flex items-center gap-4">-->
+<!--            <a href="#signin" class="text-sm font-medium text-neutral-400 hover:text-white transition">Kirish</a>-->
+<!--            <a href="#signup" class="text-sm font-semibold bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 px-5 py-2.5 rounded-full shadow-lg shadow-orange-500/20 transition duration-300 text-xs sm:text-sm">-->
+<!--                Ro'yxatdan o'tish-->
+<!--            </a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</header>-->
+
+<!--<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">-->
+<!--    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight mb-4 leading-tight">-->
+<!--        Har Bir Yo'nalishda <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-500">To'liq 4 Ekran</span> va Real Mahsulotlar-->
+<!--    </h1>-->
+<!--    <p class="text-neutral-400 max-w-2xl mx-auto text-sm sm:text-base mb-16">-->
+<!--        Hech qanday bo'sh joylarsiz, barcha vitrinalar to'liq tovarlar, narxlar va savatcha tizimlari bilan jihozlangan simmetrik interfeyslar modeli.-->
+<!--    </p>-->
+
+<!--    <div class="space-y-24 text-left">-->
+
+<!--        <section class="border border-neutral-900 bg-neutral-900/10 p-4 sm:p-8 rounded-3xl">-->
+<!--            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-neutral-900 pb-6 mb-8">-->
+<!--                <div>-->
+<!--                    <span class="text-xs font-bold uppercase tracking-widest text-orange-500 bg-orange-500/10 px-3 py-1 rounded-full">Food Delivery Tech</span>-->
+<!--                    <h2 class="text-3xl font-black text-amber-500 mt-2">Rayxon Milliy Taomlar</h2>-->
+<!--                    <p class="text-neutral-400 mt-1">Haqiqiy taomlar ro'yxati, narxlar dinamikasi va jonli kuryer navigatsiyasi.</p>-->
+<!--                </div>-->
+<!--                <button class="bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs px-5 py-3 rounded-xl transition shadow-lg shadow-orange-600/10">-->
+<!--                    Demo Botni Sinash-->
+<!--                </button>-->
+<!--            </div>-->
+
+<!--            <div class="apps-scrollbar flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory px-2">-->
+
+<!--                <div class="snap-start shrink-0 w-[315px] h-[550px] bg-neutral-50 text-neutral-900 rounded-[36px] border-[8px] border-neutral-900 shadow-2xl overflow-hidden flex flex-col font-sans">-->
+<!--                    <div class="p-3.5 pt-5 bg-white border-b border-neutral-100 flex items-center justify-between text-xs font-bold">-->
+<!--                        <span class="text-orange-800 text-sm">☰ Rayxon Menu</span><span class="text-neutral-400 text-sm">🔍</span>-->
+<!--                    </div>-->
+<!--                    <div class="p-3.5 flex-1 space-y-3.5 overflow-y-auto text-[11px]">-->
+<!--                        <div class="bg-gradient-to-br from-amber-950 to-orange-950 text-white p-3.5 rounded-2xl relative min-h-[100px] flex flex-col justify-between">-->
+<!--                            <span class="bg-amber-500 text-amber-950 font-black text-[8px] px-2 py-0.5 rounded-full w-max">TOSHKENT</span>-->
+<!--                            <div><h4 class="font-black text-sm text-amber-400">Rayxon Milliy Taomlar</h4><p class="text-[9px] text-neutral-300">★ 4.9 • Chilonzor filiali</p></div>-->
+<!--                        </div>-->
+<!--                        <div class="flex gap-1.5 text-[9px] font-extrabold overflow-x-auto pb-1">-->
+<!--                            <span class="bg-orange-600 text-white px-3 py-1.5 rounded-full shrink-0">Asosiy Taomlar</span>-->
+<!--                            <span class="bg-neutral-200 text-neutral-600 px-3 py-1.5 rounded-full shrink-0">Kaboblar</span>-->
+<!--                        </div>-->
+<!--                        <div class="space-y-2.5">-->
+<!--                            <div class="bg-white p-2.5 rounded-xl border border-neutral-200 flex justify-between items-center shadow-sm">-->
+<!--                                <div class="flex items-center gap-2.5">-->
+<!--                                    <div class="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center text-lg">🥗</div>-->
+<!--                                    <div><p class="font-bold text-neutral-800 text-xs">Baqlajonli Rulet</p><span class="text-neutral-400 text-[9px]">Yangi rayhon bilan</span></div>-->
+<!--                                </div>-->
+<!--                                <span class="text-orange-600 font-extrabold text-xs">35,000 UZS</span>-->
+<!--                            </div>-->
+<!--                            <div class="bg-white p-2.5 rounded-xl border border-amber-200 bg-amber-50/30 flex justify-between items-center shadow-sm">-->
+<!--                                <div class="flex items-center gap-2.5">-->
+<!--                                    <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center text-lg">🍛</div>-->
+<!--                                    <div><p class="font-bold text-neutral-800 text-xs">Bayram Oshi</p><span class="text-neutral-400 text-[9px]">Qo'y go'shti va ziravorlar</span></div>-->
+<!--                                </div>-->
+<!--                                <span class="text-orange-600 font-extrabold text-xs">55,000 UZS</span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="snap-start shrink-0 w-[315px] h-[550px] bg-neutral-50 text-neutral-900 rounded-[36px] border-[8px] border-neutral-900 shadow-2xl overflow-hidden flex flex-col font-sans">-->
+<!--                    <div class="p-3.5 pt-5 bg-white border-b border-neutral-100 flex items-center justify-between text-xs font-bold">-->
+<!--                        <span class="text-neutral-700">← Kuryer Navigatsiyasi</span><span class="text-neutral-400">ID: #RX-772</span>-->
+<!--                    </div>-->
+<!--                    <div class="p-3.5 flex-1 space-y-3.5 overflow-y-auto text-[11px]">-->
+<!--                        <div class="h-32 bg-gradient-to-br from-emerald-50 via-slate-100 to-amber-50 rounded-2xl relative border border-neutral-200 overflow-hidden flex flex-col justify-between p-2">-->
+<!--                            <div class="absolute top-1/2 left-0 w-full h-0.5 bg-white border-b border-neutral-300"></div>-->
+<!--                            <div class="absolute top-12 left-24 flex items-center justify-center">-->
+<!--                                <span class="animate-ping absolute inline-flex h-5 w-5 rounded-full bg-orange-400 opacity-75"></span>-->
+<!--                                <span class="relative inline-flex rounded-full h-4 w-4 bg-orange-600 text-[8px] text-white items-center justify-center font-bold">🛵</span>-->
+<!--                            </div>-->
+<!--                            <div class="absolute top-20 right-12 text-sm">📍</div>-->
+<!--                            <span class="bg-neutral-900 text-white text-[8px] px-2 py-0.5 rounded-md font-bold self-start z-10 shadow">Jonli Xarita</span>-->
+<!--                        </div>-->
+<!--                        <div class="bg-white p-2.5 rounded-xl border border-neutral-200 flex items-center justify-between shadow-sm">-->
+<!--                            <div class="flex items-center gap-2.5">-->
+<!--                                <div class="w-8 h-8 bg-orange-600 text-white rounded-full flex items-center justify-center font-black text-xs">FE</div>-->
+<!--                                <div><p class="font-black text-neutral-800 text-xs">Farhod Ergashev</p><span class="text-neutral-400 text-[8px] font-bold block">KURYER YO'LDA</span></div>-->
+<!--                            </div>-->
+<!--                            <button class="bg-orange-100 text-orange-600 p-2 rounded-full font-bold text-xs">📞</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="snap-start shrink-0 w-[315px] h-[550px] bg-neutral-50 text-neutral-900 rounded-[36px] border-[8px] border-neutral-900 shadow-2xl overflow-hidden flex flex-col font-sans">-->
+<!--                    <div class="p-3.5 pt-5 bg-white border-b border-neutral-100 flex justify-between items-center">-->
+<!--                        <span class="font-black text-amber-900 text-xs">Rayxon Filiallari</span><span class="text-neutral-400">☰</span>-->
+<!--                    </div>-->
+<!--                    <div class="p-3.5 flex-1 space-y-3.5 overflow-y-auto text-[11px]">-->
+<!--                        <div class="bg-gradient-to-r from-orange-900 to-amber-900 text-white p-3 rounded-xl shadow">-->
+<!--                            <p class="font-bold text-xs">Eng Yaqin Filialni Tanlang</p>-->
+<!--                            <p class="text-[9px] text-neutral-200 mt-0.5">Tezkor yetkazib berish kafolati</p>-->
+<!--                        </div>-->
+<!--                        <div class="space-y-2">-->
+<!--                            <div class="bg-white border border-neutral-200 rounded-xl p-3 shadow-sm flex justify-between items-center">-->
+<!--                                <div><h5 class="font-bold text-neutral-800 text-xs">Chilonzor-9 Filiali</h5><p class="text-neutral-400 text-[9px] mt-0.5">⏱ 15-25 daqiqa • 1.2 km</p></div>-->
+<!--                                <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full">Ochiq</span>-->
+<!--                            </div>-->
+<!--                            <div class="bg-white border border-neutral-200 rounded-xl p-3 shadow-sm flex justify-between items-center">-->
+<!--                                <div><h5 class="font-bold text-neutral-800 text-xs">Gofur Gulom Filiali</h5><p class="text-neutral-400 text-[9px] mt-0.5">⏱ 30-40 daqiqa • 4.5 km</p></div>-->
+<!--                                <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full">Ochiq</span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="snap-start shrink-0 w-[315px] h-[550px] bg-neutral-50 text-neutral-900 rounded-[36px] border-[8px] border-neutral-900 shadow-2xl overflow-hidden flex flex-col font-sans">-->
+<!--                    <div class="p-3.5 pt-5 bg-white border-b border-neutral-100 flex items-center justify-between text-xs font-bold">-->
+<!--                        <span class="text-neutral-700">Mening Savatcham</span><span class="bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">2 ta taom</span>-->
+<!--                    </div>-->
+<!--                    <div class="p-3.5 flex-1 space-y-3.5 overflow-y-auto text-[11px]">-->
+<!--                        <div class="bg-white p-3 rounded-xl border border-neutral-200 flex justify-between items-center shadow-sm">-->
+<!--                            <div class="flex items-center gap-2"><span class="text-lg">🍛</span><div><p class="font-black text-neutral-800">To'y Oshi (2x)</p><p class="text-[8px] text-neutral-400">Salat bilan</p></div></div>-->
+<!--                            <span class="font-bold text-neutral-800">110,000 UZS</span>-->
+<!--                        </div>-->
+<!--                        <div class="border-t border-neutral-200 pt-3 space-y-1 text-neutral-500">-->
+<!--                            <div class="flex justify-between"><span>Taomlar narxi</span><span class="font-bold text-neutral-800">110,000 UZS</span></div>-->
+<!--                            <div class="flex justify-between"><span>Yetkazish haqi</span><span class="text-emerald-600 font-bold">BEPUL</span></div>-->
+<!--                            <div class="flex justify-between text-neutral-800 font-black text-xs pt-2 border-t border-dashed border-neutral-200"><span>Umumiy Summa</span><span class="text-orange-600">110,000 UZS</span></div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="p-3 bg-white border-t border-neutral-100"><button class="w-full bg-orange-600 text-white font-black py-2.5 rounded-xl shadow-md">Buyurtmani Tasdiqlash</button></div>-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--        </section>-->
+
+<!--        <section class="border border-neutral-900 bg-neutral-900/10 p-4 sm:p-8 rounded-3xl">-->
+<!--            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-neutral-900 pb-6 mb-8">-->
+<!--                <div>-->
+<!--                    <span class="text-xs font-bold uppercase tracking-widest text-emerald-500 bg-emerald-500/10 px-3 py-1 rounded-full">MedTech App</span>-->
+<!--                    <h2 class="text-3xl font-black text-emerald-400 mt-2">Dorixona WebApp Tizimi</h2>-->
+<!--                    <p class="text-neutral-400 mt-1">Har bir sahifasi dori vositalari, real qidiruv natijalari va savatcha bilan to'ldirilgan 4 ta ekran.</p>-->
+<!--                </div>-->
+<!--                <button class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-5 py-3 rounded-xl transition shadow-lg shadow-emerald-600/10">-->
+<!--                    Demo Botni Ochish-->
+<!--                </button>-->
+<!--            </div>-->
+
+<!--            <div class="apps-scrollbar flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory px-2">-->
+
+<!--                <div class="snap-start shrink-0 w-[315px] h-[550px] bg-neutral-50 text-neutral-900 rounded-[36px] border-[8px] border-neutral-900 shadow-2xl overflow-hidden flex flex-col font-sans">-->
+<!--                    <div class="bg-emerald-600 text-white p-3.5 pt-5 flex items-center justify-between text-xs font-bold shadow">-->
+<!--                        <span>☰ Markaziy Dorixona</span><span>🎛️</span>-->
+<!--                    </div>-->
+<!--                    <div class="p-3.5 flex-1 space-y-3.5 overflow-y-auto text-[11px]">-->
+<!--                        <div class="flex gap-1.5">-->
+<!--                            <input type="text" value="Amoksitsillin" class="w-full bg-white border border-neutral-300 rounded-xl px-3 text-xs focus:outline-none">-->
+<!--                            <button class="bg-emerald-600 text-white px-3 py-1.5 rounded-xl font-bold">Topish</button>-->
+<!--                        </div>-->
+<!--                        <p class="font-bold text-neutral-800 text-xs">Qidiruv Natijalari (3)</p>-->
+<!--                        <div class="space-y-2">-->
+<!--                            <div class="bg-white p-2.5 rounded-xl border border-neutral-200 flex justify-between items-center shadow-sm">-->
+<!--                                <div><p class="font-bold text-neutral-800">Amoksitsillin 500mg</p><p class="text-neutral-400 text-[9px]">Antibiotik • 20 kapsula</p></div>-->
+<!--                                <div class="text-right"><span class="text-emerald-600 font-bold block">42,000 UZS</span><button class="bg-emerald-50 text-emerald-600 text-[9px] font-black px-2 py-0.5 rounded border border-emerald-200 mt-1">+ Qo'shish</button></div>-->
+<!--                            </div>-->
+<!--                            <div class="bg-white p-2.5 rounded-xl border border-neutral-200 flex justify-between items-center shadow-sm">-->
+<!--                                <div><p class="font-bold text-neutral-800">Kardiomagnil 75mg</p><p class="text-neutral-400 text-[9px]">Yurak uchun • 30 tabletka</p></div>-->
+<!--                                <div class="text-right"><span class="text-emerald-600 font-bold block">38,000 UZS</span><button class="bg-emerald-50 text-emerald-600 text-[9px] font-black px-2 py-0.5 rounded border border-emerald-200 mt-1">+ Qo'shish</button></div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="snap-start shrink-0 w-[315px] h-[550px] bg-neutral-50 text-neutral-900 rounded-[36px] border-[8px] border-neutral-900 shadow-2xl overflow-hidden flex flex-col font-sans">-->
+<!--                    <div class="bg-emerald-600 text-white p-3.5 pt-5 flex items-center justify-between text-xs font-bold">-->
+<!--                        <span>← Retsept Tahlili</span><span>📷</span>-->
+<!--                    </div>-->
+<!--                    <div class="p-3.5 flex-1 flex flex-col justify-between text-[11px]">-->
+<!--                        <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl text-emerald-900 shadow-sm">-->
+<!--                            <p class="font-bold">Shifokor Retseptini Skanerlash</p>-->
+<!--                            <p class="text-[9px] text-neutral-600 mt-0.5">Rasmga olib yuboring, tizim dorilarni avtomatik savatga yig'adi.</p>-->
+<!--                        </div>-->
+<!--                        <div class="my-3 flex-1 bg-neutral-900 rounded-2xl relative border border-neutral-800 overflow-hidden flex items-center justify-center shadow-inner">-->
+<!--                            <div class="absolute inset-x-6 top-1/2 h-0.5 bg-emerald-400 animate-pulse shadow-[0_0_8px_#10b981]"></div>-->
+<!--                            <div class="text-center text-neutral-500 text-[9px] space-y-1">-->
+<!--                                <span class="text-2xl block">📄</span>-->
+<!--                                <p class="tracking-widest font-mono text-emerald-500">AI SCANNER ACTIVE</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <button class="w-full bg-emerald-600 text-white font-black py-2.5 rounded-xl shadow-md">📷 Shaffof Rasmga Olish</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="snap-start shrink-0 w-[315px] h-[550px] bg-neutral-50 text-neutral-900 rounded-[36px] border-[8px] border-neutral-900 shadow-2xl overflow-hidden flex flex-col font-sans">-->
+<!--                    <div class="bg-emerald-600 text-white p-3.5 pt-5 flex items-center justify-between text-xs font-bold">-->
+<!--                        <span>☰ Dorilar Vaqti</span><span>🔔</span>-->
+<!--                    </div>-->
+<!--                    <div class="p-3.5 flex-1 space-y-3 overflow-y-auto text-[11px]">-->
+<!--                        <p class="font-black text-neutral-800 text-xs">Bugungi Reja (Kunlik doza)</p>-->
+<!--                        <div class="bg-white p-3 rounded-xl border border-neutral-200 flex justify-between items-center shadow-sm border-l-4 border-l-amber-500">-->
+<!--                            <div><p class="font-bold text-neutral-800">💊 Vitamin D3 (1000 ME)</p><p class="text-neutral-400 text-[9px] mt-0.5">Ertalab • Ovqatdan keyin</p></div>-->
+<!--                            <span class="bg-amber-100 text-amber-800 font-bold px-2 py-1 rounded-lg text-[9px]">Soat 09:00</span>-->
+<!--                        </div>-->
+<!--                        <div class="bg-white p-3 rounded-xl border border-neutral-200 flex justify-between items-center shadow-sm border-l-4 border-l-emerald-500">-->
+<!--                            <div><p class="font-bold text-neutral-800">🧪 Magniy B6 Kompleks</p><p class="text-neutral-400 text-[9px] mt-0.5">Kechki payt • Uyqudan oldin</p></div>-->
+<!--                            <span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-1 rounded-lg text-[9px]">Soat 21:00</span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="snap-start shrink-0 w-[315px] h-[550px] bg-neutral-50 text-neutral-900 rounded-[36px] border-[8px] border-neutral-900 shadow-2xl overflow-hidden flex flex-col font-sans">-->
+<!--                    <div class="bg-emerald-600 text-white p-3.5 pt-5 flex items-center justify-between text-xs font-bold">-->
+<!--                        <span>Mening Buyurtmam</span><span class="bg-white text-emerald-700 px-2 py-0.5 rounded-full font-bold">2 ta mahsulot</span>-->
+<!--                    </div>-->
+<!--                    <div class="p-3.5 flex-1 space-y-3.5 overflow-y-auto text-[11px]">-->
+<!--                        <div class="bg-white p-3 rounded-xl border border-neutral-200 flex justify-between items-center shadow-sm">-->
+<!--                            <div><p class="font-black text-neutral-800">Amoksitsillin (1x)</p><p class="text-neutral-400 text-[8px]">42,000 UZS</p></div>-->
+<!--                            <span class="font-bold text-neutral-800">42,000 UZS</span>-->
+<!--                        </div>-->
+<!--                        <div class="bg-white p-3 rounded-xl border border-neutral-200 flex justify-between items-center shadow-sm">-->
+<!--                            <div><p class="font-black text-neutral-800">Kardiomagnil (1x)</p><p class="text-neutral-400 text-[8px]">38,000 UZS</p></div>-->
+<!--                            <span class="font-bold text-neutral-800">38,000 UZS</span>-->
+<!--                        </div>-->
+<!--                        <div class="border-t border-neutral-200 pt-3 space-y-1.5 text-neutral-500">-->
+<!--                            <div class="flex justify-between"><span>Dori-darmonlar</span><span class="text-neutral-800 font-bold">80,000 UZS</span></div>-->
+<!--                            <div class="flex justify-between"><span>Yetkazib berish</span><span class="text-neutral-800 font-bold">15,000 UZS</span></div>-->
+<!--                            <div class="flex justify-between text-neutral-800 font-black text-xs pt-2 border-t border-dashed border-neutral-200"><span>Jami To'lov</span><span class="text-emerald-600">95,000 UZS</span></div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="p-3 bg-white border-t border-neutral-100"><button class="w-full bg-emerald-600 text-white font-black py-2.5 rounded-xl text-center shadow-md">Buyurtmani Rasmiylashtirish</button></div>-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--        </section>-->
+
+<!--        <section class="border border-neutral-900 bg-neutral-900/10 p-4 sm:p-8 rounded-3xl">-->
+<!--            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-neutral-900 pb-6 mb-8">-->
+<!--                <div>-->
+<!--                    <span class="text-xs font-bold uppercase tracking-widest text-blue-500 bg-blue-500/10 px-3 py-1 rounded-full">Travel Ecosystem</span>-->
+<!--                    <h2 class="text-3xl font-black text-blue-400 mt-2">Sayohat Agentligi Platformasi</h2>-->
+<!--                    <p class="text-neutral-400 mt-1">Sayohat paketlari, chiptalar, aviatsiya ma'lumotlari va bron qilish paneli bilan jihozlangan 4 ta to'liq ekran.</p>-->
+<!--                </div>-->
+<!--                <button class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-5 py-3 rounded-xl transition shadow-lg shadow-blue-600/10">-->
+<!--                    Demo Tur Ilovasini ochish-->
+<!--                </button>-->
+<!--            </div>-->
+
+<!--            <div class="apps-scrollbar flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory px-2">-->
+
+<!--                <div class="snap-start shrink-0 w-[315px] h-[550px] bg-neutral-50 text-neutral-900 rounded-[36px] border-[8px] border-neutral-900 shadow-2xl overflow-hidden flex flex-col font-sans">-->
+<!--                    <div class="p-3.5 pt-5 bg-white border-b border-neutral-100 flex items-center justify-between"><span class="font-black text-blue-800 text-xs">SayohatUz Global</span><span>🔍</span></div>-->
+<!--                    <div class="p-3.5 flex-1 space-y-3.5 overflow-y-auto text-[11px]">-->
+<!--                        <div class="bg-gradient-to-br from-cyan-600 via-blue-600 to-indigo-600 text-white p-4 rounded-2xl min-h-[110px] flex flex-col justify-between relative shadow-md">-->
+<!--                            <span class="bg-amber-400 text-neutral-950 text-[8px] px-2 py-0.5 rounded-full font-black self-start w-max">PREMIUM TUR</span>-->
+<!--                            <div><h4 class="font-black text-xs text-white">Maldiv Orollari Premium</h4><p class="text-[9px] text-cyan-100">5★ All Inclusive • 7 kun</p></div>-->
+<!--                        </div>-->
+<!--                        <p class="font-black text-neutral-800 text-xs">Mavsumiy Takliflar</p>-->
+<!--                        <div class="bg-white border border-neutral-200 rounded-xl overflow-hidden shadow-sm flex items-center p-2 gap-2">-->
+<!--                            <div class="w-12 h-12 bg-gradient-to-tr from-amber-400 to-orange-500 rounded-lg flex items-center justify-center text-xl text-white">🏖️</div>-->
+<!--                            <div class="flex-1">-->
+<!--                                <h5 class="font-bold text-neutral-800 text-xs">Antalya Sohillari</h5>-->
+<!--                                <p class="text-neutral-400 text-[9px]">Mehmonxona + Parvoz + Sug'urta</p>-->
+<!--                            </div>-->
+<!--                            <span class="text-blue-600 font-black text-xs">$720</span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="snap-start shrink-0 w-[315px] h-[550px] bg-neutral-50 text-neutral-900 rounded-[36px] border-[8px] border-neutral-900 shadow-2xl overflow-hidden flex flex-col font-sans">-->
+<!--                    <div class="p-3.5 pt-5 bg-white border-b border-neutral-100 flex items-center justify-between"><span class="font-bold text-neutral-700 text-xs">← Tur Tafsilotlari</span><span>⭐ 4.9</span></div>-->
+<!--                    <div class="p-3.5 flex-1 space-y-3 overflow-y-auto text-[11px]">-->
+<!--                        <div class="h-24 bg-gradient-to-r from-blue-900 to-indigo-900 text-white rounded-xl p-3 flex flex-col justify-end">-->
+<!--                            <h4 class="font-black text-sm">Dubay Shaxri Ultra Tur</h4>-->
+<!--                        </div>-->
+<!--                        <p class="font-bold text-neutral-800 text-xs">Paket ichiga nimalar kiradi?</p>-->
+<!--                        <ul class="space-y-1.5 text-neutral-600 text-[10px]">-->
+<!--                            <li>✈️ Doimiy borish va qaytish aviachiptasi</li>-->
+<!--                            <li>🏨 Hilton Luxury 5★ mehmonxonasi</li>-->
+<!--                            <li>🍳 Kuniga 3 mahal shved stoli taomlari</li>-->
+<!--                            <li>🗺️ Professional gid hamrohligidagi ekskursiyalar</li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                    <div class="p-3 bg-white border-t border-neutral-100 flex justify-between items-center"><span class="font-black text-blue-600 text-sm">$1,250</span><button class="bg-blue-600 text-white font-bold text-xs px-4 py-2 rounded-xl shadow">Hozir Band Qilish</button></div>-->
+<!--                </div>-->
+
+<!--                <div class="snap-start shrink-0 w-[315px] h-[550px] bg-neutral-50 text-neutral-900 rounded-[36px] border-[8px] border-neutral-900 shadow-2xl overflow-hidden flex flex-col font-sans">-->
+<!--                    <div class="p-3.5 pt-5 bg-white border-b border-neutral-100"><span class="font-black text-blue-800 text-xs">Mening Chiptalarim</span></div>-->
+<!--                    <div class="p-3.5 flex-1 space-y-3.5 overflow-y-auto text-[11px]">-->
+<!--                        <div class="bg-white border-2 border-neutral-200 rounded-2xl overflow-hidden shadow-sm border-dashed">-->
+<!--                            <div class="bg-blue-900 text-white p-3 flex justify-between items-center">-->
+<!--                                <div><p class="text-[8px] opacity-60 tracking-wider">REYS RAQAMI</p><p class="font-black text-xs">HY-301 • TAS ➔ DXB</p></div>-->
+<!--                                <span class="text-xl">✈️</span>-->
+<!--                            </div>-->
+<!--                            <div class="p-3 bg-neutral-50 text-neutral-700 space-y-1.5 text-[10px]">-->
+<!--                                <div class="flex justify-between"><span>Yo'lovchi ismi:</span><span class="font-bold text-neutral-900">Asadbek Alimov</span></div>-->
+<!--                                <div class="flex justify-between"><span>Uchish sanasi:</span><span class="font-bold text-neutral-900">12 IYUL, 06:40</span></div>-->
+<!--                                <div class="flex justify-between"><span>O'rindiq (Seat):</span><span class="font-bold text-neutral-900">12A (Business)</span></div>-->
+<!--                            </div>-->
+<!--                            <div class="bg-white p-2.5 border-t border-neutral-200 flex flex-col items-center justify-center">-->
+<!--                                <div class="flex gap-0.5 h-6 w-full max-w-[150px] bg-neutral-900 opacity-80 mb-1"></div>-->
+<!--                                <span class="text-[7px] font-mono tracking-widest text-neutral-400">ELECTRONIC BARCODE</span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="snap-start shrink-0 w-[315px] h-[550px] bg-neutral-50 text-neutral-900 rounded-[36px] border-[8px] border-neutral-900 shadow-2xl overflow-hidden flex flex-col font-sans">-->
+<!--                    <div class="p-3.5 pt-5 bg-white border-b border-neutral-100 flex items-center justify-between text-xs font-bold">-->
+<!--                        <span class="text-neutral-700">Hisob-Kitob & Bron</span><span class="text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">Faol</span>-->
+<!--                    </div>-->
+<!--                    <div class="p-3.5 flex-1 space-y-3.5 overflow-y-auto text-[11px]">-->
+<!--                        <div class="bg-white p-3 rounded-xl border border-neutral-200 space-y-2 shadow-sm">-->
+<!--                            <div class="flex justify-between"><span>Antalya Premium Tur</span><span class="font-bold text-neutral-900">$720.00</span></div>-->
+<!--                            <div class="flex justify-between"><span>Xalqaro Sug'urta (Xizmat)</span><span class="font-bold text-neutral-900">$30.00</span></div>-->
+<!--                            <div class="border-t border-neutral-200 pt-2 flex justify-between font-black text-xs text-neutral-800"><span>Umumiy Summa:</span><span class="text-blue-600">$750.00</span></div>-->
+<!--                        </div>-->
+<!--                        <div class="bg-blue-50 border border-blue-200 p-3 rounded-xl text-blue-900 text-center font-bold text-[10px]">-->
+<!--                            💳 To'lov turi: Xalqaro Visa / Master Card-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="p-3 bg-white border-t border-neutral-100"><button class="w-full bg-blue-600 text-white font-black py-2.5 rounded-xl text-center shadow-md">Invoysni Yuklab Olish</button></div>-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--        </section>-->
+
+<!--        <section class="border border-neutral-900 bg-neutral-900/10 p-4 sm:p-8 rounded-3xl">-->
+<!--            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-neutral-900 pb-6 mb-8">-->
+<!--                <div>-->
+<!--                    <span class="text-xs font-bold uppercase tracking-widest text-orange-500 bg-orange-500/10 px-3 py-1 rounded-full">E-Commerce System</span>-->
+<!--                    <h2 class="text-3xl font-black text-orange-500 mt-2">VibrantShop Marketplace</h2>-->
+<!--                    <p class="text-neutral-400 mt-1">Har bir sahifasi haqiqiy kiyim-kechak, krossovkalar, narx va savat tugmalari bilan jihozlangan 4 ta ekran.</p>-->
+<!--                </div>-->
+<!--                <button class="bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs px-5 py-3 rounded-xl transition shadow-lg shadow-orange-600/10">-->
+<!--                    Demo Do'konni Ochish-->
+<!--                </button>-->
+<!--            </div>-->
+
+<!--            <div class="apps-scrollbar flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory px-2">-->
+
+<!--                <div class="snap-start shrink-0 w-[315px] h-[550px] bg-neutral-50 text-neutral-900 rounded-[36px] border-[8px] border-neutral-900 shadow-2xl overflow-hidden flex flex-col font-sans">-->
+<!--                    <div class="p-3.5 pt-5 bg-white border-b border-neutral-100 flex justify-between font-black text-orange-600 text-xs"><span>VibrantShop Store</span><span>🛒</span></div>-->
+<!--                    <div class="p-3.5 flex-1 space-y-3.5 overflow-y-auto text-[11px]">-->
+<!--                        <div class="grid grid-cols-2 gap-3">-->
+<!--                            <div class="bg-white border border-neutral-200 rounded-2xl p-2 shadow-sm">-->
+<!--                                <div class="h-20 bg-gradient-to-tr from-orange-500 to-rose-500 rounded-xl flex items-center justify-center text-white font-black text-[10px]">👟 Velocita</div>-->
+<!--                                <p class="font-black text-neutral-800 text-xs mt-1.5 truncate">Velocita Pro</p>-->
+<!--                                <div class="flex justify-between items-center mt-1"><span class="text-orange-600 font-black">$129.00</span><span class="text-amber-500 text-[9px]">★ 4.9</span></div>-->
+<!--                            </div>-->
+<!--                            <div class="bg-white border border-neutral-200 rounded-2xl p-2 shadow-sm">-->
+<!--                                <div class="h-20 bg-gradient-to-tr from-indigo-600 to-blue-500 rounded-xl flex items-center justify-center text-white font-black text-[10px]">🎧 Zenith ANC</div>-->
+<!--                                <p class="font-black text-neutral-800 text-xs mt-1.5 truncate">Zenith Shells</p>-->
+<!--                                <div class="flex justify-between items-center mt-1"><span class="text-orange-600 font-black">$199.00</span><span class="text-amber-500 text-[9px]">★ 4.8</span></div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="snap-start shrink-0 w-[315px] h-[550px] bg-neutral-50 text-neutral-900 rounded-[36px] border-[8px] border-neutral-900 shadow-2xl overflow-hidden flex flex-col font-sans">-->
+<!--                    <div class="p-3.5 pt-5 bg-white border-b border-neutral-100 flex justify-between font-black text-neutral-800 text-xs"><span>← AeroStride Runner</span><span>♥</span></div>-->
+<!--                    <div class="p-3.5 flex-1 space-y-3.5 overflow-y-auto text-[11px]">-->
+<!--                        <div class="h-28 bg-neutral-900 text-white rounded-2xl flex flex-col items-center justify-center relative shadow-inner">-->
+<!--                            <span class="text-xs font-black text-orange-500">AEROSTRIDE MAX</span>-->
+<!--                            <span class="text-2xl mt-1">👟</span>-->
+<!--                        </div>-->
+<!--                        <div class="flex justify-between items-start">-->
+<!--                            <div><h3 class="font-black text-neutral-800 text-xs">AeroStride Pro</h3><span class="text-emerald-600 font-bold text-[9px]">Sotuvda mavjud</span></div>-->
+<!--                            <span class="text-orange-600 font-black text-sm">$189.00</span>-->
+<!--                        </div>-->
+<!--                        <div class="space-y-1">-->
+<!--                            <p class="font-bold text-neutral-700 text-[10px]">O'lchamni tanlang:</p>-->
+<!--                            <div class="grid grid-cols-4 gap-1.5 text-center font-bold text-[9px]">-->
+<!--                                <span class="border border-neutral-200 bg-white py-1 rounded-md">US 8</span>-->
+<!--                                <span class="bg-orange-600 text-white py-1 rounded-md shadow-sm">US 9</span>-->
+<!--                                <span class="border border-neutral-200 bg-white py-1 rounded-md">US 10</span>-->
+<!--                                <span class="border border-neutral-200 bg-white py-1 rounded-md">US 11</span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="p-3 bg-white border-t border-neutral-100"><button class="w-full bg-orange-600 text-white font-black py-2.5 rounded-xl shadow-md">Savatga Qo'shish</button></div>-->
+<!--                </div>-->
+
+<!--                <div class="snap-start shrink-0 w-[315px] h-[550px] bg-neutral-50 text-neutral-900 rounded-[36px] border-[8px] border-neutral-900 shadow-2xl overflow-hidden flex flex-col font-sans">-->
+<!--                    <div class="p-3.5 pt-5 bg-white border-b border-neutral-100 flex justify-between items-center text-xs font-bold">-->
+<!--                        <span class="text-neutral-700">Savatcham</span><span class="text-orange-600">2 ta mahsulot</span>-->
+<!--                    </div>-->
+<!--                    <div class="p-3.5 flex-1 space-y-3 overflow-y-auto text-[11px]">-->
+<!--                        <div class="bg-white p-2.5 rounded-xl border border-neutral-200 flex justify-between items-center shadow-sm">-->
+<!--                            <div><p class="font-bold text-neutral-800">Velocita Pro (1x)</p><span class="text-orange-600 font-bold">$129.00</span></div>-->
+<!--                            <div class="bg-neutral-100 px-2 py-1 rounded font-bold text-xs">- 1 +</div>-->
+<!--                        </div>-->
+<!--                        <div class="bg-white p-2.5 rounded-xl border border-neutral-200 flex justify-between items-center shadow-sm">-->
+<!--                            <div><p class="font-bold text-neutral-800">Zenith ANC (1x)</p><span class="text-orange-600 font-bold">$199.00</span></div>-->
+<!--                            <div class="bg-neutral-100 px-2 py-1 rounded font-bold text-xs">- 1 +</div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="snap-start shrink-0 w-[315px] h-[550px] bg-neutral-50 text-neutral-900 rounded-[36px] border-[8px] border-neutral-900 shadow-2xl overflow-hidden flex flex-col font-sans">-->
+<!--                    <div class="p-3.5 pt-5 bg-white border-b border-neutral-100 flex justify-between items-center text-xs font-bold">-->
+<!--                        <span class="text-neutral-700">To'lov va Kuryer</span><span class="text-neutral-400">Bosqich 3/3</span>-->
+<!--                    </div>-->
+<!--                    <div class="p-3.5 flex-1 space-y-3.5 overflow-y-auto text-[11px]">-->
+<!--                        <div class="bg-white p-3 rounded-xl border border-neutral-200 space-y-2 shadow-sm">-->
+<!--                            <p class="font-bold text-neutral-800">Yetkazib berish manzili:</p>-->
+<!--                            <p class="text-neutral-500 text-[10px]">Toshkent shahar, Yunusobod tumani, 4-kvartal, 14-uy.</p>-->
+<!--                        </div>-->
+<!--                        <div class="bg-white p-3 rounded-xl border border-neutral-200 space-y-1.5 shadow-sm">-->
+<!--                            <div class="flex justify-between text-neutral-500"><span>Mahsulotlar summasi:</span><span class="font-bold text-neutral-800">$328.00</span></div>-->
+<!--                            <div class="flex justify-between text-neutral-500"><span>Kuryer xizmati:</span><span class="font-bold text-neutral-800">$10.00</span></div>-->
+<!--                            <div class="border-t border-neutral-200 pt-2 flex justify-between font-black text-xs text-neutral-800"><span>Jami summa:</span><span class="text-orange-600">$338.00</span></div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="p-3 bg-white border-t border-neutral-100"><button class="w-full bg-orange-600 text-white font-black py-2.5 rounded-xl text-center shadow-md">Sotib Olish ($338.00)</button></div>-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--        </section>-->
+
+<!--    </div>-->
+<!--</main>-->
+
+<!--<footer class="text-center py-10 text-xs text-neutral-600 border-t border-neutral-900 mt-24">-->
+<!--    &copy; 2026 MakeWebApp. To'liq simmetriya va real ma'lumotlar integratsiyasi.-->
+<!--</footer>-->
+
+<!--</body>-->
+<!--</html>-->
+
+    <!DOCTYPE html>
+    <html lang="uz">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>MakeWebApp — Premium Telegram Mini App & WebApp Platformasi</title>
+        <meta name="description" content="Restoran, dorixona, turizm va e-commerce bizneslari uchun premium Telegram Mini App va WebApp dizayn platformasi." />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            brand: {
+                                50: '#fff7ed',
+                                100: '#ffedd5',
+                                400: '#fb923c',
+                                500: '#f97316',
+                                600: '#ea580c',
+                                700: '#c2410c'
+                            }
+                        },
+                        boxShadow: {
+                            glow: '0 0 80px rgba(249, 115, 22, .28)',
+                            phone: '0 28px 90px rgba(0,0,0,.48)'
+                        },
+                        backgroundImage: {
+                            grid: 'linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px)'
+                        }
+                    }
+                }
+            }
+        </script>
+        <style>
+            html { scroll-behavior: smooth; }
+            body { background: #050505; }
+            .glass { background: rgba(18,18,18,.72); backdrop-filter: blur(18px); }
+            .apps-scrollbar::-webkit-scrollbar { height: 8px; }
+            .apps-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,.05); border-radius: 999px; }
+            .apps-scrollbar::-webkit-scrollbar-thumb { background: linear-gradient(90deg,#f97316,#f59e0b); border-radius: 999px; }
+            .phone-scroll::-webkit-scrollbar { width: 0; }
+            .shine { position: relative; overflow: hidden; }
+            .shine:before { content:''; position:absolute; inset:-120% auto auto -120%; width:80%; height:240%; transform:rotate(30deg); background:linear-gradient(90deg,transparent,rgba(255,255,255,.16),transparent); animation:shine 6s infinite; }
+            @keyframes shine { 0%,55%{left:-120%} 75%,100%{left:160%} }
+        </style>
+    </head>
+    <body class="text-white font-sans antialiased selection:bg-brand-500 selection:text-white overflow-x-hidden">
+    <div class="fixed inset-0 -z-10">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(249,115,22,.24),transparent_34%),radial-gradient(circle_at_80%_10%,rgba(59,130,246,.16),transparent_30%),linear-gradient(180deg,#090909,#050505_45%,#030303)]"></div>
+        <div class="absolute inset-0 bg-grid bg-[length:48px_48px] opacity-[.22]"></div>
+        <div class="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-brand-500/20 blur-[120px]"></div>
+    </div>
+
+    <header class="sticky top-0 z-50 border-b border-white/10 glass">
+        <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+            <a href="#" class="flex items-center gap-3">
+                <span class="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-brand-500 to-amber-400 text-lg font-black text-neutral-950 shadow-glow">MW</span>
+                <span>
+              <span class="block text-xl font-black tracking-tight">MakeWebApp</span>
+              <span class="block text-[11px] font-semibold uppercase tracking-[.25em] text-neutral-500">Premium Mini Apps</span>
+            </span>
+            </a>
+            <nav class="hidden items-center gap-8 text-sm font-semibold text-neutral-300 lg:flex">
+                <a href="#solutions" class="hover:text-white">Yo‘nalishlar</a>
+                <a href="#process" class="hover:text-white">Jarayon</a>
+                <a href="#pricing" class="hover:text-white">Paketlar</a>
+                <a href="#faq" class="hover:text-white">FAQ</a>
+            </nav>
+            <div class="flex items-center gap-3">
+                <a href="#signin" class="hidden rounded-full border border-white/10 px-5 py-2.5 text-sm font-bold text-neutral-300 transition hover:bg-white/10 sm:inline-flex">Kirish</a>
+                <a href="#contact" class="rounded-full bg-gradient-to-r from-brand-600 to-amber-500 px-5 py-2.5 text-sm font-black text-white shadow-glow transition hover:scale-[1.02]">Demo olish</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="relative mx-auto max-w-7xl px-4 pb-20 pt-14 sm:px-6 lg:px-8 lg:pb-28 lg:pt-24">
+            <div class="grid items-center gap-12 lg:grid-cols-[1.04fr_.96fr]">
+                <div class="text-center lg:text-left">
+                    <div class="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-brand-500/25 bg-brand-500/10 px-4 py-2 text-xs font-black uppercase tracking-[.22em] text-brand-400 lg:mx-0">
+                        <span class="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_18px_#34d399]"></span>
+                        Telegram Mini App
+                    </div>
+                    <h1 class="max-w-5xl text-4xl font-black leading-[1.03] tracking-[-.05em] sm:text-6xl lg:text-7xl">
+                        Biznesingiz uchun <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-amber-300 to-yellow-400">tayyor sotadigan</span> premium web ilova dizayni.
+                    </h1>
+                    <p class="mt-6 max-w-2xl text-base leading-8 text-neutral-400 sm:text-lg lg:mx-0 mx-auto">
+                        Restoran, dorixona, turizm va marketplace uchun real mahsulotlar, savat, buyurtma, filial, to‘lov va admin jarayonlariga moslangan chiroyli interfeyslar.
+                    </p>
+                    <div class="mt-9 flex flex-col justify-center gap-3 sm:flex-row lg:justify-start">
+                        <a href="#solutions" class="rounded-2xl bg-white px-7 py-4 text-sm font-black text-neutral-950 transition hover:bg-brand-100">Dizaynlarni ko‘rish</a>
+                        <a href="#pricing" class="rounded-2xl border border-white/15 bg-white/5 px-7 py-4 text-sm font-black text-white transition hover:bg-white/10">Paket tanlash</a>
+                    </div>
+                    <div class="mt-10 grid grid-cols-3 gap-3 max-w-xl lg:max-w-none mx-auto lg:mx-0">
+                        <div class="rounded-3xl border border-white/10 bg-white/[.04] p-4">
+                            <b class="text-2xl text-white">4+</b><span class="mt-1 block text-xs font-semibold text-neutral-500">Yo‘nalish</span>
+                        </div>
+                        <div class="rounded-3xl border border-white/10 bg-white/[.04] p-4">
+                            <b class="text-2xl text-white">16</b><span class="mt-1 block text-xs font-semibold text-neutral-500">Mockup ekran</span>
+                        </div>
+                        <div class="rounded-3xl border border-white/10 bg-white/[.04] p-4">
+                            <b class="text-2xl text-white">100%</b><span class="mt-1 block text-xs font-semibold text-neutral-500">Responsive</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative mx-auto w-full max-w-[540px] lg:max-w-none">
+                    <div class="absolute -inset-8 rounded-[3rem] bg-gradient-to-r from-brand-500/20 to-blue-500/20 blur-3xl"></div>
+                    <div class="relative grid grid-cols-2 gap-4 sm:gap-6">
+                        <div class="space-y-4 pt-12 sm:space-y-6">
+                            <article class="rounded-[2rem] border border-white/10 bg-white/[.06] p-4 shadow-2xl">
+                                <div class="rounded-[1.4rem] bg-gradient-to-br from-orange-950 to-amber-800 p-4 h-48 flex flex-col justify-between shine">
+                                    <span class="w-max rounded-full bg-amber-300 px-3 py-1 text-[10px] font-black text-neutral-950">FOOD APP</span>
+                                    <div><h3 class="font-black">Rayxon Menu</h3><p class="text-xs text-amber-100">Buyurtma va kuryer</p></div>
+                                </div>
+                            </article>
+                            <article class="rounded-[2rem] border border-white/10 bg-white/[.06] p-4 shadow-2xl">
+                                <div class="rounded-[1.4rem] bg-gradient-to-br from-emerald-700 to-teal-950 p-4 h-36 flex flex-col justify-between">
+                                    <span class="text-2xl">💊</span><div><h3 class="font-black">Dorixona</h3><p class="text-xs text-emerald-100">Qidiruv + savat</p></div>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="space-y-4 sm:space-y-6">
+                            <article class="rounded-[2rem] border border-white/10 bg-white/[.06] p-4 shadow-2xl">
+                                <div class="rounded-[1.4rem] bg-gradient-to-br from-blue-600 to-indigo-950 p-4 h-40 flex flex-col justify-between">
+                                    <span class="text-2xl">✈️</span><div><h3 class="font-black">Travel CRM</h3><p class="text-xs text-blue-100">Tur + avia + bron</p></div>
+                                </div>
+                            </article>
+                            <article class="rounded-[2rem] border border-white/10 bg-white/[.06] p-4 shadow-2xl">
+                                <div class="rounded-[1.4rem] bg-gradient-to-br from-rose-600 to-orange-700 p-4 h-52 flex flex-col justify-between shine">
+                                    <span class="w-max rounded-full bg-white px-3 py-1 text-[10px] font-black text-neutral-950">MARKET</span>
+                                    <div><h3 class="font-black">VibrantShop</h3><p class="text-xs text-orange-100">Mahsulot + checkout</p></div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solutions" class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+            <div class="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+                <div>
+                    <p class="text-sm font-black uppercase tracking-[.22em] text-brand-400">Solutions</p>
+                    <h2 class="mt-3 text-3xl font-black tracking-[-.04em] sm:text-5xl">Har bir biznes uchun alohida tayyorlangan UI.</h2>
+                </div>
+                <p class="max-w-xl text-sm leading-7 text-neutral-400">Pastdagi ekranlar faqat rasm emas — ular real ilova logikasiga mos: mahsulot, savat, buyurtma, manzil, narx va CTA joylashuvi bilan.</p>
+            </div>
+
+            <div class="space-y-10">
+                <section class="rounded-[2rem] border border-white/10 bg-white/[.035] p-4 sm:p-7">
+                    <div class="mb-7 flex flex-col justify-between gap-4 border-b border-white/10 pb-6 md:flex-row md:items-center">
+                        <div>
+                            <span class="rounded-full bg-orange-500/10 px-3 py-1 text-xs font-black uppercase tracking-widest text-orange-400">Food Delivery Tech</span>
+                            <h3 class="mt-3 text-2xl font-black text-amber-400 sm:text-3xl">Rayxon Milliy Taomlar</h3>
+                            <p class="mt-1 text-sm text-neutral-400">Menyu, filiallar, kuryer tracking va savatcha uchun 4 ta premium ekran.</p>
+                        </div>
+                        <a href="#contact" class="w-max rounded-2xl bg-orange-600 px-5 py-3 text-xs font-black text-white shadow-lg shadow-orange-600/20 hover:bg-orange-500">Demo botni sinash</a>
+                    </div>
+                    <div class="apps-scrollbar flex snap-x gap-6 overflow-x-auto px-1 pb-5">
+                        <div class="phone"><div class="phonebar"><span>☰ Rayxon Menu</span><span>🔍</span></div><div class="phonebody"><div class="heroFood"><span>TOSHKENT</span><b>Rayxon Milliy Taomlar</b><small>★ 4.9 • Chilonzor filiali</small></div><div class="chips"><b>Asosiy</b><span>Kabob</span><span>Ichimlik</span></div><div class="item"><i>🥗</i><p><b>Baqlajonli Rulet</b><small>Yangi rayhon bilan</small></p><strong>35,000</strong></div><div class="item"><i>🍛</i><p><b>Bayram Oshi</b><small>Qo‘y go‘shti va ziravorlar</small></p><strong>55,000</strong></div><div class="item"><i>🥩</i><p><b>Jiz Biz</b><small>Issiq tortiladi</small></p><strong>68,000</strong></div></div></div>
+                        <div class="phone"><div class="phonebar"><span>← Kuryer</span><span>#RX-772</span></div><div class="phonebody"><div class="map"><span class="bike">🛵</span><span class="pin">📍</span><b>Jonli xarita</b></div><div class="courier"><span>FE</span><p><b>Farhod Ergashev</b><small>Kuryer yo‘lda • 12 daqiqa</small></p><button>📞</button></div><div class="timeline"><p><b>✓</b> Buyurtma qabul qilindi</p><p><b>✓</b> Oshxonada tayyorlandi</p><p><b>●</b> Yetkazilmoqda</p></div></div></div>
+                        <div class="phone"><div class="phonebar"><span>Rayxon Filiallari</span><span>☰</span></div><div class="phonebody"><div class="branchHero">Eng yaqin filialni tanlang</div><div class="branch"><b>Chilonzor-9</b><small>⏱ 15–25 daqiqa • 1.2 km</small><em>Ochiq</em></div><div class="branch"><b>G‘ofur G‘ulom</b><small>⏱ 30–40 daqiqa • 4.5 km</small><em>Ochiq</em></div><div class="branch"><b>Yunusobod</b><small>⏱ 35–45 daqiqa • 6.1 km</small><em>Ochiq</em></div></div></div>
+                        <div class="phone"><div class="phonebar"><span>Savatcham</span><span>2 ta</span></div><div class="phonebody"><div class="cart"><b>🍛 To‘y Oshi x2</b><span>110,000 UZS</span></div><div class="cart"><b>🥗 Salat x1</b><span>18,000 UZS</span></div><div class="total"><p><span>Taomlar</span><b>128,000</b></p><p><span>Yetkazish</span><b class="green">BEPUL</b></p><p class="final"><span>Jami</span><b>128,000 UZS</b></p></div><button class="phoneBtn orange">Buyurtmani tasdiqlash</button></div></div>
+                    </div>
+                </section>
+
+                <section class="rounded-[2rem] border border-white/10 bg-white/[.035] p-4 sm:p-7">
+                    <div class="mb-7 flex flex-col justify-between gap-4 border-b border-white/10 pb-6 md:flex-row md:items-center">
+                        <div><span class="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-black uppercase tracking-widest text-emerald-400">MedTech App</span><h3 class="mt-3 text-2xl font-black text-emerald-400 sm:text-3xl">Dorixona WebApp Tizimi</h3><p class="mt-1 text-sm text-neutral-400">Dori qidirish, retsept skaner, kunlik eslatma va buyurtma sahifalari.</p></div>
+                        <a href="#contact" class="w-max rounded-2xl bg-emerald-600 px-5 py-3 text-xs font-black text-white shadow-lg shadow-emerald-600/20 hover:bg-emerald-500">Demo botni ochish</a>
+                    </div>
+                    <div class="apps-scrollbar flex snap-x gap-6 overflow-x-auto px-1 pb-5">
+                        <div class="phone accent-green"><div class="phonebar greenbar"><span>☰ Markaziy Dorixona</span><span>🎛️</span></div><div class="phonebody"><div class="search"><input value="Amoksitsillin"><button>Topish</button></div><p class="label">Qidiruv natijalari</p><div class="med"><b>Amoksitsillin 500mg</b><small>Antibiotik • 20 kapsula</small><strong>42,000 UZS</strong></div><div class="med"><b>Kardiomagnil 75mg</b><small>Yurak uchun • 30 tabletka</small><strong>38,000 UZS</strong></div><div class="med"><b>Vitamin D3</b><small>1000 ME • 60 tabletka</small><strong>55,000 UZS</strong></div></div></div>
+                        <div class="phone accent-green"><div class="phonebar greenbar"><span>← Retsept tahlili</span><span>📷</span></div><div class="phonebody"><div class="notice"><b>Retseptni skanerlang</b><small>Tizim dorilarni avtomatik savatga yig‘adi.</small></div><div class="scanner"><span>📄</span><b>AI SCANNER ACTIVE</b></div><button class="phoneBtn green">Rasmga olish</button></div></div>
+                        <div class="phone accent-green"><div class="phonebar greenbar"><span>Dorilar vaqti</span><span>🔔</span></div><div class="phonebody"><p class="label">Bugungi reja</p><div class="dose amber"><b>💊 Vitamin D3</b><small>Ertalab • ovqatdan keyin</small><em>09:00</em></div><div class="dose"><b>🧪 Magniy B6</b><small>Kechki payt • uyqudan oldin</small><em>21:00</em></div><div class="dose"><b>🩺 Omega-3</b><small>Tushlikdan keyin</small><em>14:00</em></div></div></div>
+                        <div class="phone accent-green"><div class="phonebar greenbar"><span>Mening buyurtmam</span><span>2 ta</span></div><div class="phonebody"><div class="cart"><b>Amoksitsillin</b><span>42,000</span></div><div class="cart"><b>Kardiomagnil</b><span>38,000</span></div><div class="total"><p><span>Dorilar</span><b>80,000</b></p><p><span>Yetkazish</span><b>15,000</b></p><p class="final"><span>Jami</span><b class="green">95,000</b></p></div><button class="phoneBtn green">Rasmiylashtirish</button></div></div>
+                    </div>
+                </section>
+
+                <section class="rounded-[2rem] border border-white/10 bg-white/[.035] p-4 sm:p-7">
+                    <div class="mb-7 flex flex-col justify-between gap-4 border-b border-white/10 pb-6 md:flex-row md:items-center">
+                        <div><span class="rounded-full bg-blue-500/10 px-3 py-1 text-xs font-black uppercase tracking-widest text-blue-400">Travel Ecosystem</span><h3 class="mt-3 text-2xl font-black text-blue-400 sm:text-3xl">Sayohat Agentligi Platformasi</h3><p class="mt-1 text-sm text-neutral-400">Tur paketlari, avia chipta, bron va invoice sahifalari.</p></div>
+                        <a href="#contact" class="w-max rounded-2xl bg-blue-600 px-5 py-3 text-xs font-black text-white shadow-lg shadow-blue-600/20 hover:bg-blue-500">Demo tur ilovasi</a>
+                    </div>
+                    <div class="apps-scrollbar flex snap-x gap-6 overflow-x-auto px-1 pb-5">
+                        <div class="phone accent-blue"><div class="phonebar"><span>SayohatUz Global</span><span>🔍</span></div><div class="phonebody"><div class="travelHero"><span>PREMIUM TUR</span><b>Maldiv Orollari</b><small>5★ All Inclusive • 7 kun</small></div><div class="tour"><i>🏖️</i><p><b>Antalya Sohillari</b><small>Hotel + parvoz + sug‘urta</small></p><strong>$720</strong></div><div class="tour"><i>🌆</i><p><b>Dubay Ultra Tur</b><small>5★ hotel + city tour</small></p><strong>$1250</strong></div></div></div>
+                        <div class="phone accent-blue"><div class="phonebar"><span>← Tur tafsilotlari</span><span>⭐ 4.9</span></div><div class="phonebody"><div class="detailHero">Dubay Shahri Ultra Tur</div><p class="label">Paket ichiga kiradi</p><ul class="features"><li>✈️ Borish-qaytish aviachipta</li><li>🏨 Hilton Luxury 5★</li><li>🍳 Nonushta va transfer</li><li>🗺️ Professional gid</li></ul><button class="phoneBtn blue">Hozir band qilish</button></div></div>
+                        <div class="phone accent-blue"><div class="phonebar"><span>Mening chiptalarim</span><span>✈️</span></div><div class="phonebody"><div class="ticket"><div><small>REYS RAQAMI</small><b>HY-301 • TAS → DXB</b></div><hr><p><span>Yo‘lovchi:</span><b>Asadbek Alimov</b></p><p><span>Sana:</span><b>12 IYUL, 06:40</b></p><p><span>Seat:</span><b>12A Business</b></p><div class="barcode"></div></div></div></div>
+                        <div class="phone accent-blue"><div class="phonebar"><span>Hisob-kitob</span><span>Faol</span></div><div class="phonebody"><div class="total"><p><span>Antalya Premium</span><b>$720</b></p><p><span>Sug‘urta</span><b>$30</b></p><p class="final"><span>Jami</span><b class="blueText">$750</b></p></div><div class="paybox">💳 Visa / MasterCard / Naqd</div><button class="phoneBtn blue">Invoice yuklab olish</button></div></div>
+                    </div>
+                </section>
+
+                <section class="rounded-[2rem] border border-white/10 bg-white/[.035] p-4 sm:p-7">
+                    <div class="mb-7 flex flex-col justify-between gap-4 border-b border-white/10 pb-6 md:flex-row md:items-center">
+                        <div><span class="rounded-full bg-orange-500/10 px-3 py-1 text-xs font-black uppercase tracking-widest text-orange-400">E-Commerce System</span><h3 class="mt-3 text-2xl font-black text-orange-400 sm:text-3xl">VibrantShop Marketplace</h3><p class="mt-1 text-sm text-neutral-400">Mahsulot katalogi, product detail, savat va checkout sahifalari.</p></div>
+                        <a href="#contact" class="w-max rounded-2xl bg-orange-600 px-5 py-3 text-xs font-black text-white shadow-lg shadow-orange-600/20 hover:bg-orange-500">Demo do‘kon</a>
+                    </div>
+                    <div class="apps-scrollbar flex snap-x gap-6 overflow-x-auto px-1 pb-5">
+                        <div class="phone"><div class="phonebar"><span>VibrantShop</span><span>🛒</span></div><div class="phonebody"><div class="grid grid-cols-2 gap-3"><div class="product"><div>👟</div><b>Velocita Pro</b><span>$129</span></div><div class="product"><div>🎧</div><b>Zenith ANC</b><span>$199</span></div><div class="product"><div>⌚</div><b>Nova Watch</b><span>$149</span></div><div class="product"><div>🎒</div><b>Urban Bag</b><span>$89</span></div></div></div></div>
+                        <div class="phone"><div class="phonebar"><span>← AeroStride</span><span>♥</span></div><div class="phonebody"><div class="shoeHero"><b>AEROSTRIDE MAX</b><span>👟</span></div><div class="priceRow"><b>AeroStride Pro</b><strong>$189</strong></div><p class="label">O‘lcham tanlang</p><div class="sizes"><span>US 8</span><b>US 9</b><span>US 10</span><span>US 11</span></div><button class="phoneBtn orange">Savatga qo‘shish</button></div></div>
+                        <div class="phone"><div class="phonebar"><span>Savatcham</span><span>2 ta</span></div><div class="phonebody"><div class="cart"><b>Velocita Pro</b><span>$129</span></div><div class="cart"><b>Zenith ANC</b><span>$199</span></div><div class="qty">- &nbsp; 1 &nbsp; +</div><div class="total"><p class="final"><span>Jami</span><b>$328</b></p></div></div></div>
+                        <div class="phone"><div class="phonebar"><span>Checkout</span><span>3/3</span></div><div class="phonebody"><div class="address"><b>Yetkazib berish manzili</b><small>Toshkent, Yunusobod, 4-kvartal, 14-uy</small></div><div class="total"><p><span>Mahsulotlar</span><b>$328</b></p><p><span>Kuryer</span><b>$10</b></p><p class="final"><span>Jami</span><b>$338</b></p></div><button class="phoneBtn orange">Sotib olish</button></div></div>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <section id="process" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+            <div class="rounded-[2.2rem] border border-white/10 bg-gradient-to-br from-white/[.08] to-white/[.025] p-6 sm:p-10">
+                <div class="max-w-2xl"><p class="text-sm font-black uppercase tracking-[.22em] text-brand-400">Workflow</p><h2 class="mt-3 text-3xl font-black tracking-[-.04em] sm:text-5xl">G‘oyadan ishga tushguncha aniq jarayon.</h2></div>
+                <div class="mt-10 grid gap-4 md:grid-cols-4">
+                    <div class="step"><span>01</span><b>Brief</b><p>Biznes turi, mahsulotlar, filiallar va buyurtma jarayoni aniqlanadi.</p></div>
+                    <div class="step"><span>02</span><b>UX Structure</b><p>Asosiy sahifalar, savat, checkout va admin oqimi chiziladi.</p></div>
+                    <div class="step"><span>03</span><b>Premium UI</b><p>Brend ranglari, mobil dizayn, komponentlar va mockuplar tayyorlanadi.</p></div>
+                    <div class="step"><span>04</span><b>Launch Ready</b><p>Frontend, backend, bot va to‘lov integratsiyasiga tayyor holatga keladi.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+            <div class="mb-10 text-center"><p class="text-sm font-black uppercase tracking-[.22em] text-brand-400">Pricing</p><h2 class="mt-3 text-3xl font-black tracking-[-.04em] sm:text-5xl">Paketlar</h2><p class="mx-auto mt-4 max-w-2xl text-neutral-400">Narxlarni real loyihaga qarab o‘zgartirish mumkin. Bu blok landing page uchun namunaviy ko‘rinish.</p></div>
+            <div class="grid gap-5 lg:grid-cols-3">
+                <div class="priceCard"><h3>Start</h3><p>Oddiy mini app MVP</p><b>$300+</b><ul><li>4–6 ekran UI</li><li>Responsive HTML</li><li>Savat va CTA struktura</li></ul><a href="#contact">Tanlash</a></div>
+                <div class="priceCard featured"><span>Eng ommabop</span><h3>Business</h3><p>Real biznes uchun tayyor flow</p><b>$700+</b><ul><li>10–16 ekran UI</li><li>Telegram Mini App flow</li><li>Checkout, manzil, order status</li></ul><a href="#contact">Boshlash</a></div>
+                <div class="priceCard"><h3>Pro</h3><p>CRM/admin bilan to‘liq tizim</p><b>$1500+</b><ul><li>Admin panel dizayni</li><li>CRM/lead flow</li><li>Backend integratsiyaga tayyor</li></ul><a href="#contact">Maslahat olish</a></div>
+            </div>
+        </section>
+
+        <section id="faq" class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+            <div class="mb-8 text-center"><p class="text-sm font-black uppercase tracking-[.22em] text-brand-400">FAQ</p><h2 class="mt-3 text-3xl font-black tracking-[-.04em] sm:text-5xl">Ko‘p so‘raladigan savollar</h2></div>
+            <div class="space-y-3">
+                <details class="faq" open><summary>Bu dizayn Telegram Mini App uchun mosmi?</summary><p>Ha. Layout mobil ekranlarga moslangan, sticky CTA, savat, manzil va buyurtma flowlari Telegram Mini App uchun qulay.</p></details>
+                <details class="faq"><summary>Backend bilan ulash mumkinmi?</summary><p>Ha. HTML struktura keyinchalik Spring Boot, PostgreSQL, bot va to‘lov tizimlari bilan ulashga qulay qilib ajratilgan.</p></details>
+                <details class="faq"><summary>Rang va brendni o‘zgartirish mumkinmi?</summary><p>Ha. Tailwind orqali ranglar, gradientlar, buttonlar va kartalar tez moslanadi.</p></details>
+            </div>
+        </section>
+
+        <section id="contact" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+            <div class="relative overflow-hidden rounded-[2.4rem] border border-brand-500/25 bg-gradient-to-br from-brand-600 via-orange-600 to-amber-500 p-8 text-center shadow-glow sm:p-14">
+                <div class="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-white/20 blur-3xl"></div>
+                <div class="relative mx-auto max-w-3xl">
+                    <h2 class="text-3xl font-black tracking-[-.04em] sm:text-5xl">Biznesingizga mos premium mini app tayyorlaymiz.</h2>
+                    <p class="mt-4 text-white/80">Restoran, dorixona, turizm, do‘kon yoki xizmat ko‘rsatish biznesi uchun sotishga yordam beradigan interfeys.</p>
+                    <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+                        <a href="https://t.me/ajvadates" class="rounded-2xl bg-neutral-950 px-7 py-4 text-sm font-black text-white">Telegram orqali yozish</a>
+                        <a href="tel:+998981987040" class="rounded-2xl bg-white px-7 py-4 text-sm font-black text-neutral-950">+998 98 198 70 40</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-white/10 py-10 text-center text-xs font-semibold text-neutral-600">
+        © 2026 MakeWebApp. Premium Telegram Mini App va WebApp dizayn platformasi.
+    </footer>
+
+    <style>
+        .phone{scroll-snap-align:start; flex:0 0 315px; height:550px; background:#f8fafc; color:#171717; border:8px solid #111; border-radius:36px; overflow:hidden; display:flex; flex-direction:column; box-shadow:var(--tw-shadow-phone); font-family:Inter,ui-sans-serif,system-ui,sans-serif}
+        .phonebar{height:58px; padding:18px 14px 10px; background:white; border-bottom:1px solid #e5e7eb; display:flex; align-items:center; justify-content:space-between; font-size:12px; font-weight:900}
+        .phonebody{padding:14px; overflow-y:auto; flex:1; font-size:11px; scrollbar-width:none}.phonebody::-webkit-scrollbar{display:none}
+        .heroFood,.travelHero{min-height:108px; padding:14px; border-radius:20px; color:white; display:flex; flex-direction:column; justify-content:space-between; background:linear-gradient(135deg,#431407,#92400e)}.heroFood span,.travelHero span{width:max-content; border-radius:999px; padding:3px 8px; background:#fbbf24; color:#431407; font-size:8px; font-weight:1000}.heroFood b,.travelHero b{font-size:14px;color:#fbbf24}.heroFood small,.travelHero small{color:#e5e7eb;font-size:9px}.travelHero{background:linear-gradient(135deg,#0284c7,#3730a3)}.travelHero b{color:white}.travelHero span{background:#facc15;color:#111827}
+        .chips{display:flex;gap:6px;overflow:auto;margin:12px 0}.chips span,.chips b{white-space:nowrap;border-radius:999px;padding:7px 12px;font-size:9px;font-weight:900}.chips b{background:#ea580c;color:white}.chips span{background:#e5e7eb;color:#525252}
+        .item,.courier,.cart,.med,.tour,.address{background:white;border:1px solid #e5e7eb;border-radius:14px;padding:10px;display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px;box-shadow:0 8px 20px rgba(15,23,42,.05)}.item i,.tour i{width:38px;height:38px;border-radius:12px;background:#ffedd5;display:grid;place-items:center;font-style:normal;font-size:18px}.item p,.tour p{flex:1}.item b,.med b,.tour b,.cart b{display:block;color:#262626;font-size:12px}.item small,.med small,.tour small,.address small{display:block;color:#737373;font-size:9px}.item strong{color:#ea580c;font-size:11px}.tour strong{color:#2563eb}.map{height:130px;border-radius:20px;background:linear-gradient(135deg,#ecfdf5,#f1f5f9,#fffbeb);border:1px solid #e5e7eb;position:relative;overflow:hidden;padding:10px;margin-bottom:12px}.map:after{content:'';position:absolute;top:60px;left:0;right:0;height:3px;background:white;border-top:1px solid #cbd5e1}.map b{position:relative;z-index:2;background:#111827;color:white;border-radius:8px;padding:4px 8px;font-size:9px}.bike{position:absolute;left:95px;top:48px;z-index:3;background:#ea580c;color:white;border-radius:999px;padding:3px;box-shadow:0 0 0 8px rgba(249,115,22,.15)}.pin{position:absolute;right:44px;top:78px;z-index:3}.courier span{width:34px;height:34px;border-radius:999px;background:#ea580c;color:white;display:grid;place-items:center;font-weight:1000}.courier p{flex:1}.courier small{display:block;color:#737373;font-size:8px}.courier button{background:#ffedd5;color:#ea580c;border-radius:999px;padding:8px}.timeline{background:white;border:1px solid #e5e7eb;border-radius:16px;padding:10px;color:#525252}.timeline p{margin:5px 0}.timeline b{color:#16a34a}.branchHero,.detailHero,.shoeHero{background:linear-gradient(90deg,#7c2d12,#92400e);color:white;border-radius:16px;padding:16px;font-weight:900;margin-bottom:10px}.branch{position:relative;background:white;border:1px solid #e5e7eb;border-radius:14px;padding:12px;margin-bottom:9px}.branch b{display:block}.branch small{color:#737373;font-size:9px}.branch em{position:absolute;right:10px;top:12px;background:#dcfce7;color:#166534;border-radius:999px;padding:2px 7px;font-size:9px;font-weight:900;font-style:normal}.total{background:white;border:1px solid #e5e7eb;border-radius:16px;padding:12px;margin-top:12px}.total p{display:flex;justify-content:space-between;color:#737373;margin:7px 0}.total b{color:#171717}.total .final{border-top:1px dashed #d4d4d4;padding-top:9px;color:#171717;font-weight:900}.green{color:#059669!important}.blueText{color:#2563eb!important}.phoneBtn{width:100%;border-radius:14px;padding:11px;font-size:12px;font-weight:1000;color:white;margin-top:12px;box-shadow:0 10px 22px rgba(0,0,0,.12)}.orange{background:#ea580c}.green{background:#059669}.blue{background:#2563eb}.greenbar{background:#059669!important;color:white}.search{display:flex;gap:6px;margin-bottom:12px}.search input{width:100%;border:1px solid #d4d4d4;border-radius:12px;padding:8px;font-size:11px}.search button{background:#059669;color:white;border-radius:12px;padding:8px 10px;font-weight:900}.label{font-weight:1000;color:#262626;margin:8px 0 10px}.med{display:block}.med strong{display:block;color:#059669;margin-top:6px}.notice{background:#ecfdf5;border:1px solid #a7f3d0;color:#064e3b;border-radius:14px;padding:12px}.notice small{display:block;color:#475569;margin-top:4px}.scanner{height:260px;margin:12px 0;background:#111827;border-radius:20px;color:#10b981;display:grid;place-items:center;text-align:center;position:relative;overflow:hidden}.scanner:after{content:'';position:absolute;left:20px;right:20px;top:50%;height:2px;background:#34d399;box-shadow:0 0 14px #34d399}.scanner span{display:block;font-size:34px}.scanner b{font-size:10px;letter-spacing:.18em}.dose{position:relative;background:white;border:1px solid #e5e7eb;border-left:4px solid #10b981;border-radius:14px;padding:12px;margin-bottom:10px}.dose.amber{border-left-color:#f59e0b}.dose b{display:block}.dose small{color:#737373;font-size:9px}.dose em{position:absolute;right:10px;top:12px;background:#dcfce7;color:#166534;border-radius:8px;padding:4px 6px;font-size:9px;font-weight:900;font-style:normal}.detailHero{background:linear-gradient(90deg,#1e3a8a,#312e81);height:92px;display:flex;align-items:end}.features{color:#525252;line-height:2;font-size:10px}.ticket{background:white;border:2px dashed #d4d4d4;border-radius:18px;overflow:hidden}.ticket div:first-child{background:#1e3a8a;color:white;padding:14px}.ticket small{display:block;color:#bfdbfe;font-size:8px}.ticket b{font-size:12px}.ticket p{display:flex;justify-content:space-between;padding:0 12px;font-size:10px}.barcode{height:34px;margin:12px;background:repeating-linear-gradient(90deg,#111 0 3px,transparent 3px 6px)}.paybox{background:#dbeafe;color:#1e3a8a;border:1px solid #bfdbfe;border-radius:14px;padding:12px;text-align:center;font-weight:900;margin-top:12px}.product{background:white;border:1px solid #e5e7eb;border-radius:18px;padding:9px;box-shadow:0 8px 20px rgba(15,23,42,.05)}.product div{height:78px;border-radius:14px;background:linear-gradient(135deg,#f97316,#e11d48);display:grid;place-items:center;color:white;font-size:25px}.product b{display:block;margin-top:7px;font-size:11px}.product span{color:#ea580c;font-weight:1000}.shoeHero{height:120px;background:#111827;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#f97316}.shoeHero span{font-size:32px}.priceRow{display:flex;align-items:center;justify-content:space-between;margin:12px 0}.priceRow strong{color:#ea580c;font-size:16px}.sizes{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.sizes span,.sizes b{border:1px solid #e5e7eb;border-radius:8px;padding:8px 0;text-align:center;background:white;font-size:9px}.sizes b{background:#ea580c;color:white}.qty{background:#f5f5f5;color:#171717;border-radius:10px;width:max-content;padding:6px 12px;font-weight:900}.address{display:block}.step{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);border-radius:26px;padding:22px}.step span{color:#fb923c;font-weight:1000;font-size:12px}.step b{display:block;margin-top:10px;font-size:18px}.step p{margin-top:8px;color:#a3a3a3;font-size:13px;line-height:1.7}.priceCard{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.045);border-radius:30px;padding:28px}.priceCard.featured{background:linear-gradient(180deg,rgba(249,115,22,.18),rgba(255,255,255,.045));border-color:rgba(249,115,22,.45);box-shadow:0 0 70px rgba(249,115,22,.15)}.priceCard>span{display:inline-block;background:#f97316;color:white;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:1000;margin-bottom:16px}.priceCard h3{font-size:25px;font-weight:1000}.priceCard p{color:#a3a3a3;margin-top:6px}.priceCard>b{display:block;font-size:38px;margin:22px 0}.priceCard ul{space-y:8px;color:#d4d4d4;font-size:14px;line-height:2}.priceCard li:before{content:'✓ ';color:#22c55e;font-weight:1000}.priceCard a{display:block;margin-top:22px;border-radius:16px;background:white;color:#111827;padding:13px;text-align:center;font-weight:1000}.featured a{background:#f97316;color:white}.faq{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.045);border-radius:22px;padding:18px 22px}.faq summary{cursor:pointer;font-weight:1000}.faq p{margin-top:10px;color:#a3a3a3;line-height:1.7;font-size:14px}
+    </style>
+    </body>
+    </html>

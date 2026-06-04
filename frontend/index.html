@@ -1,0 +1,3380 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaBooks</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="user-home.css?v=20260602-genre-search">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --surface2: #1a1a24;
+      --border: #252533;
+      --accent: #6c63ff;
+      --danger: #ff6584;
+      --ok: #43e97b;
+      --book: #f7a541;
+      --text: #e8e8f0;
+      --muted: #85859a;
+      --radius: 12px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; color: var(--text); background: var(--bg); }
+    button, input, select { font: inherit; }
+
+    .layout { min-height: 100vh; display: grid; grid-template-columns: 250px 1fr; }
+    .sidebar { background: var(--surface); border-right: 1px solid var(--border); padding: 24px 18px; display: flex; flex-direction: column; }
+    .logo { display: flex; align-items: center; gap: 12px; padding-bottom: 22px; border-bottom: 1px solid var(--border); font-weight: 800; font-size: 21px; }
+    .logo-mark { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 10px; background: linear-gradient(135deg, var(--accent), var(--danger)); }
+    .nav-label { margin: 22px 10px 8px; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; }
+    .nav-item { width: 100%; display: flex; align-items: center; gap: 10px; padding: 11px 12px; border: 1px solid transparent; border-radius: 10px; color: var(--muted); background: transparent; cursor: pointer; text-align: left; }
+    .nav-item:hover, .nav-item.active { color: var(--text); background: var(--surface2); border-color: var(--border); }
+    .nav-item:disabled { opacity: 0.45; cursor: not-allowed; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; }
+    .service { margin-top: auto; padding-top: 20px; }
+    .pill { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; padding: 9px 10px; border: 1px solid var(--border); border-radius: 9px; color: var(--muted); font-size: 12px; }
+
+    .content { min-width: 0; }
+    .topbar { height: 76px; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; background: var(--surface); border-bottom: 1px solid var(--border); }
+    .title { font-size: 22px; font-weight: 800; }
+    .subtitle { margin-top: 3px; color: var(--muted); font-size: 13px; }
+    .main { padding: 30px 32px; }
+    .page { display: none; }
+    .page.active { display: block; animation: fade 0.2s ease; }
+    @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    .grid { display: grid; gap: 16px; }
+    .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-bottom: 28px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+    .stat-num { font-size: 38px; line-height: 1; font-weight: 850; margin: 10px 0 6px; }
+    .muted { color: var(--muted); }
+    .section-title { margin: 24px 0 12px; font-weight: 800; }
+    .form-grid { display: grid; gap: 12px; max-width: 420px; }
+    .book-form-grid { max-width: none; grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: end; }
+    .form-wide { grid-column: span 2; }
+    .form-actions { display: flex; gap: 10px; align-items: end; }
+    .add-book-panel { background: var(--admin-surface); border: 1px solid rgba(216,208,200,0.58); border-radius: 22px; padding: 48px; box-shadow: 0 12px 34px rgba(58,48,42,0.045); }
+    .add-book-layout { display: grid; grid-template-columns: minmax(220px, 260px) 1fr; gap: 48px; align-items: start; }
+    .add-book-cover-col { display: grid; gap: 22px; }
+    .add-book-details .section-title { margin: 0 0 20px; }
+    .add-book-actions { justify-content: flex-end; margin-top: 28px; }
+    .admin-textarea { min-height: 130px; resize: vertical; border-radius: 12px !important; }
+    .lend-panel { max-width: 520px; padding: 40px; border-radius: 14px; background: var(--admin-surface); }
+    .lend-form { display: grid; gap: 28px; max-width: none; }
+    .lend-input-wrap { position: relative; }
+    .lend-input-wrap .ti { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--admin-muted); font-size: 20px; z-index: 1; }
+    .lend-input-wrap .input { padding-left: 48px; }
+    .admin-plan-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .admin-plan-card { min-height: 70px; border: 1px solid rgba(154,144,136,0.32); border-radius: 8px; background: #f7f0e8; color: var(--admin-text); cursor: pointer; font-weight: 800; }
+    .admin-plan-card.active { border-color: var(--admin-primary); box-shadow: inset 0 0 0 1px var(--admin-primary); }
+    .admin-plan-price { display: block; margin-top: 7px; color: var(--admin-primary); font-size: 11px; }
+    .status-chip { display: inline-flex; align-items: center; gap: 8px; color: var(--admin-primary); font-weight: 800; }
+    .status-chip::before { content: ""; width: 16px; height: 16px; border-radius: 50%; background: radial-gradient(circle, var(--admin-primary) 0 4px, #f4d9c6 5px 100%); }
+    .status-chip.borrowed { color: #9a9088; font-style: italic; }
+    .status-chip.borrowed::before { background: #ded8d0; width: 8px; height: 8px; }
+    .status-chip.overdue { color: var(--admin-danger); }
+    .status-chip.overdue::before { background: radial-gradient(circle, var(--admin-danger) 0 4px, #f0cccc 5px 100%); }
+    .status-chip.completed { color: #4c8a54; }
+    .status-chip.completed::before { background: radial-gradient(circle, #4c8a54 0 4px, #cfe5d3 5px 100%); }
+    .status-due { margin-left: 4px; font-weight: 700; color: inherit; font-style: normal; }
+    .money-summary { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 18px 20px; border-bottom: 1px solid rgba(216,208,200,0.55); background: var(--admin-surface-low); }
+    .money-summary strong { color: var(--admin-primary); font-family: "EB Garamond", serif; font-size: 30px; }
+    .cover-field { display: grid; grid-template-columns: minmax(170px, 220px) 1fr; gap: 16px; align-items: start; }
+    .cover-dropzone {
+      width: 210px;
+      aspect-ratio: 3 / 4;
+      border: 2px dashed #c9c9d4;
+      border-radius: 18px;
+      background: #f7f7fa;
+      color: #20202a;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+      overflow: hidden;
+      position: relative;
+      text-align: center;
+    }
+    .cover-dropzone:hover, .cover-dropzone.dragging {
+      border-color: var(--accent);
+      background: #ffffff;
+      transform: translateY(-1px);
+    }
+    .cover-placeholder { display: grid; gap: 12px; justify-items: center; }
+    .cover-plus { font-size: 46px; line-height: 1; font-weight: 300; }
+    .cover-title { font-size: 25px; line-height: 1.2; font-weight: 500; }
+    .cover-placeholder p { margin: 0; max-width: 180px; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .cover-preview {
+      width: 100%;
+      height: 100%;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface2);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+    .cover-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .cover-controls { display: grid; gap: 8px; min-width: 220px; }
+    .cover-help { color: var(--muted); font-size: 12px; line-height: 1.5; margin: 0; }
+
+    .toolbar { display: flex; gap: 10px; align-items: center; padding: 16px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+    .pager { display: flex; justify-content: flex-end; align-items: center; gap: 12px; padding: 14px 16px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; }
+    .input { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 9px; color: var(--text); background: var(--surface2); outline: none; }
+    .input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.15); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 9px; color: var(--text); background: var(--surface2); cursor: pointer; white-space: nowrap; }
+    .btn:hover { border-color: var(--accent); }
+    .btn.primary { border-color: var(--accent); background: var(--accent); color: #fff; }
+    .btn.danger { color: var(--danger); border-color: rgba(255, 101, 132, 0.35); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 13px 16px; border-bottom: 1px solid var(--border); text-align: left; font-size: 14px; }
+    th { color: var(--muted); background: var(--surface2); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+    tr:hover td { background: rgba(255,255,255,0.025); }
+    .badge { display: inline-flex; padding: 4px 8px; border-radius: 999px; background: rgba(108, 99, 255, 0.15); color: #b9b5ff; font-size: 12px; }
+    .badge.admin { background: rgba(255, 101, 132, 0.15); color: #ff9bb0; }
+    .ok { color: var(--ok); }
+
+    .auth-screen {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      place-items: center;
+      padding: 28px 24px;
+      background:
+        radial-gradient(circle at 18% 58%, rgba(194,101,42,0.05), transparent 24%),
+        radial-gradient(circle at 82% 18%, rgba(216,208,200,0.35), transparent 30%),
+        #faf5ee;
+      color: #3a302a;
+      font-family: "Manrope", sans-serif;
+    }
+    .auth-shell { width: min(420px, 100%); text-align: center; }
+    .auth-brand { display: grid; justify-items: center; margin-bottom: 38px; }
+    .auth-brand-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: #c9672a;
+      color: #fff;
+      font-size: 31px;
+      box-shadow: 0 12px 28px rgba(194,101,42,0.22);
+    }
+    .auth-brand h1 {
+      margin: 18px 0 6px;
+      font-family: "EB Garamond", serif;
+      font-size: 46px;
+      line-height: 1;
+      color: #3a302a;
+    }
+    .auth-brand p { margin: 0; color: #776f67; font-size: 14px; }
+    .auth-card {
+      width: 100%;
+      background: rgba(250,245,238,0.72);
+      border: 1px solid #ded6cc;
+      border-radius: 12px;
+      padding: 32px;
+      text-align: left;
+      box-shadow: 0 18px 48px rgba(58,48,42,0.05);
+    }
+    .tabs { display: flex; gap: 6px; padding: 4px; margin: 0 0 32px; background: #f7f0e8; border-radius: 8px; }
+    .tab { flex: 1; padding: 12px; border: none; border-radius: 7px; color: #776f67; background: transparent; cursor: pointer; font-weight: 800; }
+    .tab.active { color: #c9672a; background: #fff; box-shadow: 0 8px 16px rgba(58,48,42,0.08); }
+    .form { display: none; }
+    .form.active { display: grid; gap: 22px; }
+    .field label { display: block; margin-bottom: 8px; color: #625a52; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.2px; }
+    .auth-input-wrap { position: relative; }
+    .auth-input-wrap .input { padding-left: 16px; padding-right: 44px; }
+    .auth-input-prefix {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #625a52;
+      font-weight: 900;
+      pointer-events: none;
+    }
+    .auth-input-wrap.has-prefix .input { padding-left: 58px; }
+    .auth-eye {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: transparent;
+      color: #625a52;
+      cursor: pointer;
+      padding: 4px;
+      font-size: 18px;
+    }
+    .auth-card .input {
+      min-height: 54px;
+      border: 1px solid #6f7785;
+      border-radius: 8px;
+      background: #fff;
+      color: #3a302a;
+      font-size: 16px;
+    }
+    .auth-card .input::placeholder { color: #c8beb5; }
+    .auth-card .input:focus { border-color: #3a4961; box-shadow: none; }
+    .auth-card select.input {
+      appearance: none;
+      background-image:
+        linear-gradient(45deg, transparent 50%, #746b63 50%),
+        linear-gradient(135deg, #746b63 50%, transparent 50%);
+      background-position:
+        calc(100% - 20px) 50%,
+        calc(100% - 14px) 50%;
+      background-size: 6px 6px, 6px 6px;
+      background-repeat: no-repeat;
+      padding-right: 44px;
+    }
+    .auth-forgot {
+      float: right;
+      color: #c9672a;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+    .auth-submit {
+      width: 100%;
+      min-height: 56px;
+      border: none;
+      border-radius: 7px;
+      background: #c9672a;
+      color: #fff;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(194,101,42,0.22);
+    }
+    .social-btn { min-height: 50px; border: 1px solid #ded6cc; border-radius: 8px; background: #faf5ee; color: #3a302a; font-weight: 800; cursor: pointer; }
+    .auth-footer { display: flex; justify-content: center; align-items: center; gap: 28px; flex-wrap: wrap; padding: 26px 0 0; color: #776f67; }
+    .auth-footer a, .auth-footer b { color: #3a302a; text-decoration: none; }
+    .auth-footer span { color: #b1a9a0; }
+    .hint { font-size: 12px; color: #776f67; margin-top: -6px; }
+    .countdown { font-size: 14px; font-weight: 700; color: #c9672a; text-align: center; margin: 4px 0 8px; }
+    .register-step { display: none; gap: 12px; }
+    .register-step.active { display: grid; }
+    .success-panel { text-align: center; padding: 8px 0; }
+    .success-panel h3 { margin: 0 0 8px; color: var(--ok); font-size: 18px; line-height: 1.4; }
+    .success-panel p { margin: 0 0 18px; color: var(--muted); font-size: 14px; }
+    .readonly-box { padding: 10px 12px; border: 1px solid var(--border); border-radius: 9px; background: var(--surface2); font-size: 14px; }
+    .step-label { font-size: 12px; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+
+    .token-box { word-break: break-all; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 12px; line-height: 1.7; }
+    .toast-wrap { position: fixed; right: 20px; bottom: 20px; display: grid; gap: 10px; z-index: 20; }
+    .toast {
+      min-width: 300px;
+      max-width: min(420px, calc(100vw - 40px));
+      padding: 15px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(216,208,200,0.75);
+      background: #fffaf6;
+      color: #3a302a;
+      box-shadow: 0 18px 46px rgba(58,48,42,0.18);
+      display: grid;
+      gap: 6px;
+    }
+    .toast-title { font-weight: 900; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .toast-message { color: #605850; font-size: 13px; line-height: 1.45; }
+    .toast-code { color: #9a9088; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+    .toast.error { border-left: 5px solid #c0392b; }
+    .toast.success { border-left: 5px solid #43a047; }
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.58); display: none; place-items: center; padding: 20px; z-index: 30; }
+    .modal-backdrop.active { display: grid; }
+    .borrow-modal { width: min(760px, 100%); background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; box-shadow: 0 24px 70px rgba(0,0,0,0.45); }
+    .modal-head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; margin-bottom: 16px; }
+    .modal-title { font-size: 20px; font-weight: 800; }
+    .plan-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
+    .plan-card { border: 1px solid var(--border); border-radius: 10px; padding: 14px; background: var(--surface2); cursor: pointer; color: var(--text); text-align: left; }
+    .plan-card.active { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(108,99,255,0.18); }
+    .plan-name { font-weight: 800; margin-bottom: 6px; }
+    .plan-price { color: var(--ok); font-size: 20px; font-weight: 850; }
+    .payment-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .borrow-step { display: none; }
+    .borrow-step.active { display: block; }
+    .selected-plan-summary { border: 1px solid var(--border); background: var(--surface2); border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; color: var(--muted); }
+    .fine-warning { border: 1px solid rgba(247,165,65,0.45); background: rgba(247,165,65,0.1); color: #ffd19a; border-radius: 10px; padding: 12px 14px; margin: 0 0 14px; font-size: 13px; line-height: 1.5; }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
+    .hidden { display: none !important; }
+
+    .book-thumb {
+      width: 42px;
+      height: 58px;
+      border-radius: 4px;
+      object-fit: cover;
+      background: var(--surface2);
+      vertical-align: middle;
+    }
+    .book-cover-img-admin { width: 42px; height: 58px; border-radius: 4px; object-fit: cover; }
+
+    #adminApp {
+      --admin-bg: #faf5ee;
+      --admin-surface: #ffffff;
+      --admin-surface-low: #f6f0e8;
+      --admin-surface-mid: #ece6dc;
+      --admin-border: #d8d0c8;
+      --admin-primary: #c2652a;
+      --admin-primary-soft: #fbe8d8;
+      --admin-text: #3a302a;
+      --admin-muted: #605850;
+      --admin-danger: #8c3c3c;
+      min-height: 100vh;
+      grid-template-columns: 256px 1fr;
+      background: var(--admin-bg);
+      color: var(--admin-text);
+      font-family: "Manrope", Inter, sans-serif;
+    }
+    #adminApp .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      background: var(--admin-surface-low);
+      border-right: 1px solid rgba(216,208,200,0.75);
+      padding: 18px 16px;
+    }
+    #adminApp .logo {
+      border-bottom: 0;
+      padding: 6px 12px 24px;
+      align-items: flex-start;
+      color: var(--admin-primary);
+      font-family: "EB Garamond", serif;
+      font-size: 24px;
+      font-weight: 700;
+    }
+    #adminApp .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: var(--admin-primary-soft);
+      color: var(--admin-primary);
+    }
+    #adminApp .nav-label {
+      color: rgba(96,88,80,0.72);
+      letter-spacing: 1.8px;
+      margin: 18px 12px 8px;
+    }
+    #adminApp .nav-item {
+      border-radius: 10px;
+      color: var(--admin-muted);
+      padding: 12px 14px;
+      font-weight: 700;
+    }
+    #adminApp .nav-item:hover {
+      background: rgba(234,226,218,0.72);
+      color: var(--admin-primary);
+      border-color: transparent;
+    }
+    #adminApp .nav-item.active {
+      background: var(--admin-primary-soft);
+      color: #401a08;
+      border-color: transparent;
+      transform: scale(0.99);
+    }
+    #adminApp .dot { width: 20px; height: 20px; border-radius: 6px; opacity: 0.9; }
+    #adminApp .pill {
+      border-color: rgba(216,208,200,0.65);
+      background: rgba(255,255,255,0.38);
+      color: var(--admin-muted);
+      border-radius: 10px;
+    }
+    #adminApp .content { background: var(--admin-bg); }
+    #adminApp .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      height: 64px;
+      background: rgba(250,245,238,0.95);
+      border-bottom: 1px solid rgba(216,208,200,0.75);
+      backdrop-filter: blur(10px);
+      padding: 0 32px;
+    }
+    #adminApp .title {
+      font-family: "EB Garamond", serif;
+      font-size: 30px;
+      font-weight: 600;
+    }
+    #adminApp .subtitle { color: var(--admin-muted); }
+    #adminApp .main {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 38px 40px 48px;
+    }
+    #adminApp .card {
+      background: var(--admin-surface);
+      border-color: rgba(216,208,200,0.58);
+      border-radius: 16px;
+      box-shadow: 0 12px 34px rgba(58,48,42,0.045);
+    }
+    #adminApp .stats {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 22px;
+      margin-bottom: 28px;
+    }
+    #adminApp .stats .card {
+      background: var(--admin-surface-low);
+      padding: 26px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    #adminApp .stats .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 42px rgba(58,48,42,0.08);
+    }
+    #adminApp .stat-num {
+      color: var(--admin-text);
+      font-family: "EB Garamond", serif;
+      font-size: 42px;
+      font-weight: 700;
+    }
+    #adminApp .muted { color: var(--admin-muted); }
+    #adminApp .section-title {
+      color: var(--admin-text);
+      font-family: "EB Garamond", serif;
+      font-size: 24px;
+      font-weight: 700;
+    }
+    #adminApp .input {
+      background: var(--admin-surface-low);
+      border-color: transparent;
+      color: var(--admin-text);
+      border-radius: 999px;
+    }
+    #adminApp .input:focus {
+      border-color: rgba(194,101,42,0.35);
+      box-shadow: 0 0 0 3px rgba(194,101,42,0.13);
+    }
+    #adminApp .btn {
+      background: var(--admin-surface-low);
+      border-color: rgba(216,208,200,0.75);
+      color: var(--admin-text);
+      border-radius: 10px;
+      font-weight: 700;
+    }
+    #adminApp .btn:hover { border-color: var(--admin-primary); color: var(--admin-primary); }
+    #adminApp .btn.primary {
+      background: var(--admin-primary);
+      border-color: var(--admin-primary);
+      color: #fff;
+    }
+    #adminApp .btn.danger {
+      background: #fce0e0;
+      border-color: #e8a0a0;
+      color: var(--admin-danger);
+    }
+    #adminApp .toolbar {
+      border-bottom-color: rgba(216,208,200,0.55);
+      background: var(--admin-surface-low);
+    }
+    #adminApp .add-book-panel .input {
+      min-height: 58px;
+      border: 1px solid rgba(154,144,136,0.32);
+      border-radius: 12px;
+      background: #f7f0e8;
+    }
+    #adminApp .add-book-panel label {
+      color: rgba(58,48,42,0.78);
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+    #adminApp .add-book-panel .cover-dropzone {
+      width: 245px;
+      max-width: 100%;
+      border-color: rgba(194,101,42,0.55);
+      background: #f4ece2;
+    }
+    #adminApp .add-book-panel .cover-preview {
+      border-color: transparent;
+      background: #f4ece2;
+      color: var(--admin-text);
+      font-family: "EB Garamond", serif;
+    }
+    #adminApp .add-book-panel .cover-plus {
+      width: 64px;
+      height: 64px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #ffe1ca;
+      color: var(--admin-primary);
+      font-size: 34px;
+    }
+    #adminApp .pager {
+      border-top-color: rgba(216,208,200,0.55);
+      background: var(--admin-surface-low);
+      color: var(--admin-muted);
+    }
+    #adminApp th {
+      background: var(--admin-surface-mid);
+      color: var(--admin-muted);
+    }
+    #adminApp td { border-bottom-color: rgba(216,208,200,0.35); color: var(--admin-text); }
+    #adminApp tr:hover td { background: rgba(236,230,220,0.34); }
+    #adminApp .badge {
+      background: var(--admin-primary-soft);
+      color: #8a4518;
+      font-weight: 800;
+    }
+    #adminApp .badge.admin {
+      background: #fce0e0;
+      color: var(--admin-danger);
+    }
+    .admin-hero {
+      margin-bottom: 26px;
+    }
+    .admin-hero h2 {
+      margin: 0 0 8px;
+      color: var(--admin-text);
+      font-family: "EB Garamond", serif;
+      font-size: 44px;
+      font-weight: 500;
+      line-height: 1;
+    }
+    .admin-dashboard-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+      gap: 24px;
+      margin-top: 24px;
+    }
+    .admin-chart {
+      height: 230px;
+      display: flex;
+      align-items: end;
+      gap: 16px;
+      padding-top: 24px;
+    }
+    .admin-bar { flex: 1; display: grid; align-items: end; gap: 10px; height: 100%; color: var(--admin-muted); font-size: 12px; text-align: center; }
+    .admin-bar span:first-child { display: block; border-radius: 10px 10px 0 0; background: var(--admin-primary-soft); min-height: 28px; }
+    .admin-bar:nth-child(5) span:first-child { background: var(--admin-primary); }
+    .activity-list { display: grid; gap: 18px; margin-top: 18px; }
+    .activity-item { display: flex; gap: 12px; align-items: flex-start; color: var(--admin-muted); font-size: 13px; }
+    .activity-dot { width: 8px; height: 8px; margin-top: 6px; border-radius: 50%; background: var(--admin-primary); flex: 0 0 auto; }
+
+    #userApp.profile-mode {
+      background: #fbf6ef !important;
+      min-height: 100vh;
+      padding: 32px 0 60px;
+    }
+    #userApp.profile-mode nav,
+    #userApp.profile-mode > footer,
+    #userApp.profile-mode #userHeroSection,
+    #userApp.profile-mode #userSearchSection,
+    #userApp.profile-mode #userBooksSection {
+      display: none !important;
+    }
+    #userApp.profile-mode #userProfilePage {
+      display: block !important;
+      max-width: 948px;
+      margin: 0 auto;
+      padding: 0;
+    }
+    #userApp .profile-page-head {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 18px !important;
+      margin-bottom: 26px !important;
+    }
+    #userApp .profile-back-home {
+      min-height: 44px;
+      border: 1px solid #e3d6c8;
+      border-radius: 999px;
+      background: #fff;
+      color: #2C1A0E;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 18px;
+      font-weight: 900;
+      font-size: 13px;
+      cursor: pointer;
+      box-shadow: 0 12px 28px rgba(44,26,14,0.05);
+      transition: transform 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    }
+    #userApp .profile-back-home:hover {
+      border-color: #D4A853;
+      color: #c9672a;
+      transform: translateY(-1px);
+    }
+    #userApp .profile-head-copy { text-align: right; }
+    #userApp .profile-head-copy span {
+      display: block;
+      color: #c9672a;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 5px;
+    }
+    #userApp .profile-head-copy h2 {
+      margin: 0;
+      color: #2C1A0E;
+      font: 700 28px/1 'Playfair Display', serif;
+    }
+    #userApp .profile-management-grid {
+      display: grid !important;
+      grid-template-columns: 294px minmax(0, 618px) !important;
+      gap: 32px !important;
+      align-items: start !important;
+      justify-content: center;
+    }
+    #userApp .profile-left-stack { display: grid !important; gap: 32px !important; }
+    #userApp .profile-side-card {
+      position: relative;
+      background: rgba(250,245,238,0.78) !important;
+      border: 1px solid #E8DED2 !important;
+      border-radius: 16px !important;
+      padding: 34px 32px 36px !important;
+      text-align: center !important;
+      box-shadow: 0 18px 60px rgba(44,26,14,0.035) !important;
+    }
+    #userApp .profile-side-card .profile-avatar-large {
+      width: 128px !important;
+      height: 128px !important;
+      margin: 0 auto 30px !important;
+      border-radius: 50% !important;
+      border: 4px solid #cf6c58 !important;
+      outline: 5px solid #fff5ed !important;
+      background: #6B3F1F !important;
+      color: #D4A853 !important;
+      display: grid !important;
+      place-items: center !important;
+      font: 700 46px 'Playfair Display', serif !important;
+      overflow: hidden !important;
+      padding: 0 !important;
+    }
+    #userApp .profile-avatar-large img { width: 100%; height: 100%; object-fit: cover; }
+    #userApp .profile-online-dot {
+      position: absolute;
+      top: 137px;
+      right: 83px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #21c46b;
+      border: 3px solid #fff;
+    }
+    #userApp .profile-side-card h3 {
+      margin: 0 0 8px !important;
+      font: 700 30px 'Playfair Display', serif !important;
+      color: #2C1A0E !important;
+    }
+    #userApp .profile-member-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #5f554d;
+      margin-bottom: 18px;
+      font-size: 16px;
+    }
+    #userApp .profile-member-status i { color: #c9672a; }
+    #userApp .profile-pill {
+      display: table;
+      margin: 0 auto 9px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      background: #ffe4cf;
+      color: #b9511c;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+    }
+    #userApp .profile-pill.muted-pill { background: #eee6dc; color: #7b7065; }
+    #userApp .profile-side-divider { height: 1px; background: #E8DED2; margin: 30px 0 24px; }
+    #userApp .profile-side-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 18px 0;
+      color: #6e645b;
+      font-size: 15px;
+    }
+    #userApp .profile-side-row b { color: #2C1A0E; }
+    #userApp .profile-danger-btn {
+      width: 100%;
+      min-height: 62px;
+      border: 1px solid #f0c5ba;
+      border-radius: 12px;
+      background: rgba(255,250,246,.72);
+      color: #dc3528;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    #userApp .profile-main-stack { display: grid !important; gap: 32px !important; }
+    #userApp .profile-info-card {
+      background: #fff !important;
+      border: 1px solid #F0E9E1 !important;
+      border-radius: 18px !important;
+      overflow: hidden !important;
+      box-shadow: 0 16px 44px rgba(44,26,14,.045) !important;
+    }
+    #userApp .profile-card-title {
+      display: flex !important;
+      align-items: center !important;
+      gap: 14px !important;
+      padding: 34px 32px 24px !important;
+      color: #2C1A0E !important;
+      font: 700 25px 'Playfair Display', serif !important;
+    }
+    #userApp .profile-card-title span {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #ede2d9;
+      color: #c9672a;
+    }
+    #userApp .profile-info-grid {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 34px 48px !important;
+      padding: 14px 32px 36px !important;
+    }
+    #userApp .profile-info-item {
+      border-bottom: 1px solid #EDE8DF !important;
+      padding-bottom: 12px !important;
+    }
+    #userApp .profile-info-item label {
+      display: block;
+      margin-bottom: 10px;
+      color: #6e645b;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    #userApp .profile-info-item b { color: #2C1A0E; font-size: 16px; line-height: 1.5; }
+    #userApp .rental-title { justify-content: space-between !important; }
+    #userApp .rental-title > div { display: flex; align-items: center; gap: 14px; }
+    #userApp .profile-link-btn {
+      border: 0;
+      background: transparent;
+      color: #c9672a;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    #userApp .profile-stats-row {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 20px !important;
+      padding: 0 !important;
+    }
+    #userApp .profile-stats-row div {
+      border: 1px solid #f1cfc2;
+      border-radius: 14px;
+      padding: 21px 22px;
+      background: #fff1e7;
+      min-height: 97px;
+    }
+    #userApp .profile-stats-row div:nth-child(2) { background: #fbede8; }
+    #userApp .profile-stats-row span {
+      display: block;
+      color: #c9672a;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    #userApp .profile-stats-row b {
+      display: block;
+      margin-top: 8px;
+      color: #2C1A0E;
+      font: 700 32px 'Playfair Display', serif;
+    }
+    #userApp .profile-rental-table {
+      width: 100% !important;
+      border-collapse: collapse !important;
+      background: #fff !important;
+    }
+    #userApp .profile-rental-table th {
+      background: #f7f3ee !important;
+      color: #6e645b !important;
+      font-size: 10px !important;
+      text-transform: uppercase !important;
+      letter-spacing: 1px !important;
+      padding: 20px 32px !important;
+      border: 0 !important;
+    }
+    #userApp .profile-rental-table td {
+      color: #2C1A0E !important;
+      border-bottom: 1px solid #F0E9E1 !important;
+      padding: 18px 32px !important;
+      vertical-align: middle !important;
+      background: #fff !important;
+    }
+    #userApp .profile-book-cell { display: flex; align-items: center; gap: 14px; }
+    #userApp .profile-book-mini {
+      width: 42px;
+      height: 56px;
+      border-radius: 4px;
+      background: #ede8df;
+      color: #d8d0c6;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      flex: 0 0 auto;
+    }
+    #userApp .profile-book-cell b { display: block; font: 700 17px/1.25 'Playfair Display', serif; }
+    #userApp .profile-book-cell span { display: block; margin-top: 4px; color: #8B7355; font-size: 12px; }
+    #userApp .profile-status {
+      display: inline-flex;
+      min-width: 84px;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 7px 11px;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+    }
+    #userApp .profile-status.returned { background: #dff8e8; color: #219653; }
+    #userApp .profile-status.progress { background: #ffe5cf; color: #b9571f; }
+    #userApp .profile-status.overdue { background: #ffe0dc; color: #d73027; }
+    #userApp .profile-overdue-date { color: #d73027 !important; font-style: italic; }
+    #userApp .profile-empty-row { text-align: center; color: #8B7355 !important; padding: 34px !important; }
+
+    @media (max-width: 850px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; border-right: none; border-bottom: 1px solid var(--border); }
+      .stats { grid-template-columns: 1fr; }
+      .plan-grid, .payment-grid { grid-template-columns: 1fr; }
+      .book-form-grid { grid-template-columns: 1fr; }
+      .form-wide { grid-column: auto; }
+      .add-book-layout { grid-template-columns: 1fr; gap: 24px; }
+      .add-book-panel { padding: 24px; }
+      .admin-plan-grid { grid-template-columns: 1fr; }
+      .cover-field { grid-template-columns: 1fr; }
+      .cover-dropzone { width: min(100%, 220px); }
+      .topbar { height: auto; padding: 18px; align-items: flex-start; gap: 14px; flex-direction: column; }
+      .main { padding: 18px; }
+      #userApp.profile-mode { padding: 22px 18px 42px; }
+      #userApp.profile-mode #userProfilePage { max-width: 100%; }
+      #userApp .profile-page-head { align-items: flex-start !important; flex-direction: column !important; }
+      #userApp .profile-head-copy { text-align: left; }
+      #userApp .profile-management-grid { grid-template-columns: 1fr !important; }
+      #userApp .profile-info-grid { grid-template-columns: 1fr !important; }
+      #userApp .profile-rental-table-wrap { overflow-x: auto; }
+      #userApp .profile-rental-table { min-width: 680px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-screen" id="authScreen">
+    <div class="auth-shell">
+      <div class="auth-brand">
+        <div class="auth-brand-icon"><i class="ti ti-book-2"></i></div>
+        <h1>Yavax Library</h1>
+        <p>Bilimga ochiladigan issiq darvoza</p>
+      </div>
+
+      <div class="auth-card">
+        <div class="tabs">
+          <button class="tab active" id="loginTab" onclick="switchTab('login')">Kirish</button>
+          <button class="tab" id="registerTab" onclick="switchTab('register')">Ro'yxatdan o'tish</button>
+        </div>
+
+        <div class="form active" id="loginForm">
+          <div class="field">
+            <label>Telefon raqami</label>
+            <div class="auth-input-wrap has-prefix">
+              <span class="auth-input-prefix">+998</span>
+              <input class="input" id="loginPhone" placeholder="90 123 45 67">
+            </div>
+          </div>
+          <div class="field">
+            <label>Parol <a class="auth-forgot" href="#" onclick="toast('Admin bilan boglaning'); return false;">Parolni unutdingizmi?</a></label>
+            <div class="auth-input-wrap">
+              <input class="input" id="loginPassword" type="password" placeholder="••••••••">
+              <button class="auth-eye" type="button" onclick="toggleLoginPassword()" aria-label="Parolni ko'rsatish"><i class="ti ti-eye"></i></button>
+            </div>
+          </div>
+          <button class="auth-submit" onclick="login()">Kirish</button>
+        </div>
+
+        <div class="form" id="registerForm">
+          <div class="register-step active" id="registerStep1">
+            <span class="step-label">1-qadam · Ma'lumotlar</span>
+            <div class="field"><label>Ism</label><input class="input" id="regIsm" placeholder="Ali"></div>
+            <div class="field"><label>Familiya</label><input class="input" id="regFamilya" placeholder="Valiyev"></div>
+            <div class="field"><label>Gmail</label><input class="input" id="regGmail" placeholder="ali@gmail.com"></div>
+            <div class="field"><label>Telefon</label><input class="input" id="regPhone" placeholder="+998901234567"></div>
+            <div class="field">
+              <label>Jins</label>
+              <select class="input" id="regGender">
+                <option value="">Jinsni tanlang</option>
+                <option value="ERKAK">Erkak</option>
+                <option value="AYOL">Ayol</option>
+              </select>
+            </div>
+            <div class="field"><label>Tug'ilgan yil</label><input class="input" id="regBirthYear" type="number" placeholder="2000" min="1950" max="2015"></div>
+            <div class="field"><label>Parol</label><input class="input" id="regPassword" type="password" placeholder="••••••••"></div>
+            <button class="auth-submit" id="registerBtn" onclick="register()">Ro'yxatdan o'tish</button>
+          </div>
+
+          <div class="register-step" id="registerStep2">
+            <span class="step-label">2-qadam · Gmail tasdiqlash</span>
+            <p class="hint" style="margin:0;">Ro'yxatdan o'tdingiz. Gmail va telefon tekshirildi. Endi tasdiqlash kodi yuboriladi.</p>
+            <div class="field">
+              <label>Gmail</label>
+              <div class="readonly-box" id="regGmailDisplay">-</div>
+            </div>
+            <div class="field">
+              <label>Telefon</label>
+              <div class="readonly-box" id="regPhoneDisplay">-</div>
+            </div>
+            <div class="field">
+              <label>Gmail kodi</label>
+              <input class="input" id="regCode" placeholder="123456">
+            </div>
+            <p class="hint" id="verifyHint">Kod gmailga yuborilmoqda...</p>
+            <p class="countdown" id="codeCountdown">Qayta yuborish: 1:00</p>
+            <button class="social-btn" type="button" id="resendCodeBtn" onclick="sendCode()" disabled>Kodni qayta yuborish</button>
+            <button class="auth-submit" type="button" onclick="verifyCode()">Kodni tekshirish</button>
+          </div>
+
+          <div class="register-step success-panel" id="registerStep3">
+            <span class="step-label">Tayyor</span>
+            <h3>Siz muvaffaqiyatli registratsiyadan o'tildi</h3>
+            <p>Gmail tasdiqlandi. Endi tizimga kirishingiz mumkin.</p>
+            <button class="auth-submit" type="button" onclick="finishRegistration()">Kirish sahifasiga</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="auth-footer">
+      <b>Yavax Library</b>
+      <a href="#">Terms of Service</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Admin Support</a>
+      <span>© 2024 Yavax Library. All rights reserved.</span>
+    </footer>
+  </div>
+  </div>
+
+  <!-- USER sahifa (JavaBooks) -->
+  <div id="userApp" style="display:none;">
+    <nav>
+      <div class="jb-logo">Yavax Library</div>
+      <div class="nav-right">
+        <button class="nav-icon-btn" type="button" onclick="userScrollToBooks()" title="Kitoblar"><i class="ti ti-book-2"></i></button>
+        <button class="nav-icon-btn" type="button" onclick="showUserProfilePage()" title="Profil"><i class="ti ti-user-circle"></i></button>
+        <span class="nav-username" id="userNavName">Foydalanuvchi</span>
+        <button class="nav-avatar" id="userNavAvatar" type="button" onclick="showUserProfilePage()" title="Profil">U</button>
+        <button class="btn-logout" type="button" onclick="logout()">Chiqish</button>
+      </div>
+    </nav>
+
+    <section class="search-section" id="userSearchSection">
+      <div class="catalog-head">
+        <h1>Kitoblar Katalogi</h1>
+        <p>Kerakli kitobni toping, tarif tanlang va ijaraga oling</p>
+        <div class="search-wrap">
+          <input class="search-input" id="userSearchInput" type="text" placeholder="Kitob yoki muallif">
+          <button class="catalog-search-btn" type="button" onclick="userSearchBooks()">Qidirish</button>
+        </div>
+      </div>
+    </section>
+
+    <main class="jb-main user-view catalog-wide" id="userBooksSection">
+      <div class="catalog-results">
+        <div class="catalog-filter-bar">
+          <div class="filter-stack">
+            <div class="selected-genres hidden" id="selectedGenresWrap">
+              <span>Tanlangan janrlar:</span>
+              <div id="selectedGenresList"></div>
+            </div>
+            <div class="categories" id="userCategories"></div>
+          </div>
+          <span id="userBookCount">0 ta kitob topildi</span>
+        </div>
+        <div class="books-grid" id="userBooksGrid"></div>
+        <div class="catalog-pager" id="userCatalogPager">
+          <button type="button" onclick="changeUserCatalogPage(-1)"><i class="ti ti-chevron-left"></i></button>
+          <span id="userCatalogPageInfo">1</span>
+          <button type="button" onclick="changeUserCatalogPage(1)"><i class="ti ti-chevron-right"></i></button>
+        </div>
+      </div>
+
+      <div class="hidden" id="userReadingList"></div>
+      <div class="hidden" id="userGenreSidebar"></div>
+      <input class="hidden" id="userAvailableOnly" type="checkbox" checked>
+    </main>
+
+    <main class="jb-main user-view hidden" id="userProfilePage">
+      <div class="profile-page-head">
+        <button class="profile-back-home" type="button" onclick="showUserHome()"><i class="ti ti-arrow-left"></i> Asosiy sahifa</button>
+        <div class="profile-head-copy">
+          <span>Foydalanuvchi profili</span>
+          <h2>Profil boshqaruvi</h2>
+        </div>
+      </div>
+      <div class="profile-management-grid">
+        <div class="profile-left-stack">
+          <aside class="profile-side-card">
+            <button class="profile-avatar-large" id="profileAvatarLarge" type="button" onclick="profileImageInput.click()">U</button>
+            <input class="hidden" id="profileImageInput" type="file" accept="image/*" onchange="handleProfileImageChange()">
+            <div class="profile-online-dot"></div>
+            <h3 id="profileNameTitle">Foydalanuvchi</h3>
+            <div class="profile-member-status"><i class="ti ti-rosette-discount-check"></i> Active Member</div>
+            <span class="profile-pill">Premium Tier</span>
+            <span class="profile-pill muted-pill">Loyalty Level 4</span>
+            <div class="profile-side-divider"></div>
+            <div class="profile-side-row"><span>Joined</span><b id="profileJoinedText">Oct 12, 2021</b></div>
+            <div class="profile-side-row"><span>Member ID</span><b id="profileUserIdText">-</b></div>
+          </aside>
+          <div class="profile-stats-row">
+            <div><span>Books Rented</span><b id="profileTotalRentals">0</b></div>
+            <div><span>Active Holds</span><b id="profileActiveRentals">0</b></div>
+            <div><span>Returned</span><b id="profileReturnedRentals">0</b></div>
+            <div><span>Total Paid</span><b id="profileTotalPaid">0</b></div>
+          </div>
+          <button class="profile-danger-btn" type="button" onclick="deleteProfileImage()"><i class="ti ti-photo-x"></i> Profil rasmini o'chirish</button>
+        </div>
+
+        <section class="profile-main-stack">
+          <div class="profile-info-card">
+            <div class="profile-card-title"><span><i class="ti ti-clipboard-list"></i></span>Personal Information</div>
+            <div class="profile-info-grid">
+              <div class="profile-info-item"><label>Full Name</label><b id="profileFullNameText">Foydalanuvchi</b></div>
+              <div class="profile-info-item"><label>Email Address</label><b id="profileEmailText">-</b></div>
+              <div class="profile-info-item"><label>Phone Number</label><b id="profilePhoneText">-</b></div>
+              <div class="profile-info-item"><label>Home Address</label><b>Tashkent, Uzbekistan</b></div>
+            </div>
+          </div>
+
+          <div class="profile-info-card">
+            <div class="profile-card-title"><span><i class="ti ti-user-edit"></i></span>Profilni tahrirlash</div>
+            <div class="profile-info-grid">
+              <div class="field"><label>Ism</label><input class="input" id="profileFirstNameInput" placeholder="Ism"></div>
+              <div class="field"><label>Familya</label><input class="input" id="profileLastNameInput" placeholder="Familya"></div>
+            </div>
+            <button class="profile-link-btn" type="button" onclick="updateUserProfileName()">Nameni o'zgartirish</button>
+          </div>
+
+          <div class="profile-info-card">
+            <div class="profile-card-title"><span><i class="ti ti-lock-cog"></i></span>Parolni almashtirish</div>
+            <div class="profile-info-grid">
+              <div class="field"><label>Joriy parol</label><input class="input" id="currentPasswordInput" type="password" placeholder="••••••••"></div>
+              <div class="field"><label>Yangi parol</label><input class="input" id="newPasswordInput" type="password" placeholder="Kamida 6 belgi"></div>
+            </div>
+            <button class="profile-link-btn" type="button" onclick="changeUserPassword()">Parolni saqlash</button>
+          </div>
+
+          <div class="profile-info-card rental-history-card">
+            <div class="profile-card-title rental-title">
+              <div><span><i class="ti ti-history"></i></span>Rental History</div>
+              <button class="profile-link-btn" type="button" onclick="loadMyBorrows()">View All</button>
+            </div>
+            <div class="profile-rental-table-wrap">
+              <table class="profile-rental-table">
+                <thead>
+                  <tr>
+                    <th>Book Title</th>
+                    <th>Rented Date</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="userBorrowList"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div>
+        <div class="footer-logo">Yavax Library</div>
+        <div class="footer-text">© 2024 Yavax Library. Preserving the tactile essence of literature.</div>
+      </div>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Access</a>
+        <a href="#">Lending Rules</a>
+        <a href="#">Contact Archivist</a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ADMIN sahifa -->
+  <div class="layout" id="adminApp" style="display:none;">
+    <aside class="sidebar">
+      <div class="logo"><div class="logo-mark">📚</div><div><div>Yavax Admin</div><div class="subtitle" style="font-family:Manrope,sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:1.8px;">Sahara Edition</div></div></div>
+      <button class="btn primary" style="width:100%;margin-bottom:10px;" onclick="openAddBook()">+ New Entry</button>
+      <div class="nav-label">Asosiy</div>
+      <button class="nav-item active" data-page="dashboard" onclick="goTo('dashboard', this)"><span class="dot" style="background:#fbe8d8"></span>Dashboard</button>
+      <div class="nav-label">Servislar</div>
+      <button class="nav-item" data-page="books" onclick="goTo('books', this)"><span class="dot" style="background:#e08850"></span>Books</button>
+      <button class="nav-item admin-only" data-page="add-book" onclick="openAddBook()"><span class="dot" style="background:#fbe8d8"></span>Add Book</button>
+      <button class="nav-item admin-only" data-page="lend-book" onclick="goTo('lend-book', this)"><span class="dot" style="background:#d47070"></span>Ijaraga berish</button>
+      <button class="nav-item" data-page="borrows" onclick="goTo('borrows', this)"><span class="dot" style="background:#eae2da"></span>Ijaralar</button>
+      <button class="nav-item admin-only" data-page="return-review" onclick="goTo('return-review', this)"><span class="dot" style="background:#f0a878"></span>Qaytdimi?</button>
+      <button class="nav-item admin-only" data-page="completed" onclick="goTo('completed', this)"><span class="dot" style="background:#b7d4bd"></span>Tugallangan</button>
+      <button class="nav-item admin-only" data-page="users" onclick="goTo('users', this)"><span class="dot" style="background:#cec6be"></span>Users</button>
+      <button class="nav-item" data-page="auth" onclick="goTo('auth', this)"><span class="dot" style="background:#fce0e0"></span>Settings</button>
+      <div class="service">
+        <div class="nav-label">Portlar</div>
+        <div class="pill"><span>Auth</span><span>:8098</span></div>
+        <div class="pill"><span>User</span><span>:8095</span></div>
+        <div class="pill"><span>Book</span><span>:8099</span></div>
+      </div>
+    </aside>
+
+    <section class="content">
+      <header class="topbar">
+        <div style="display:flex;align-items:center;gap:18px;">
+          <div>
+            <div class="title" id="pageTitle">Dashboard</div>
+            <div class="subtitle" id="pageSubtitle">Umumiy ko'rinish</div>
+          </div>
+          <div style="position:relative;min-width:260px;">
+            <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--admin-muted);">⌕</span>
+            <input class="input" placeholder="Search collection..." style="padding-left:38px;">
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="badge" id="roleBadge">USER</span>
+          <button class="btn" onclick="logout()">Chiqish</button>
+        </div>
+      </header>
+      <main class="main">
+        <div class="page active" id="page-dashboard">
+          <div class="admin-hero">
+            <h2>Library Overview</h2>
+            <p class="muted">Welcome back. Here is what is happening across the JavaBooks collection today.</p>
+          </div>
+          <div class="grid stats">
+            <div class="card"><div class="muted">Total Books</div><div class="stat-num" id="bookStat">0</div><div class="badge">+2.4%</div></div>
+            <div class="card admin-only"><div class="muted">Active Users</div><div class="stat-num" id="userStat">0</div><div class="badge">+12%</div></div>
+            <div class="card"><div class="muted">Active Session</div><div class="stat-num" id="tokenStat">0</div><div class="badge">JWT</div></div>
+            <div class="card"><div class="muted">Overdue</div><div class="stat-num" id="overdueStat">0</div><div class="badge admin">20k per day</div></div>
+            <div class="card"><div class="muted">Due Tomorrow</div><div class="stat-num" id="dueTomorrowStat">0</div><div class="badge">Reminder</div></div>
+            <div class="card"><div class="muted">Today Revenue</div><div class="stat-num" id="todayRevenueStat">0</div><div class="badge">Daily</div></div>
+          </div>
+          <div class="admin-dashboard-grid">
+            <div class="card">
+              <div style="display:flex;justify-content:space-between;gap:16px;align-items:end;">
+                <div>
+                  <div class="section-title" style="margin-top:0;">Weekly Lending Activity</div>
+                  <p class="muted">Volume of books checked out across the week.</p>
+                </div>
+                <button class="btn primary">Weekly</button>
+              </div>
+              <div class="admin-chart">
+                <div class="admin-bar"><span style="height:60%"></span><span>Mon</span></div>
+                <div class="admin-bar"><span style="height:45%"></span><span>Tue</span></div>
+                <div class="admin-bar"><span style="height:85%"></span><span>Wed</span></div>
+                <div class="admin-bar"><span style="height:70%"></span><span>Thu</span></div>
+                <div class="admin-bar"><span style="height:100%"></span><span>Fri</span></div>
+                <div class="admin-bar"><span style="height:40%"></span><span>Sat</span></div>
+                <div class="admin-bar"><span style="height:25%"></span><span>Sun</span></div>
+              </div>
+            </div>
+            <div class="card" style="background:var(--admin-primary);color:#fff;">
+              <div class="section-title" style="margin-top:0;color:#fff;">Quick Actions</div>
+              <div style="display:grid;gap:10px;">
+                <button class="btn" onclick="loadBooks()">Kitoblarni yangilash</button>
+                <button class="btn admin-only" onclick="loadUsers()">Userlarni yangilash</button>
+                <button class="btn" onclick="goTo('lend-book', document.querySelector('[data-page=lend-book]'))">Ijaraga berish</button>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="margin-top:24px;">
+            <div class="section-title" style="margin-top:0;">Recent Activity</div>
+            <div class="activity-list" id="adminAuditList">
+              <div class="activity-item"><span class="activity-dot"></span><div><b>New Entry</b><br>Kitob qo'shish oynasi tayyor.</div></div>
+              <div class="activity-item"><span class="activity-dot" style="background:var(--admin-danger);"></span><div><b>Late Return</b><br>Muddatdan oshgan kun uchun 20 000 so'm jarima hisoblanadi.</div></div>
+              <div class="activity-item"><span class="activity-dot" style="background:#4c8a54;"></span><div><b>Payment Flow</b><br>Tarif tanlangandan keyin karta ma'lumotlari so'raladi.</div></div>
+            </div>
+          </div>
+          <div class="admin-dashboard-grid" style="margin-top:24px;">
+            <div class="card">
+              <div class="section-title" style="margin-top:0;">Admin Notifications</div>
+              <div class="activity-list" id="adminNotificationList"></div>
+            </div>
+            <div class="card">
+              <div class="section-title" style="margin-top:0;">Analytics</div>
+              <div class="activity-list" id="adminAnalyticsList"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="page" id="page-add-book">
+          <div class="add-book-panel admin-only">
+            <div class="add-book-layout">
+              <div class="add-book-cover-col">
+                <div class="field">
+                  <label>Book Cover</label>
+                  <div class="cover-dropzone" id="bookCoverDropzone" onclick="bookCoverFileInput.click()">
+                    <div class="cover-preview" id="bookCoverPreview">
+                      <div class="cover-placeholder">
+                        <div class="cover-plus">+</div>
+                        <div class="cover-title">Rasm qo'shish</div>
+                        <p>Rasmni shu kartochka ustiga tashlang yoki link joylang.<br>Telegramdan fayl sifatida tortib tashlasangiz ham qabul qiladi.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Rasm fayl yoki Telegram/public link</label>
+                  <input class="input hidden" id="bookCoverFileInput" type="file" accept="image/*" onchange="handleCoverFileChange()">
+                  <input class="input" id="bookCoverInput" placeholder="https://example.com/book-cover.jpg" oninput="updateCoverPreview()">
+                </div>
+              </div>
+              <div class="add-book-details">
+                <div class="section-title" id="bookFormTitle">Kitob qo'shish</div>
+                <div class="form-grid book-form-grid">
+                  <div class="field"><label>Kitob nomi</label><input class="input" id="bookNameInput" placeholder="Clean Code"></div>
+                  <div class="field"><label>Muallifi</label><input class="input" id="bookAuthorInput" placeholder="Robert C. Martin"></div>
+                  <div class="field"><label>Nashr yili</label><input class="input" id="bookYearInput" placeholder="2008"></div>
+                  <div class="field"><label>Janr</label><input class="input" id="bookGenreInput" placeholder="Programming"></div>
+                  <div class="field"><label>Nusxalar soni</label><input class="input" id="bookCopiesInput" type="number" min="1" placeholder="1"></div>
+                  <div class="field form-wide"><label>Tavsif (description)</label><textarea class="input admin-textarea" id="bookDescriptionInput" placeholder="Brief overview of the literary work..."></textarea></div>
+                </div>
+                <div class="form-actions add-book-actions">
+                  <button class="btn" onclick="resetBookForm()">Tozalash</button>
+                  <button class="btn primary" onclick="saveBook()">Saqlash</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="page" id="page-books">
+          <div class="card" style="padding:0;overflow:hidden;">
+            <div class="toolbar">
+              <input class="input" id="bookSearch" placeholder="Kitob yoki muallif (GET /book/name)" style="flex:1;min-width:200px;">
+              <button class="btn" onclick="searchBooks()">Qidirish</button>
+              <button class="btn" onclick="loadBooks()">Barchasi</button>
+              <button class="btn primary admin-only" onclick="openAddBook()">Kitob qo'shish</button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Rasm</th>
+                  <th>Nomi</th>
+                  <th>Muallif</th>
+                  <th>Yil</th>
+                  <th>Janr</th>
+                  <th>Nusxa</th>
+                  <th>Status</th>
+                  <th class="admin-only">Amal</th>
+                </tr>
+              </thead>
+              <tbody id="booksBody"></tbody>
+            </table>
+            <div class="pager" id="booksPager">
+              <button class="btn" id="prevBooksPage" onclick="changeBooksPage(-1)">Oldingi</button>
+              <span id="booksPageInfo">1 / 1</span>
+              <button class="btn" id="nextBooksPage" onclick="changeBooksPage(1)">Keyingi</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="page" id="page-lend-book">
+          <div class="card lend-panel admin-only">
+            <div class="form-grid lend-form">
+              <div class="field">
+                <label>User ID</label>
+                <div class="lend-input-wrap">
+                  <i class="ti ti-user"></i>
+                  <input class="input" id="borrowUserId" type="number" placeholder="Foydalanuvchi identifikatori">
+                </div>
+              </div>
+              <div class="field">
+                <label>Book ID</label>
+                <div class="lend-input-wrap">
+                  <i class="ti ti-book-2"></i>
+                  <input class="input" id="borrowBookId" type="number" placeholder="Kitob identifikatori">
+                </div>
+              </div>
+              <div class="field">
+                <label>Ijara muddati va narxi</label>
+                <div class="admin-plan-grid" id="adminBorrowPlanGrid"></div>
+              </div>
+              <button class="btn primary" style="height:68px;font-size:16px;" onclick="createBorrow()">Ijara yaratish <i class="ti ti-arrow-right"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="page" id="page-borrows">
+          <div class="card" style="padding:0;overflow:hidden;margin-top:16px;">
+            <div class="toolbar">
+              <div class="section-title" style="margin:0;">Ijara ro'yxati</div>
+              <button class="btn primary admin-only" onclick="goTo('lend-book', document.querySelector('[data-page=lend-book]'))">Ijaraga berish</button>
+              <button class="btn" onclick="loadBorrows()">Yangilash</button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>User</th>
+                  <th>Book</th>
+                  <th>Olingan sana</th>
+                  <th>Status</th>
+                  <th>Amal</th>
+                </tr>
+              </thead>
+              <tbody id="borrowsBody"></tbody>
+            </table>
+            <div class="pager" id="borrowsPager">
+              <button class="btn" id="prevBorrowsPage" onclick="changeBorrowsPage(-1)">Oldingi</button>
+              <span id="borrowsPageInfo">1 / 1</span>
+              <button class="btn" id="nextBorrowsPage" onclick="changeBorrowsPage(1)">Keyingi</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="page" id="page-return-review">
+          <div class="card" style="padding:0;overflow:hidden;margin-top:16px;">
+            <div class="toolbar">
+              <div class="section-title" style="margin:0;">Muddat tugagan kitoblar</div>
+              <button class="btn" onclick="loadReturnReview()">Yangilash</button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>User</th>
+                  <th>Book</th>
+                  <th>Olingan sana</th>
+                  <th>Tugagan sana</th>
+                  <th>Holat</th>
+                  <th>Admin tekshiruvi</th>
+                </tr>
+              </thead>
+              <tbody id="returnReviewBody"></tbody>
+            </table>
+            <div class="pager" id="returnReviewPager">
+              <button class="btn" id="prevReturnReviewPage" onclick="changeReturnReviewPage(-1)">Oldingi</button>
+              <span id="returnReviewPageInfo">1 / 1</span>
+              <button class="btn" id="nextReturnReviewPage" onclick="changeReturnReviewPage(1)">Keyingi</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="page" id="page-completed">
+          <div class="card" style="padding:0;overflow:hidden;margin-top:16px;">
+            <div class="toolbar">
+              <div class="section-title" style="margin:0;">Tugallangan ijaralar</div>
+              <button class="btn" onclick="loadBorrows()">Yangilash</button>
+            </div>
+            <div class="money-summary">
+              <span class="muted">Bizga to'langan umumiy summa</span>
+              <strong id="completedTotalPaid">0 so'm</strong>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>User</th>
+                  <th>Book</th>
+                  <th>Olgan sana</th>
+                  <th>Kelgan sana</th>
+                  <th>Tarif</th>
+                  <th>Jarima</th>
+                  <th>Jami to'langan</th>
+                </tr>
+              </thead>
+              <tbody id="completedBody"></tbody>
+            </table>
+            <div class="pager" id="completedPager">
+              <button class="btn" id="prevCompletedPage" onclick="changeCompletedPage(-1)">Oldingi</button>
+              <span id="completedPageInfo">1 / 1</span>
+              <button class="btn" id="nextCompletedPage" onclick="changeCompletedPage(1)">Keyingi</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="page" id="page-users">
+          <div class="card" style="padding:0;overflow:hidden;">
+            <div class="toolbar">
+              <input class="input" id="userSearch" placeholder="User qidirish" oninput="state.userPage = 1; renderUsers()" style="flex:1;">
+              <button class="btn" onclick="loadUsers()">Refresh</button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Ism</th>
+                  <th>Gmail</th>
+                  <th>Telefon</th>
+                  <th>Rol</th>
+                </tr>
+              </thead>
+              <tbody id="usersBody"></tbody>
+            </table>
+            <div class="pager" id="usersPager">
+              <button class="btn" id="prevUsersPage" onclick="changeUsersPage(-1)">Oldingi</button>
+              <span id="usersPageInfo">1 / 1</span>
+              <button class="btn" id="nextUsersPage" onclick="changeUsersPage(1)">Keyingi</button>
+            </div>
+          </div>
+          <p class="muted hidden" id="usersDenied">Faqat ADMIN roli /users/all-users ko'radi</p>
+        </div>
+
+        <div class="page" id="page-auth">
+          <div class="card">
+            <div class="section-title">JWT Token</div>
+            <div class="token-box" id="tokenBox">Token yo'q</div>
+            <div class="section-title">Payload</div>
+            <pre class="token-box" id="payloadBox">-</pre>
+            <div class="section-title">Login javobi</div>
+            <pre class="token-box" id="loginMetaBox">-</pre>
+          </div>
+        </div>
+      </main>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="borrowModal">
+    <div class="borrow-modal">
+      <div class="modal-head">
+        <div>
+          <div class="modal-title" id="borrowModalTitle">Kitobni olish</div>
+          <div class="subtitle" id="borrowModalSubtitle">Avval tarifni tanlang</div>
+        </div>
+        <button class="btn" type="button" onclick="closeBorrowModal()">Yopish</button>
+      </div>
+      <div class="borrow-step active" id="borrowPlanStep">
+        <div class="plan-grid" id="borrowPlanGrid"></div>
+      </div>
+      <div class="borrow-step" id="borrowPaymentStep">
+        <div class="selected-plan-summary" id="selectedPlanSummary"></div>
+        <div class="fine-warning" id="fineWarningBox">
+          Ogohlantirish: kitob tanlangan muddatdan kech qaytarilsa, har bir kechikkan kun uchun 20 000 so'm jarima hisoblanadi.
+        </div>
+        <div class="payment-grid">
+          <div class="field">
+            <label>Karta oxirgi 4 raqami</label>
+            <input class="input" id="cardLastFourInput" maxlength="4" inputmode="numeric" placeholder="1234">
+          </div>
+          <div class="field">
+            <label>Karta egasi ism-familiyasi</label>
+            <input class="input" id="cardHolderInput" placeholder="Ali Valiyev">
+          </div>
+          <div class="field">
+            <label>Amal qilish muddati</label>
+            <input class="input" id="cardExpiryInput" maxlength="5" placeholder="MM/YY">
+          </div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn hidden" id="backToPlanBtn" type="button" onclick="showBorrowPlanStep()">Tarifga qaytish</button>
+        <button class="btn" type="button" onclick="closeBorrowModal()">Bekor qilish</button>
+        <button class="btn primary hidden" id="confirmBorrowBtn" type="button" onclick="confirmBorrow()">To'lov va ijara</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-wrap" id="toasts"></div>
+
+  <script>
+    const API = {
+      auth: 'http://localhost:8098/auth',
+      users: 'http://localhost:8095/users',
+      books: 'http://localhost:8099/book'
+    };
+
+    const state = {
+      token: localStorage.getItem('token'),
+      userId: localStorage.getItem('userId') ? Number(localStorage.getItem('userId')) : null,
+      phoneNumber: localStorage.getItem('phoneNumber') || '',
+      isAdmin: false,
+      registerStep: 1,
+      registeredGmail: '',
+      registeredPhone: '',
+      users: [],
+      books: [],
+      borrows: [],
+      returnReviewBorrows: [],
+      myBorrows: [],
+      userBooks: [],
+      currentUser: null,
+      userStats: null,
+      analytics: null,
+      notifications: [],
+      auditLogs: [],
+      userGenres: [],
+      userGenreFilters: [],
+      userTotalBooks: 0,
+      userTotalPages: 1,
+      bookCovers: {},
+      profileImageUrl: '',
+      profileImageVersion: '',
+      resendTimerId: null,
+      editingBookId: null,
+      coverFile: null,
+      coverObjectUrl: null,
+      selectedBorrowBookId: null,
+      selectedBorrowPlan: null,
+      adminBorrowPlan: 'ONE_DAY',
+      bookPage: 1,
+      userPage: 1,
+      borrowPage: 1,
+      returnReviewPage: 1,
+      completedPage: 1,
+      userCatalogPage: 1,
+      pageSize: 8
+    };
+    const USER_CATALOG_PAGE_SIZE = 8;
+    const USER_FILTERED_CATALOG_PAGE_SIZE = 500;
+
+    const BORROW_PLANS = [
+      { code: 'ONE_DAY', name: '1 kun', days: 1, price: 35000 },
+      { code: 'ONE_WEEK', name: '1 hafta', days: 7, price: 70000 },
+      { code: 'ONE_MONTH', name: '1 oy', days: 30, price: 250000 }
+    ];
+
+    const BOOK_GRADIENTS = [
+      'linear-gradient(145deg, #2C3E50, #3D5A6B)',
+      'linear-gradient(145deg, #1A3A2A, #2D6B50)',
+      'linear-gradient(145deg, #3A1A0A, #8B4513)',
+      'linear-gradient(145deg, #4A2A1A, #9B5B2E)',
+      'linear-gradient(145deg, #1A1A3A, #2D2D8B)',
+      'linear-gradient(145deg, #2A1A3A, #6B2D8B)'
+    ];
+
+    const RESEND_SECONDS = 60;
+
+    function getStoredCoverUrl(book) {
+      if (book.hasCoverImage && book.id) {
+        return API.books + '/' + book.id + '/cover';
+      }
+      return book.coverUrl || book.cover_url || state.bookCovers[book.id] || null;
+    }
+
+    async function fetchOpenLibraryCover(book) {
+      if (Object.prototype.hasOwnProperty.call(state.bookCovers, book.id)) {
+        return state.bookCovers[book.id];
+      }
+      const stored = book.coverUrl || book.cover_url;
+      if (book.hasCoverImage) {
+        state.bookCovers[book.id] = API.books + '/' + book.id + '/cover';
+        return state.bookCovers[book.id];
+      }
+      if (stored) {
+        state.bookCovers[book.id] = stored;
+        return stored;
+      }
+      const q = encodeURIComponent([book.book_name, book.author].filter(Boolean).join(' ').trim());
+      if (!q) {
+        state.bookCovers[book.id] = null;
+        return null;
+      }
+      try {
+        const res = await fetch(`https://openlibrary.org/search.json?q=${q}&limit=1&fields=cover_i`);
+        const data = await res.json();
+        const coverId = data.docs?.[0]?.cover_i;
+        state.bookCovers[book.id] = coverId
+          ? `https://covers.openlibrary.org/b/id/${coverId}-L.jpg`
+          : null;
+      } catch (_) {
+        state.bookCovers[book.id] = null;
+      }
+      return state.bookCovers[book.id];
+    }
+
+    async function hydrateBookCovers(books, mode) {
+      if (!books?.length) return;
+      await Promise.allSettled(books.map(b => fetchOpenLibraryCover(b)));
+      if (mode === 'user') {
+        renderUserBooksGrid();
+        renderUserReadingList();
+      }
+      if (mode === 'admin') renderBooks();
+    }
+
+    function bookCoverCardHtml(book, index) {
+      const grad = BOOK_GRADIENTS[index % BOOK_GRADIENTS.length];
+      const title = book.book_name || 'Kitob';
+      const url = getStoredCoverUrl(book);
+      const img = url
+        ? `<img class="book-cover-img" src="${esc(url)}" alt="${esc(title)}" loading="lazy" onerror="this.style.display='none'">`
+        : '';
+      return `
+        <div class="book-cover" style="background:${grad}">
+          ${img}
+          <div class="book-cover-overlay"></div>
+          <div class="book-cover-title">${esc(title)}</div>
+        </div>
+      `;
+    }
+
+    function bookCoverMiniStyle(book, index) {
+      const url = getStoredCoverUrl(book);
+      if (url) {
+        return `background:url('${url.replace(/'/g, '%27')}') center/cover no-repeat;`;
+      }
+      return `background:${BOOK_GRADIENTS[index % BOOK_GRADIENTS.length]};`;
+    }
+
+    function esc(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function escAttr(value) {
+      return esc(value).replace(/'/g, '&#39;');
+    }
+
+    function formatSum(value) {
+      return new Intl.NumberFormat('uz-UZ').format(value) + " so'm";
+    }
+
+    function formatCompactSum(value) {
+      const amount = Number(value || 0);
+      if (amount >= 1000000) return (amount / 1000000).toFixed(1).replace('.0', '') + 'M';
+      if (amount >= 1000) return Math.round(amount / 1000) + 'K';
+      return String(amount);
+    }
+
+    function parseJwt(token) {
+      if (!token || !token.includes('.')) return null;
+      try {
+        const payload = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+        return JSON.parse(atob(payload));
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function syncRoleFromToken() {
+      const claims = parseJwt(state.token);
+      state.isAdmin = claims?.isAdmin === true;
+      if (claims?.userId != null) state.userId = Number(claims.userId);
+      if (claims?.sub) state.phoneNumber = claims.sub;
+      updateAdminUI();
+    }
+
+    function updateAdminUI() {
+      document.querySelectorAll('.admin-only').forEach(el => {
+        el.classList.toggle('hidden', !state.isAdmin);
+      });
+      roleBadge.textContent = state.isAdmin ? 'ADMIN' : 'USER';
+      roleBadge.classList.toggle('admin', state.isAdmin);
+      if (borrowUserId && state.userId) borrowUserId.value = state.userId;
+    }
+
+    function headers(json = true) {
+      const h = {};
+      if (json) h['Content-Type'] = 'application/json';
+      if (state.token) h.Authorization = 'Bearer ' + state.token;
+      return h;
+    }
+
+    async function request(url, options = {}) {
+      let res;
+      try {
+        res = await fetch(url, options);
+      } catch (networkError) {
+        const err = new Error('Server bilan aloqa yo\'q. Servis ishlayotganini tekshiring');
+        err.status = 0;
+        err.path = url;
+        throw err;
+      }
+      const text = await res.text();
+      let data = text;
+      try {
+        data = text ? JSON.parse(text) : null;
+      } catch (_) {}
+
+      if (data && typeof data === 'object' && data.status >= 400 && data.description) {
+        const err = new Error(data.description);
+        err.status = data.status;
+        err.errorCode = data.error;
+        err.path = data.path || url;
+        throw err;
+      }
+
+      if (!res.ok) {
+        const msg =
+          (typeof data === 'object' && (data?.description || data?.message)) ||
+          (typeof data === 'string' && data) ||
+          text ||
+          ('HTTP ' + res.status);
+        const err = new Error(msg);
+        err.status = res.status;
+        err.path = url;
+        throw err;
+      }
+
+      return data;
+    }
+
+    function errorTitle(status) {
+      if (!status) return 'Aloqa xatosi';
+      if (status >= 500) return 'Server xatosi';
+      if (status === 401 || status === 403) return 'Ruxsat yo\'q';
+      if (status === 404) return 'Topilmadi';
+      return 'So\'rov xatosi';
+    }
+
+    function withErrorContext(prefix, error) {
+      const err = new Error(`${prefix}: ${error?.message || error || 'Xato yuz berdi'}`);
+      err.status = error?.status;
+      err.path = error?.path;
+      err.errorCode = error?.errorCode;
+      return err;
+    }
+
+    async function responseError(res, fallback) {
+      const text = await res.text();
+      let data = text;
+      try {
+        data = text ? JSON.parse(text) : null;
+      } catch (_) {}
+      const err = new Error((data && typeof data === 'object' && (data.description || data.message)) || text || fallback);
+      err.status = (data && typeof data === 'object' && data.status) || res.status;
+      err.errorCode = data && typeof data === 'object' ? data.error : null;
+      err.path = (data && typeof data === 'object' && data.path) || res.url;
+      return err;
+    }
+
+    function showRegisterStep(step) {
+      state.registerStep = step;
+      registerStep1.classList.toggle('active', step === 1);
+      registerStep2.classList.toggle('active', step === 2);
+      registerStep3.classList.toggle('active', step === 3);
+    }
+
+    function formatCountdown(seconds) {
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      return m + ':' + String(s).padStart(2, '0');
+    }
+
+    function stopResendCountdown() {
+      if (state.resendTimerId) {
+        clearInterval(state.resendTimerId);
+        state.resendTimerId = null;
+      }
+    }
+
+    function startResendCountdown() {
+      stopResendCountdown();
+      let left = RESEND_SECONDS;
+      resendCodeBtn.disabled = true;
+      codeCountdown.textContent = 'Qayta yuborish: ' + formatCountdown(left);
+
+      state.resendTimerId = setInterval(() => {
+        left -= 1;
+        if (left <= 0) {
+          stopResendCountdown();
+          codeCountdown.textContent = 'Endi kodni qayta yuborishingiz mumkin';
+          resendCodeBtn.disabled = false;
+          return;
+        }
+        codeCountdown.textContent = 'Qayta yuborish: ' + formatCountdown(left);
+      }, 1000);
+    }
+
+    function resetRegisterFlow() {
+      stopResendCountdown();
+      state.registerStep = 1;
+      state.registeredGmail = '';
+      state.registeredPhone = '';
+      regCode.value = '';
+      showRegisterStep(1);
+      verifyHint.textContent = 'Kod gmailga yuborilmoqda...';
+      verifyHint.classList.remove('ok');
+      codeCountdown.textContent = 'Qayta yuborish: ' + formatCountdown(RESEND_SECONDS);
+      resendCodeBtn.disabled = true;
+    }
+
+    function switchTab(tab) {
+      loginTab.classList.toggle('active', tab === 'login');
+      registerTab.classList.toggle('active', tab === 'register');
+      loginForm.classList.toggle('active', tab === 'login');
+      registerForm.classList.toggle('active', tab === 'register');
+      if (tab === 'register') resetRegisterFlow();
+    }
+
+    function finishRegistration() {
+      switchTab('login');
+      loginPhone.value = state.registeredPhone || loginPhone.value;
+      resetRegisterFlow();
+    }
+
+    function normalizePhoneInput(value) {
+      const raw = value.trim();
+      if (raw.startsWith('+')) return raw.replace(/\s+/g, '');
+      const digits = raw.replace(/\D/g, '');
+      if (digits.startsWith('998')) return '+' + digits;
+      return '+998' + digits;
+    }
+
+    function toggleLoginPassword() {
+      loginPassword.type = loginPassword.type === 'password' ? 'text' : 'password';
+    }
+
+    function getRegisterGmail() {
+      return state.registeredGmail || regGmail.value.trim();
+    }
+
+    async function sendCode() {
+      const gmail = getRegisterGmail();
+      if (!gmail) {
+        toast('Gmail topilmadi', 'error');
+        return;
+      }
+      if (resendCodeBtn.disabled && state.resendTimerId) {
+        toast('1 daqiqa kuting, keyin qayta yuboring', 'error');
+        return;
+      }
+      resendCodeBtn.disabled = true;
+      try {
+        await request(API.auth + '/send-code', {
+          method: 'POST',
+          headers: headers(),
+          body: JSON.stringify({ gmail })
+        });
+        verifyHint.textContent = 'Kod gmailga yuborildi va users.gmail_code ga saqlandi.';
+        verifyHint.classList.add('ok');
+        toast('Kod gmailga yuborildi', 'success');
+        startResendCountdown();
+      } catch (e) {
+        verifyHint.textContent = 'Kod yuborilmadi: ' + e.message;
+        verifyHint.classList.remove('ok');
+        resendCodeBtn.disabled = false;
+        toast(e, 'error');
+      }
+    }
+
+    async function verifyCode() {
+      const gmail = getRegisterGmail();
+      const code = regCode.value.trim();
+      if (!gmail || !code) {
+        toast('Gmail va kodni kiriting', 'error');
+        return;
+      }
+      try {
+        const msg = await request(API.auth + '/verify-code', {
+          method: 'POST',
+          headers: headers(),
+          body: JSON.stringify({ gmail, code })
+        });
+        showRegisterStep(3);
+        toast(typeof msg === 'string' ? msg : 'Siz muvaffaqiyatli registratsiyadan o\'tdildi', 'success');
+      } catch (e) {
+        toast(e, 'error');
+      }
+    }
+
+    async function register() {
+      const gmail = regGmail.value.trim();
+      const phoneNumber = regPhone.value.trim();
+      const password = regPassword.value.trim();
+      const jinsi = regGender.value;
+
+      if (!gmail || !phoneNumber || !password || !jinsi) {
+        toast('Gmail, telefon, jins va parol to\'ldirilishi kerak', 'error');
+        return;
+      }
+
+      const birthYear = Number(regBirthYear.value) || 2000;
+      registerBtn.disabled = true;
+      try {
+        await request(API.auth + '/register', {
+          method: 'POST',
+          headers: headers(),
+          body: JSON.stringify({
+            ism: regIsm.value.trim(),
+            familya: regFamilya.value.trim(),
+            jinsi,
+            gmail,
+            phoneNumber,
+            password,
+            birthYear
+          })
+        });
+
+        state.registeredGmail = gmail;
+        state.registeredPhone = phoneNumber;
+        localStorage.setItem('userName', regIsm.value.trim() || 'Foydalanuvchi');
+        localStorage.setItem('userGmail', gmail);
+        regGmailDisplay.textContent = gmail;
+        regPhoneDisplay.textContent = phoneNumber;
+        showRegisterStep(2);
+        toast('Ro\'yxatdan o\'tdingiz. Gmailga kod yuborilmoqda...', 'success');
+        try {
+          await sendCode();
+        } catch (mailErr) {
+          toast(withErrorContext('Ro\'yxatdan o\'tdingiz, lekin kod yuborilmadi', mailErr), 'error');
+        }
+      } catch (e) {
+        toast(e, 'error');
+      } finally {
+        registerBtn.disabled = false;
+      }
+    }
+
+    async function login() {
+      try {
+        const phoneNumber = normalizePhoneInput(loginPhone.value);
+        const data = await request(API.auth + '/login', {
+          method: 'POST',
+          headers: headers(),
+          body: JSON.stringify({
+            phoneNumber,
+            password: loginPassword.value.trim()
+          })
+        });
+
+        state.token = data.token;
+        state.userId = data.userId ?? null;
+        state.phoneNumber = data.phoneNumber ?? phoneNumber;
+
+        localStorage.setItem('token', state.token);
+        if (state.userId != null) localStorage.setItem('userId', String(state.userId));
+        localStorage.setItem('phoneNumber', state.phoneNumber);
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userGmail');
+        localStorage.removeItem('userProfileImageVersion');
+
+        syncRoleFromToken();
+        enterAppShell();
+        toast('Tizimga kirdingiz', 'success');
+      } catch (e) {
+        toast(e, 'error');
+      }
+    }
+
+    function enterAppShell() {
+      authScreen.style.display = 'none';
+      if (state.isAdmin) {
+        userApp.style.display = 'none';
+        adminApp.style.display = 'grid';
+        updateAdminUI();
+        renderAuth();
+        return Promise.allSettled([loadBooks(), loadUsers(), loadBorrows(), loadReturnReview(), loadAdminInsights()]);
+      }
+      adminApp.style.display = 'none';
+      userApp.style.display = 'block';
+      return initUserApp();
+    }
+
+    function buildUserFullName(user) {
+      const fullName = [user?.ism, user?.familya].filter(Boolean).join(' ').trim();
+      return fullName || localStorage.getItem('userName') || state.phoneNumber || 'Foydalanuvchi';
+    }
+
+    async function loadCurrentUser() {
+      if (!state.userId) return null;
+      try {
+        const user = await request(`${API.users}/${state.userId}`, { headers: headers(false) });
+        state.currentUser = user;
+        const fullName = buildUserFullName(user);
+        localStorage.setItem('userName', fullName);
+        if (user.gmail) localStorage.setItem('userGmail', user.gmail);
+        if (user.phoneNumber) {
+          state.phoneNumber = user.phoneNumber;
+          localStorage.setItem('phoneNumber', user.phoneNumber);
+        }
+        if (user.hasProfileImage && !localStorage.getItem('userProfileImageVersion')) {
+          localStorage.setItem('userProfileImageVersion', String(Date.now()));
+        } else if (!user.hasProfileImage) {
+          localStorage.removeItem('userProfileImageVersion');
+        }
+        renderUserProfile();
+        return user;
+      } catch (e) {
+        toast(withErrorContext("Profil ma'lumotlarini olish", e), 'error');
+        return null;
+      }
+    }
+
+    function getDisplayName() {
+      return buildUserFullName(state.currentUser);
+    }
+
+    async function initUserApp() {
+      await loadCurrentUser();
+      const name = getDisplayName();
+      userNavName.textContent = name;
+      renderUserProfile();
+      resetUserCatalogFilters();
+
+      showUserHome(false);
+      return Promise.allSettled([loadUserGenres(), loadUserBooks(), loadMyBorrows(), loadUserStats()]);
+    }
+
+    function resetUserCatalogFilters() {
+      state.userGenreFilters = [];
+      state.userCatalogPage = 1;
+      if (window.userSearchInput) userSearchInput.value = '';
+      if (window.userTopSearchInput) userTopSearchInput.value = '';
+      if (window.userAvailableOnly) userAvailableOnly.checked = true;
+    }
+
+    function showUserHome(scroll = true) {
+      userApp?.classList.remove('profile-mode');
+      userSearchSection?.classList.remove('hidden');
+      userBooksSection?.classList.remove('hidden');
+      userProfilePage?.classList.add('hidden');
+      if (scroll) window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showUserBorrowsPage() {
+      showUserProfilePage();
+    }
+
+    function showUserProfilePage() {
+      userApp?.classList.add('profile-mode');
+      userSearchSection?.classList.add('hidden');
+      userBooksSection?.classList.add('hidden');
+      userProfilePage?.classList.remove('hidden');
+      renderUserProfile();
+      loadMyBorrows();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function userScrollToBooks() {
+      showUserHome(false);
+      userBooksSection?.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function userScrollToMyBooks() {
+      showUserBorrowsPage();
+    }
+
+    function renderAvatarElement(el, sizeClass = '') {
+      if (!el) return;
+      const name = getDisplayName();
+      const initial = (name.charAt(0) || 'U').toUpperCase();
+      const imageVersion = localStorage.getItem('userProfileImageVersion') || '';
+      el.textContent = initial;
+      if (state.userId && state.token && imageVersion) {
+        setAuthenticatedProfileImage(el, initial, imageVersion);
+      }
+      if (sizeClass) el.classList.add(sizeClass);
+    }
+
+    async function setAuthenticatedProfileImage(el, initial, imageVersion) {
+      try {
+        if (!state.profileImageUrl || state.profileImageVersion !== imageVersion) {
+          if (state.profileImageUrl) URL.revokeObjectURL(state.profileImageUrl);
+          const res = await fetch(`${API.users}/${state.userId}/profile-image?t=${encodeURIComponent(imageVersion)}`, {
+            headers: { Authorization: 'Bearer ' + state.token }
+          });
+          if (!res.ok) throw new Error('Profil rasmi olinmadi');
+          state.profileImageUrl = URL.createObjectURL(await res.blob());
+          state.profileImageVersion = imageVersion;
+        }
+        el.innerHTML = `<img src="${esc(state.profileImageUrl)}" alt="Profil rasmi">`;
+        const img = el.querySelector('img');
+        if (img) img.onerror = () => { el.textContent = initial; };
+      } catch (e) {
+        el.textContent = initial;
+      }
+    }
+
+    function renderUserProfile() {
+      const name = getDisplayName();
+      renderAvatarElement(userNavAvatar);
+      renderAvatarElement(profileAvatarLarge);
+      if (profileNameTitle) profileNameTitle.textContent = name;
+      if (profileFullNameText) profileFullNameText.textContent = name;
+      if (profileEmailText) profileEmailText.textContent = localStorage.getItem('userGmail') || '-';
+      if (profilePhoneText) profilePhoneText.textContent = state.phoneNumber || '-';
+      if (profileUserIdText) profileUserIdText.textContent = state.userId ? `YX-${String(state.userId).padStart(5, '0')}` : '-';
+      if (window.profileFirstNameInput) profileFirstNameInput.value = state.currentUser?.ism || '';
+      if (window.profileLastNameInput) profileLastNameInput.value = state.currentUser?.familya || '';
+    }
+
+    async function handleProfileImageChange() {
+      const file = profileImageInput.files?.[0];
+      if (!file) return;
+      if (!state.userId) {
+        toast('Profil rasmi uchun avval tizimga qayta kiring', 'error');
+        return;
+      }
+      if (!file.type.startsWith('image/')) {
+        toast('Faqat rasm fayl tanlang', 'error');
+        return;
+      }
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        const res = await fetch(`${API.users}/${state.userId}/profile-image`, {
+          method: 'POST',
+          headers: state.token ? { Authorization: 'Bearer ' + state.token } : {},
+          body: formData
+        });
+        if (!res.ok) throw await responseError(res, 'Profil rasmi saqlanmadi');
+        localStorage.setItem('userProfileImageVersion', String(Date.now()));
+        state.currentUser = { ...(state.currentUser || {}), hasProfileImage: true };
+        if (state.profileImageUrl) URL.revokeObjectURL(state.profileImageUrl);
+        state.profileImageUrl = '';
+        state.profileImageVersion = '';
+        renderUserProfile();
+        toast('Profil rasmi shifrlangan holda SQLga saqlandi', 'success');
+      } catch (e) {
+        toast(e, 'error');
+      } finally {
+        profileImageInput.value = '';
+      }
+    }
+
+    async function updateUserProfileName() {
+      if (!state.userId) return;
+      try {
+        const updated = await request(`${API.users}/${state.userId}/profile`, {
+          method: 'PUT',
+          headers: headers(),
+          body: JSON.stringify({
+            ism: profileFirstNameInput.value.trim(),
+            familya: profileLastNameInput.value.trim()
+          })
+        });
+        state.currentUser = updated;
+        renderUserProfile();
+        toast('Profil nomi yangilandi', 'success');
+      } catch (e) {
+        toast(withErrorContext('Profilni yangilash', e), 'error');
+      }
+    }
+
+    async function changeUserPassword() {
+      if (!state.userId) return;
+      try {
+        await request(`${API.users}/${state.userId}/password`, {
+          method: 'PUT',
+          headers: headers(),
+          body: JSON.stringify({
+            currentPassword: currentPasswordInput.value,
+            newPassword: newPasswordInput.value
+          })
+        });
+        currentPasswordInput.value = '';
+        newPasswordInput.value = '';
+        toast('Parol almashtirildi', 'success');
+      } catch (e) {
+        toast(withErrorContext('Parol almashtirish', e), 'error');
+      }
+    }
+
+    async function deleteProfileImage() {
+      if (!state.userId) return;
+      try {
+        await request(`${API.users}/${state.userId}/profile-image`, {
+          method: 'DELETE',
+          headers: headers(false)
+        });
+        localStorage.removeItem('userProfileImageVersion');
+        if (state.profileImageUrl) URL.revokeObjectURL(state.profileImageUrl);
+        state.profileImageUrl = '';
+        state.profileImageVersion = '';
+        state.currentUser = { ...(state.currentUser || {}), hasProfileImage: false };
+        renderUserProfile();
+        toast('Profil rasmi o\'chirildi', 'success');
+      } catch (e) {
+        toast(withErrorContext('Profil rasmini o\'chirish', e), 'error');
+      }
+    }
+
+    async function loadUserStats() {
+      if (!state.userId) return;
+      try {
+        state.userStats = await request(`${API.users}/${state.userId}/stats`, { headers: headers(false) });
+        renderUserStats();
+      } catch (e) {
+        state.userStats = null;
+      }
+    }
+
+    function renderUserStats() {
+      const stats = state.userStats || {};
+      if (window.profileTotalRentals) profileTotalRentals.textContent = stats.totalRentals ?? 0;
+      if (window.profileActiveRentals) profileActiveRentals.textContent = stats.activeRentals ?? 0;
+      if (window.profileReturnedRentals) profileReturnedRentals.textContent = stats.returnedRentals ?? 0;
+      if (window.profileTotalPaid) profileTotalPaid.textContent = formatSum(stats.totalPaid || 0);
+    }
+
+    function remainingTimeText(dueDate) {
+      if (!dueDate) return 'Muddat ko\'rsatilmagan';
+      const diff = new Date(dueDate).getTime() - Date.now();
+      if (Number.isNaN(diff)) return dueDate;
+      if (diff <= 0) return 'Muddat tugagan';
+      const totalHours = Math.ceil(diff / (1000 * 60 * 60));
+      const days = Math.floor(totalHours / 24);
+      const hours = totalHours % 24;
+      if (days && hours) return `${days} kun ${hours} soat qoldi`;
+      if (days) return `${days} kun qoldi`;
+      return `${hours} soat qoldi`;
+    }
+
+    function userBorrowCardHtml(borrow, book, mode) {
+      const title = book?.book_name || ('Kitob #' + borrow.bookId);
+      const isActive = borrow.status === 'BORROWED';
+      const price = borrow.priceSum ? formatSum(borrow.priceSum) : '0 so\'m';
+      const fine = borrow.fineSum ? formatSum(borrow.fineSum) : '0 so\'m';
+      const total = formatSum(Number(borrow.priceSum || 0) + Number(borrow.fineSum || 0));
+      const remaining = isActive ? remainingTimeText(borrow.dueDate) : 'Qaytarilgan';
+      const statusText = isActive ? 'Ayni paytdagi ijara' : 'Ijara tarixi';
+      return `
+        <div class="reading-card${isActive ? '' : ' returned'}">
+          <div class="reading-mini-cover" style="${book ? bookCoverMiniStyle(book, 0) : 'background:' + BOOK_GRADIENTS[0]}"></div>
+          <div class="borrow-card-body">
+            <div class="borrow-card-top">
+              <div>
+                <div class="borrow-book-title">${esc(title)}</div>
+                <div class="borrow-card-meta">Olingan: ${esc(borrow.borrowDate || '-')} ${borrow.returnDate ? ' · Qaytgan: ' + esc(borrow.returnDate) : ''}</div>
+              </div>
+              <span class="reading-status${isActive ? ' active' : ''}">${esc(statusText)}</span>
+            </div>
+            <div class="borrow-time-left">${esc(remaining)}</div>
+            <div class="borrow-money-row">
+              <span>Tarif: ${esc(price)}</span>
+              <span>Jarima: ${esc(fine)}</span>
+              <span>Jami: ${esc(total)}</span>
+            </div>
+            ${isActive ? `<button class="return-link" type="button" onclick="returnBorrow(${borrow.id}, 'user')">Qaytarish</button>` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    async function loadUserBooks() {
+      try {
+        const selectedGenres = state.userGenreFilters || [];
+        const showFullGenreResults = selectedGenres.length > 0;
+        if (showFullGenreResults) {
+          const genreResults = await Promise.all(selectedGenres.map(fetchAllBooksForGenre));
+          const merged = new Map();
+          genreResults.flat().forEach(book => {
+            const key = book.id ?? `${book.book_name}-${book.author}-${book.genre}`;
+            merged.set(key, book);
+          });
+          state.userBooks = [...merged.values()];
+          state.userTotalBooks = state.userBooks.length;
+          state.userTotalPages = 1;
+          state.userCatalogPage = 1;
+        } else {
+          const data = await fetchUserCatalogPage('', state.userCatalogPage - 1, USER_CATALOG_PAGE_SIZE);
+          state.userBooks = data.content || [];
+          state.userTotalBooks = data.totalElements ?? state.userBooks.length;
+          state.userTotalPages = data.totalPages || 1;
+        }
+        renderUserHome();
+        hydrateBookCovers(state.userBooks, 'user');
+      } catch (e) {
+        toast(withErrorContext('Kitoblarni olish', e), 'error');
+        userBooksGrid.innerHTML = '<div class="empty-books">Kitoblar yuklanmadi</div>';
+      }
+    }
+
+    async function fetchAllBooksForGenre(genre) {
+      const firstPage = await fetchUserCatalogPage(genre, 0, USER_FILTERED_CATALOG_PAGE_SIZE);
+      const books = [...(firstPage.content || [])];
+      const totalPages = firstPage.totalPages || 1;
+      if (totalPages > 1) {
+        const remainingPages = [];
+        for (let page = 1; page < totalPages; page++) {
+          remainingPages.push(fetchUserCatalogPage(genre, page, USER_FILTERED_CATALOG_PAGE_SIZE));
+        }
+        const rest = await Promise.all(remainingPages);
+        rest.forEach(pageData => books.push(...(pageData.content || [])));
+      }
+      return books;
+    }
+
+    function fetchUserCatalogPage(genre, page, size) {
+      const params = new URLSearchParams({
+        page: String(Math.max(0, page)),
+        size: String(size),
+        name: userSearchInput?.value?.trim() || '',
+        genre: genre || '',
+        availableOnly: String(!!window.userAvailableOnly?.checked)
+      });
+      return request(`${API.books}/page?${params.toString()}`, { headers: headers(false) });
+    }
+
+    async function loadUserGenres() {
+      try {
+        const genres = await request(API.books + '/genres', { headers: headers(false) });
+        state.userGenres = [...new Set((genres || []).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+        if (state.userBooks.length) renderUserHome();
+      } catch (e) {
+        state.userGenres = [];
+      }
+    }
+
+    async function loadMyBorrows() {
+      if (!state.userId) return;
+      try {
+        state.myBorrows = await request(API.users + '/mybook?userId=' + encodeURIComponent(state.userId), {
+          headers: headers(false)
+        });
+        renderUserBorrowList();
+      } catch (e) {
+        toast(withErrorContext('Mening kitoblarim', e), 'error');
+      }
+    }
+
+    async function userSearchBooks() {
+      try {
+        state.userCatalogPage = 1;
+        await loadUserBooks();
+        toast('Qidiruv: ' + state.userTotalBooks + ' ta', 'success');
+      } catch (e) {
+        toast(withErrorContext('Qidiruv', e), 'error');
+      }
+    }
+
+    function userFilterGenre(el) {
+      const genre = el.dataset.genre || '';
+      const selected = state.userGenreFilters || [];
+      if (selected.includes(genre)) {
+        state.userGenreFilters = selected.filter(item => item !== genre);
+      } else {
+        if (selected.length >= 2) {
+          toast('Bir vaqtda maksimum 2 ta janr tanlanadi', 'error');
+          return;
+        }
+        state.userGenreFilters = [...selected, genre];
+      }
+      state.userCatalogPage = 1;
+      document.querySelectorAll('#userCategories .cat-chip').forEach(c => {
+        c.classList.toggle('active', state.userGenreFilters.includes(c.dataset.genre || ''));
+      });
+      renderSelectedGenres();
+      loadUserBooks();
+    }
+
+    function removeSelectedGenre(genre) {
+      state.userGenreFilters = (state.userGenreFilters || []).filter(item => item !== genre);
+      state.userCatalogPage = 1;
+      renderSelectedGenres();
+      document.querySelectorAll('#userCategories .cat-chip').forEach(c => {
+        c.classList.toggle('active', state.userGenreFilters.includes(c.dataset.genre || ''));
+      });
+      loadUserBooks();
+    }
+
+    function renderSelectedGenres() {
+      const selectedGenres = state.userGenreFilters || [];
+      if (!window.selectedGenresWrap || !window.selectedGenresList) return;
+      selectedGenresWrap.classList.toggle('hidden', selectedGenres.length === 0);
+      selectedGenresList.innerHTML = selectedGenres
+        .map(g => `<button class="selected-genre-chip" type="button" data-genre="${esc(g)}" onclick="removeSelectedGenreFromChip(this)">${esc(g)} <i class="ti ti-x"></i></button>`)
+        .join('');
+    }
+
+    function removeSelectedGenreFromChip(button) {
+      removeSelectedGenre(button.dataset.genre || '');
+    }
+
+    function changeUserCatalogPage(delta) {
+      state.userCatalogPage += delta;
+      loadUserBooks();
+    }
+
+    function renderUserHome() {
+      const books = state.userBooks || [];
+      const selectedGenres = state.userGenreFilters || [];
+      const baseGenres = selectedGenres;
+      const genres = [...new Set([...baseGenres, ...state.userGenres, ...books.map(b => b.genre).filter(Boolean)])];
+
+      userCategories.innerHTML = genres
+        .map(g => `<div class="cat-chip ${selectedGenres.includes(g) ? 'active' : ''}" data-genre="${esc(g)}" onclick="userFilterGenre(this)">${esc(g)}</div>`)
+        .join('');
+      renderSelectedGenres();
+
+      userGenreSidebar.innerHTML = genres.length
+        ? genres.map(g => {
+            const count = books.filter(b => b.genre === g).length;
+            return `<div class="genre-row"><span>${esc(g)}</span><span class="genre-count">${count}</span></div>`;
+          }).join('')
+        : '<div class="genre-row"><span>Janrlar yo\'q</span></div>';
+
+      renderUserBooksGrid();
+      renderUserReadingList();
+      renderUserBorrowList();
+    }
+
+    function renderUserBooksGrid() {
+      let books = state.userBooks || [];
+      const totalPages = Math.max(1, state.userTotalPages || 1);
+      const showFullGenreResults = (state.userGenreFilters || []).length > 0;
+      state.userCatalogPage = Math.min(Math.max(1, state.userCatalogPage), totalPages);
+      if (window.userBookCount) userBookCount.textContent = `${state.userTotalBooks ?? books.length} ta kitob topildi`;
+      if (!books.length) {
+        userBooksGrid.innerHTML = '<div class="empty-books">Kitob topilmadi</div>';
+        if (window.userCatalogPager) userCatalogPager.style.display = 'none';
+        return;
+      }
+      if (window.userCatalogPager) userCatalogPager.style.display = !showFullGenreResults && totalPages > 1 ? 'flex' : 'none';
+      if (window.userCatalogPageInfo) userCatalogPageInfo.textContent = `${state.userCatalogPage} / ${totalPages}`;
+      const pagerButtons = window.userCatalogPager?.querySelectorAll('button') || [];
+      if (pagerButtons[0]) pagerButtons[0].disabled = state.userCatalogPage <= 1;
+      if (pagerButtons[1]) pagerButtons[1].disabled = state.userCatalogPage >= totalPages;
+      userBooksGrid.innerHTML = books.map((b, i) => {
+        const title = b.book_name || 'Kitob';
+        const available = Number(b.availableCopies ?? 1);
+        const borrowGuard = getBorrowGuard(b.id, available);
+        const actionsHtml = state.userId ? `
+            <div class="book-card-actions">
+              <button class="borrow-btn" type="button" ${borrowGuard.disabled ? 'disabled' : ''} onclick="borrowBook(${b.id})">${esc(borrowGuard.label)}</button>
+            </div>` : '';
+        return `
+          <div class="book-card">
+            ${bookCoverCardHtml(b, i)}
+            <div class="book-meta">${esc(b.genre || '-')} · ${esc(b.write_year || '-')} · ${esc(available)} ta mavjud</div>
+            <div class="book-info-title">${esc(title)}</div>
+            <div class="book-author">${esc(b.author || '-')}</div>
+            ${actionsHtml}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function isActiveBorrowStatus(status) {
+      return ['BORROWED', 'RETURN_REVIEW', 'FINE_PENDING'].includes(status);
+    }
+
+    function getActiveUserBorrows() {
+      return (state.myBorrows || []).filter(b => isActiveBorrowStatus(b.status));
+    }
+
+    function getBorrowGuard(bookId, available = 1) {
+      const activeBorrows = getActiveUserBorrows();
+      const sameBook = activeBorrows.find(b => Number(b.bookId) === Number(bookId));
+      if (sameBook) return { disabled: true, label: 'Sizda bor', message: 'Bu kitob sizda allaqachon bor' };
+      if (activeBorrows.some(b => b.status === 'FINE_PENDING')) {
+        return { disabled: true, label: 'Jarima bor', message: 'Muddati o\'tgan kitob bor. Avval uni qaytaring va jarimani to\'lang' };
+      }
+      if (activeBorrows.length >= 3) {
+        return { disabled: true, label: 'Limit tugadi', message: 'Bir vaqtda maksimum 3 ta kitob olish mumkin' };
+      }
+      if (Number(available) <= 0) return { disabled: true, label: 'Band', message: 'Bu kitobdan bo\'sh nusxa qolmagan' };
+      return { disabled: false, label: 'Ijaraga olish', message: '' };
+    }
+
+    function renderUserBorrowList() {
+      const borrows = state.myBorrows || [];
+      const activeCount = borrows.filter(b => isActiveBorrowStatus(b.status)).length;
+      if (!state.userStats) {
+        if (window.profileTotalRentals) profileTotalRentals.textContent = borrows.length;
+        if (window.profileActiveRentals) profileActiveRentals.textContent = activeCount;
+      }
+      if (!borrows.length) {
+        userBorrowList.innerHTML = '<tr><td colspan="4" class="profile-empty-row">Sizda hali olingan kitob yo\'q</td></tr>';
+        return;
+      }
+
+      userBorrowList.innerHTML = borrows.map((borrow) => {
+        const book = (state.userBooks || []).find(b => Number(b.id) === Number(borrow.bookId));
+        const title = book?.book_name || ('Kitob #' + borrow.bookId);
+        const isActive = borrow.status === 'BORROWED';
+        const isOverdue = isActive && isDateOverdue(borrow.dueDate);
+        const label = isActive ? (isOverdue ? 'Overdue' : 'In Progress') : 'Returned';
+        const statusClass = isActive ? (isOverdue ? 'overdue' : 'progress') : 'returned';
+        return `
+          <tr>
+            <td>
+              <div class="profile-book-cell">
+                <div class="profile-book-mini"><i class="ti ti-book"></i></div>
+                <div>
+                  <b>${esc(title)}</b>
+                  <span>${isActive ? esc(remainingTimeText(borrow.dueDate)) : 'Qaytarilgan'}</span>
+                </div>
+              </div>
+            </td>
+            <td>${esc(shortDate(borrow.borrowDate) || '-')}</td>
+            <td class="${isOverdue ? 'profile-overdue-date' : ''}">${esc(shortDate(borrow.dueDate) || '-')}</td>
+            <td><span class="profile-status ${statusClass}">${esc(label)}</span></td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderUserReadingList() {
+      const books = (state.userBooks || []).slice(0, 3);
+      if (!books.length) {
+        userReadingList.innerHTML = '<p style="color:var(--text-muted);font-size:14px;">Hali kitob yo\'q</p>';
+        return;
+      }
+      userReadingList.innerHTML = books.map((b, i) => {
+        return `
+          <div class="reading-card">
+            <div class="reading-mini-cover" style="${bookCoverMiniStyle(b, i)}"></div>
+            <div style="flex:1;">
+              <div style="font-size:15px;font-weight:500;">${esc(b.book_name)}</div>
+              <div style="font-size:12px;color:var(--text-muted);">${esc(b.author)} · ${esc(b.genre)}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function logout() {
+      stopResendCountdown();
+      state.token = null;
+      state.userId = null;
+      state.phoneNumber = '';
+      state.isAdmin = false;
+      state.users = [];
+      state.books = [];
+      state.borrows = [];
+      state.returnReviewBorrows = [];
+      state.myBorrows = [];
+      state.userBooks = [];
+      state.currentUser = null;
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      localStorage.removeItem('phoneNumber');
+      localStorage.removeItem('userName');
+      localStorage.removeItem('userGmail');
+      localStorage.removeItem('userProfileImageVersion');
+      adminApp.style.display = 'none';
+      userApp.style.display = 'none';
+      authScreen.style.display = 'grid';
+      toast('Chiqdingiz');
+    }
+
+    function goTo(page, el) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      document.getElementById('page-' + page).classList.add('active');
+      if (el) el.classList.add('active');
+
+      const titles = {
+        dashboard: ['Dashboard', "Umumiy ko'rinish"],
+        'add-book': ['Kitob qo\'shish', 'Rasm fayl/link orqali saqlanadi'],
+        books: ['Kitoblar', 'book-service · GET /book/all-books, /name'],
+        'lend-book': ['Ijaraga berish', 'user-service · POST /users/addbook'],
+        borrows: ['Ijaralar', 'user-service · GET /users/borrows'],
+        'return-review': ['Qaytdimi?', 'Muddat tugagan kitoblarni admin tekshiradi'],
+        completed: ['Tugallangan', 'Qaytgan kitoblar va to\'lovlar'],
+        users: ['Foydalanuvchilar', 'user-service · GET /users/all-users (ADMIN)'],
+        auth: ['JWT', 'auth-service · POST /auth/login']
+      };
+      pageTitle.textContent = titles[page][0];
+      pageSubtitle.textContent = titles[page][1];
+
+      if (page === 'auth') renderAuth();
+      if (page === 'users' && state.isAdmin) loadUsers();
+      if (page === 'books' && !state.books.length) loadBooks();
+      if (page === 'lend-book') {
+        if (borrowUserId && state.userId) borrowUserId.value = state.userId;
+        renderAdminBorrowPlans();
+      }
+      if (page === 'borrows') {
+        if (state.isAdmin) loadBorrows();
+      }
+      if (page === 'return-review' && state.isAdmin) loadReturnReview();
+      if (page === 'completed' && state.isAdmin) loadBorrows();
+    }
+
+    function openAddBook() {
+      resetBookForm();
+      goTo('add-book', document.querySelector('[data-page=add-book]'));
+    }
+
+    async function loadUsers() {
+      if (!state.isAdmin) {
+        usersDenied.classList.remove('hidden');
+        toast('Userlar ro\'yxati faqat ADMIN uchun', 'error');
+        return;
+      }
+      usersDenied.classList.add('hidden');
+      try {
+        state.users = await request(API.users + '/all-users', { headers: headers(false) });
+        state.userPage = 1;
+        renderUsers();
+        if (userStat) userStat.textContent = state.users.length;
+      } catch (e) {
+        toast(withErrorContext('Userlarni olish', e), 'error');
+      }
+    }
+
+    async function loadBooks() {
+      try {
+        state.books = await request(API.books + '/all-books', { headers: headers(false) });
+        state.bookPage = 1;
+        renderBooks();
+        hydrateBookCovers(state.books, 'admin');
+        bookStat.textContent = state.books.length;
+        if (state.isAdmin) loadBorrows();
+      } catch (e) {
+        toast(withErrorContext('Kitoblarni olish', e), 'error');
+      }
+    }
+
+    async function loadAdminInsights() {
+      if (!state.isAdmin) return;
+      try {
+        const [analytics, notifications, auditLogs] = await Promise.all([
+          request(API.users + '/analytics', { headers: headers(false) }),
+          request(API.users + '/notifications', { headers: headers(false) }),
+          request(API.users + '/audit-logs', { headers: headers(false) })
+        ]);
+        state.analytics = analytics;
+        state.notifications = notifications || [];
+        state.auditLogs = auditLogs || [];
+        renderAdminInsights();
+      } catch (e) {
+        toast(withErrorContext('Dashboard insight', e), 'error');
+      }
+    }
+
+    async function searchBooks() {
+      const q = bookSearch.value.trim();
+      if (!q) {
+        await loadBooks();
+        return;
+      }
+      try {
+        const url = API.books + '/name?name=' + encodeURIComponent(q);
+        state.books = await request(url, { headers: headers(false) });
+        state.bookPage = 1;
+        renderBooks();
+        hydrateBookCovers(state.books, 'admin');
+        bookStat.textContent = state.books.length;
+        toast('Qidiruv: ' + state.books.length + ' ta natija', 'success');
+      } catch (e) {
+        toast(withErrorContext('Qidiruv', e), 'error');
+      }
+    }
+
+    async function deleteBook(id) {
+      if (!state.isAdmin) {
+        toast('Kitob o\'chirish faqat ADMIN uchun', 'error');
+        return;
+      }
+      if (!confirm('Kitob #' + id + ' o\'chirilsinmi?')) return;
+      try {
+        await request(API.books + '/delete/' + id, {
+          method: 'DELETE',
+          headers: headers(false)
+        });
+        toast('Kitob o\'chirildi', 'success');
+        await loadBooks();
+      } catch (e) {
+        toast(withErrorContext('O\'chirish', e), 'error');
+      }
+    }
+
+    function resetBookForm() {
+      state.editingBookId = null;
+      bookFormTitle.textContent = 'Kitob qo\'shish';
+      bookNameInput.value = '';
+      bookAuthorInput.value = '';
+      bookYearInput.value = '';
+      bookGenreInput.value = '';
+      if (window.bookCopiesInput) bookCopiesInput.value = '1';
+      if (window.bookDescriptionInput) bookDescriptionInput.value = '';
+      bookCoverInput.value = '';
+      bookCoverFileInput.value = '';
+      state.coverFile = null;
+      updateCoverPreview();
+    }
+
+    function coverPlaceholderHtml() {
+      return `
+        <div class="cover-placeholder">
+          <div class="cover-plus">+</div>
+          <div class="cover-title">Rasm<br>qo'shish</div>
+        </div>
+      `;
+    }
+
+    function handleCoverFileChange() {
+      state.coverFile = bookCoverFileInput.files?.[0] || null;
+      if (state.coverFile) bookCoverInput.value = '';
+      updateCoverPreview();
+    }
+
+    function updateCoverPreview() {
+      const file = state.coverFile || bookCoverFileInput.files?.[0];
+      if (file) {
+        if (state.coverObjectUrl) URL.revokeObjectURL(state.coverObjectUrl);
+        state.coverObjectUrl = URL.createObjectURL(file);
+        bookCoverPreview.innerHTML = `<img src="${state.coverObjectUrl}" alt="Kitob rasmi">`;
+        return;
+      }
+      const url = bookCoverInput.value.trim();
+      if (!url) {
+        bookCoverPreview.innerHTML = coverPlaceholderHtml();
+        return;
+      }
+      bookCoverPreview.innerHTML = `<img src="${esc(url)}" alt="Kitob rasmi" onerror="this.parentElement.textContent='Rasm ochilmadi'">`;
+    }
+
+    function extractDroppedImageUrl(dataTransfer) {
+      const uri = dataTransfer.getData('text/uri-list') || dataTransfer.getData('text/plain');
+      if (uri && /^https?:\/\//i.test(uri.trim())) return uri.trim();
+      const html = dataTransfer.getData('text/html');
+      if (!html) return '';
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const src = doc.querySelector('img')?.src || '';
+      return /^https?:\/\//i.test(src) ? src : '';
+    }
+
+    function handleCoverDrop(event) {
+      event.preventDefault();
+      bookCoverDropzone.classList.remove('dragging');
+      const file = [...(event.dataTransfer.files || [])].find(item => item.type?.startsWith('image/'));
+      if (file) {
+        state.coverFile = file;
+        bookCoverInput.value = '';
+        updateCoverPreview();
+        toast('Rasm qabul qilindi', 'success');
+        return;
+      }
+      const imageUrl = extractDroppedImageUrl(event.dataTransfer);
+      if (imageUrl) {
+        state.coverFile = null;
+        bookCoverFileInput.value = '';
+        bookCoverInput.value = imageUrl;
+        updateCoverPreview();
+        toast('Rasm linki qabul qilindi', 'success');
+        return;
+      }
+      toast('Rasm fayl yoki rasm linkini tashlang', 'error');
+    }
+
+    function editBook(id) {
+      const book = state.books.find(b => Number(b.id) === Number(id));
+      if (!book) return;
+      state.editingBookId = id;
+      bookFormTitle.textContent = 'Kitobni tahrirlash #' + id;
+      bookNameInput.value = book.book_name || '';
+      bookAuthorInput.value = book.author || '';
+      bookYearInput.value = book.write_year || '';
+      bookGenreInput.value = book.genre || '';
+      if (window.bookCopiesInput) bookCopiesInput.value = book.totalCopies || 1;
+      bookCoverFileInput.value = '';
+      state.coverFile = null;
+      bookCoverInput.value = '';
+      if (book.hasCoverImage) {
+        bookCoverPreview.innerHTML = `<img src="${API.books}/${book.id}/cover" alt="Kitob rasmi">`;
+      } else {
+        bookCoverInput.value = book.coverUrl || book.cover_url || '';
+        updateCoverPreview();
+      }
+      goTo('add-book', document.querySelector('[data-page=add-book]'));
+      bookNameInput.focus();
+    }
+
+    async function saveBook() {
+      if (!state.isAdmin) {
+        toast('Kitob saqlash faqat ADMIN uchun', 'error');
+        return;
+      }
+      const payload = {
+        book_name: bookNameInput.value.trim(),
+        author: bookAuthorInput.value.trim(),
+        write_year: bookYearInput.value.trim(),
+        genre: bookGenreInput.value.trim(),
+        totalCopies: Math.max(1, Number(bookCopiesInput?.value || 1))
+      };
+      if (!payload.book_name || !payload.author) {
+        toast('Kitob nomi va muallif kiritilishi kerak', 'error');
+        return;
+      }
+      try {
+        const isEdit = state.editingBookId != null;
+        const savedBook = await request(API.books + (isEdit ? '/' + state.editingBookId : ''), {
+          method: isEdit ? 'PUT' : 'POST',
+          headers: headers(),
+          body: JSON.stringify(payload)
+        });
+        await saveBookCover(savedBook.id || state.editingBookId);
+        toast(isEdit ? 'Kitob yangilandi' : 'Kitob qo\'shildi', 'success');
+        resetBookForm();
+        await loadBooks();
+        goTo('books', document.querySelector('[data-page=books]'));
+      } catch (e) {
+        toast(withErrorContext('Kitob saqlash', e), 'error');
+      }
+    }
+
+    async function saveBookCover(bookId) {
+      const file = state.coverFile || bookCoverFileInput.files?.[0];
+      const imageUrl = bookCoverInput.value.trim();
+      if (file) {
+        const formData = new FormData();
+        formData.append('file', file);
+        const res = await fetch(API.books + '/' + bookId + '/cover', {
+          method: 'POST',
+          headers: state.token ? { Authorization: 'Bearer ' + state.token } : {},
+          body: formData
+        });
+        if (!res.ok) throw await responseError(res, 'Rasm upload bo\'lmadi');
+        return;
+      }
+      if (imageUrl) {
+        await request(API.books + '/' + bookId + '/cover-url', {
+          method: 'POST',
+          headers: headers(),
+          body: JSON.stringify({ imageUrl })
+        });
+      }
+    }
+
+    async function borrowBook(bookId) {
+      if (!state.userId) {
+        toast('Avval tizimga kiring', 'error');
+        return;
+      }
+      const book = (state.userBooks || []).find(b => Number(b.id) === Number(bookId));
+      await loadMyBorrows();
+      const guard = getBorrowGuard(bookId, Number(book?.availableCopies ?? 1));
+      if (guard.disabled) {
+        toast(guard.message, 'error');
+        renderUserBooksGrid();
+        return;
+      }
+      state.selectedBorrowBookId = bookId;
+      state.selectedBorrowPlan = null;
+      borrowModalTitle.textContent = book ? `Kitobni olish: ${book.book_name || 'Kitob'}` : 'Kitobni olish';
+      cardLastFourInput.value = '';
+      cardHolderInput.value = '';
+      cardExpiryInput.value = '';
+      renderBorrowPlans();
+      showBorrowPlanStep();
+      borrowModal.classList.add('active');
+    }
+
+    function renderBorrowPlans() {
+      borrowPlanGrid.innerHTML = BORROW_PLANS.map(plan => `
+        <button class="plan-card${state.selectedBorrowPlan === plan.code ? ' active' : ''}" type="button" onclick="selectBorrowPlan('${plan.code}')">
+          <div class="plan-name">${esc(plan.name)}</div>
+          <div class="plan-price">${esc(formatSum(plan.price))}</div>
+          <div class="muted">${plan.days} kun foydalanish</div>
+        </button>
+      `).join('');
+    }
+
+    function renderAdminBorrowPlans() {
+      if (!window.adminBorrowPlanGrid) return;
+      adminBorrowPlanGrid.innerHTML = BORROW_PLANS.map(plan => `
+        <button class="admin-plan-card${state.adminBorrowPlan === plan.code ? ' active' : ''}" type="button" onclick="selectAdminBorrowPlan('${plan.code}')">
+          ${esc(plan.name)}
+          <span class="admin-plan-price">${esc(formatSum(plan.price))}</span>
+        </button>
+      `).join('');
+    }
+
+    function selectAdminBorrowPlan(planCode) {
+      state.adminBorrowPlan = planCode;
+      renderAdminBorrowPlans();
+    }
+
+    function selectBorrowPlan(planCode) {
+      state.selectedBorrowPlan = planCode;
+      renderBorrowPlans();
+      showBorrowPaymentStep();
+      cardLastFourInput.focus();
+    }
+
+    function getSelectedBorrowPlan() {
+      return BORROW_PLANS.find(plan => plan.code === state.selectedBorrowPlan);
+    }
+
+    function showBorrowPlanStep() {
+      borrowModalSubtitle.textContent = 'Avval tarifni tanlang';
+      borrowPlanStep.classList.add('active');
+      borrowPaymentStep.classList.remove('active');
+      backToPlanBtn.classList.add('hidden');
+      confirmBorrowBtn.classList.add('hidden');
+    }
+
+    function showBorrowPaymentStep() {
+      const plan = getSelectedBorrowPlan();
+      borrowModalSubtitle.textContent = 'Endi karta ma\'lumotlarini kiriting';
+      selectedPlanSummary.textContent = plan
+        ? `Tanlangan tarif: ${plan.name} · ${formatSum(plan.price)} · ${plan.days} kun`
+        : 'Tarif tanlanmagan';
+      borrowPlanStep.classList.remove('active');
+      borrowPaymentStep.classList.add('active');
+      backToPlanBtn.classList.remove('hidden');
+      confirmBorrowBtn.classList.remove('hidden');
+    }
+
+    function closeBorrowModal() {
+      borrowModal.classList.remove('active');
+      state.selectedBorrowBookId = null;
+      state.selectedBorrowPlan = null;
+    }
+
+    async function confirmBorrow() {
+      if (!state.selectedBorrowBookId || !state.selectedBorrowPlan) {
+        toast('Tarif tanlang', 'error');
+        return;
+      }
+      await loadMyBorrows();
+      const book = (state.userBooks || []).find(b => Number(b.id) === Number(state.selectedBorrowBookId));
+      const guard = getBorrowGuard(state.selectedBorrowBookId, Number(book?.availableCopies ?? 1));
+      if (guard.disabled) {
+        toast(guard.message, 'error');
+        closeBorrowModal();
+        renderUserBooksGrid();
+        return;
+      }
+      const cardLastFour = cardLastFourInput.value.trim();
+      const cardHolder = cardHolderInput.value.trim();
+      const cardExpiry = cardExpiryInput.value.trim();
+      if (!/^\d{4}$/.test(cardLastFour)) {
+        toast('Karta oxirgi 4 raqamini kiriting', 'error');
+        return;
+      }
+      if (!cardHolder) {
+        toast('Karta egasi ism-familiyasini kiriting', 'error');
+        return;
+      }
+      if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(cardExpiry)) {
+        toast('Amal qilish muddati MM/YY formatida bo\'lsin', 'error');
+        return;
+      }
+      try {
+        await request(API.users + '/addbook', {
+          method: 'POST',
+          headers: headers(),
+          body: JSON.stringify({
+            userId: state.userId,
+            bookId: state.selectedBorrowBookId,
+            rentalPlan: state.selectedBorrowPlan,
+            cardLastFour,
+            cardHolder,
+            cardExpiry
+          })
+        });
+        closeBorrowModal();
+        toast('Kitob mening ro\'yxatimga qo\'shildi', 'success');
+        await Promise.allSettled([loadMyBorrows(), loadUserBooks(), loadUserStats()]);
+      } catch (e) {
+        toast(withErrorContext('Kitob olish', e), 'error');
+      }
+    }
+
+    async function createBorrow() {
+      const userId = Number(borrowUserId.value);
+      const bookId = Number(borrowBookId.value);
+      if (!userId || !bookId) {
+        toast('User ID va Book ID kiriting', 'error');
+        return;
+      }
+      try {
+        await request(API.users + '/addbook', {
+          method: 'POST',
+          headers: headers(),
+          body: JSON.stringify({
+            userId,
+            bookId,
+            rentalPlan: state.adminBorrowPlan || 'ONE_DAY',
+            cardLastFour: '0000',
+            cardHolder: 'Admin Manual',
+            cardExpiry: '12/30'
+          })
+        });
+        toast('Ijara yaratildi', 'success');
+        borrowBookId.value = '';
+        await Promise.allSettled([loadBorrows(), loadBooks(), loadAdminInsights()]);
+        goTo('borrows', document.querySelector('[data-page=borrows]'));
+      } catch (e) {
+        toast(withErrorContext('Ijara', e), 'error');
+      }
+    }
+
+    async function loadBorrows() {
+      if (!state.isAdmin) return;
+      try {
+        state.borrows = await request(API.users + '/borrows', { headers: headers(false) });
+        state.borrowPage = 1;
+        state.completedPage = 1;
+        renderBorrows();
+        renderCompletedBorrows();
+        renderBooks();
+      } catch (e) {
+        toast(withErrorContext('Ijara ro\'yxati', e), 'error');
+      }
+    }
+
+    async function loadReturnReview() {
+      if (!state.isAdmin) return;
+      try {
+        state.returnReviewBorrows = await request(API.users + '/return-review', { headers: headers(false) });
+        state.returnReviewPage = 1;
+        renderReturnReviewBorrows();
+        await loadAdminInsights();
+      } catch (e) {
+        toast(withErrorContext('Qaytdimi tekshiruvi', e), 'error');
+      }
+    }
+
+    async function returnBorrow(id, mode = 'admin') {
+      try {
+        await request(API.users + '/returnbook/' + id, {
+          method: 'PUT',
+          headers: headers(false)
+        });
+        toast('Kitob qaytarildi', 'success');
+        if (mode === 'user') {
+          await Promise.allSettled([loadMyBorrows(), loadUserBooks(), loadUserStats()]);
+        } else {
+          await Promise.allSettled([loadBorrows(), loadBooks(), loadAdminInsights()]);
+        }
+      } catch (e) {
+        toast(withErrorContext('Qaytarish', e), 'error');
+      }
+    }
+
+    async function confirmReturnedNoFine(id) {
+      try {
+        await request(API.users + '/return-review/' + id + '/confirm', {
+          method: 'PUT',
+          headers: headers(false)
+        });
+        toast('Kitob qaytgan deb belgilandi. Jarima yozilmadi', 'success');
+        await Promise.allSettled([loadReturnReview(), loadBorrows(), loadBooks(), loadAdminInsights()]);
+      } catch (e) {
+        toast(withErrorContext('Qaytganini tasdiqlash', e), 'error');
+      }
+    }
+
+    async function rejectReturnedStartFine(id) {
+      try {
+        await request(API.users + '/return-review/' + id + '/fine', {
+          method: 'PUT',
+          headers: headers(false)
+        });
+        toast('Kitob qaytmagan deb belgilandi. Jarima boshlandi', 'success');
+        await Promise.allSettled([loadReturnReview(), loadBorrows(), loadAdminInsights()]);
+      } catch (e) {
+        toast(withErrorContext('Jarimaga tushirish', e), 'error');
+      }
+    }
+
+    function getPageSlice(rows, pageKey) {
+      const totalPages = Math.max(1, Math.ceil(rows.length / state.pageSize));
+      state[pageKey] = Math.min(Math.max(1, state[pageKey] || 1), totalPages);
+      const start = (state[pageKey] - 1) * state.pageSize;
+      return {
+        rows: rows.slice(start, start + state.pageSize),
+        totalPages
+      };
+    }
+
+    function updatePager(kind, totalRows, totalPages, currentPage) {
+      const info = document.getElementById(kind + 'PageInfo');
+      const prev = document.getElementById('prev' + kind[0].toUpperCase() + kind.slice(1) + 'Page');
+      const next = document.getElementById('next' + kind[0].toUpperCase() + kind.slice(1) + 'Page');
+      if (info) info.textContent = totalRows ? `${currentPage} / ${totalPages} · ${totalRows} ta` : '0 / 0 · 0 ta';
+      if (prev) prev.disabled = currentPage <= 1 || !totalRows;
+      if (next) next.disabled = currentPage >= totalPages || !totalRows;
+    }
+
+    function changeBooksPage(delta) {
+      state.bookPage += delta;
+      renderBooks();
+    }
+
+    function changeUsersPage(delta) {
+      state.userPage += delta;
+      renderUsers();
+    }
+
+    function changeBorrowsPage(delta) {
+      state.borrowPage += delta;
+      renderBorrows();
+    }
+
+    function changeReturnReviewPage(delta) {
+      state.returnReviewPage += delta;
+      renderReturnReviewBorrows();
+    }
+
+    function changeCompletedPage(delta) {
+      state.completedPage += delta;
+      renderCompletedBorrows();
+    }
+
+    function isDateOverdue(value) {
+      if (!value) return false;
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const due = new Date(value);
+      due.setHours(0, 0, 0, 0);
+      return !Number.isNaN(due.getTime()) && due < today;
+    }
+
+    function shortDate(value) {
+      if (!value) return '';
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return value;
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    }
+
+    function getBorrowStatus(borrow) {
+      if (!borrow) return { type: 'available', label: 'Available', due: '' };
+      if (borrow.status === 'RETURN_REVIEW') return { type: 'overdue', label: 'Tekshiruv', due: borrow.dueDate };
+      if (borrow.status === 'FINE_PENDING') return { type: 'overdue', label: 'Jarimada', due: borrow.dueDate };
+      if (borrow.status !== 'BORROWED') return { type: 'completed', label: 'Tugallangan', due: '' };
+      if (isDateOverdue(borrow.dueDate)) return { type: 'overdue', label: 'Overdue', due: borrow.dueDate };
+      return { type: 'borrowed', label: 'Borrowed', due: borrow.dueDate };
+    }
+
+    function getBookStatus(bookId) {
+      const borrow = (state.borrows || []).find(item => Number(item.bookId) === Number(bookId) && item.status === 'BORROWED');
+      return getBorrowStatus(borrow);
+    }
+
+    function statusChip(status) {
+      const due = status.due ? `<span class="status-due">(Due ${esc(shortDate(status.due))})</span>` : '';
+      return `<span class="status-chip ${esc(status.type)}">${esc(status.label)}${due}</span>`;
+    }
+
+    function activeBorrows() {
+      return (state.borrows || []).filter(b => b.status === 'BORROWED' || b.status === 'FINE_PENDING');
+    }
+
+    function completedBorrows() {
+      return (state.borrows || []).filter(b => b.status === 'RETURNED');
+    }
+
+    function paidTotal(borrow) {
+      return Number(borrow.paidSum || 0) || (Number(borrow.priceSum || 0) + Number(borrow.fineSum || 0));
+    }
+
+    function renderAdminInsights() {
+      const analytics = state.analytics || {};
+      if (window.overdueStat) overdueStat.textContent = analytics.overdueBorrows ?? 0;
+      if (window.dueTomorrowStat) dueTomorrowStat.textContent = analytics.dueTomorrowBorrows ?? 0;
+      if (window.todayRevenueStat) todayRevenueStat.textContent = formatCompactSum(analytics.todayRevenue || 0);
+      if (window.userStat && analytics.totalUsers != null) userStat.textContent = analytics.totalUsers;
+      if (window.adminAnalyticsList) {
+        const popular = analytics.popularBooks || {};
+        const popularRows = Object.entries(popular).map(([bookId, count]) => `Kitob #${esc(bookId)}: ${esc(count)} marta`).join('<br>') || 'Hali statistika yo\'q';
+        adminAnalyticsList.innerHTML = `
+          <div class="activity-item"><span class="activity-dot"></span><div><b>Aktiv ijaralar</b><br>${esc(analytics.activeBorrows ?? 0)} ta</div></div>
+          <div class="activity-item"><span class="activity-dot" style="background:#f0a878;"></span><div><b>Admin tekshiruvi</b><br>${esc(analytics.returnReviewBorrows ?? 0)} ta</div></div>
+          <div class="activity-item"><span class="activity-dot" style="background:#4c8a54;"></span><div><b>Umumiy tushum</b><br>${esc(formatSum(analytics.revenue || 0))}</div></div>
+          <div class="activity-item"><span class="activity-dot" style="background:#2f80ed;"></span><div><b>Bugungi ijara</b><br>${esc(analytics.todayBorrows ?? 0)} ta · ${esc(formatSum(analytics.todayRevenue || 0))}</div></div>
+          <div class="activity-item"><span class="activity-dot" style="background:#9b7a35;"></span><div><b>Ertaga qaytadi</b><br>${esc(analytics.dueTomorrowBorrows ?? 0)} ta email eslatma</div></div>
+          <div class="activity-item"><span class="activity-dot" style="background:var(--admin-danger);"></span><div><b>Jarima tushumi</b><br>${esc(formatSum(analytics.fineRevenue || 0))}</div></div>
+          <div class="activity-item"><span class="activity-dot" style="background:#7257b8;"></span><div><b>O'rtacha to'lov</b><br>${esc(formatSum(analytics.averagePaid || 0))}</div></div>
+          <div class="activity-item"><span class="activity-dot" style="background:#b48a44;"></span><div><b>Top kitoblar</b><br>${popularRows}</div></div>
+        `;
+      }
+      if (window.adminNotificationList) {
+        adminNotificationList.innerHTML = (state.notifications || []).slice(0, 6).map(n => `
+          <div class="activity-item"><span class="activity-dot" style="background:${n.type === 'OVERDUE' ? 'var(--admin-danger)' : 'var(--admin-primary)'};"></span><div><b>${esc(n.type || 'Notification')}</b><br>${esc(n.message || '-')}</div></div>
+        `).join('') || '<div class="muted">Notification yo\'q</div>';
+      }
+      if (window.adminAuditList) {
+        adminAuditList.innerHTML = (state.auditLogs || []).slice(0, 6).map(a => `
+          <div class="activity-item"><span class="activity-dot"></span><div><b>${esc(a.action || 'Audit')}</b><br>${esc(a.details || '-')}</div></div>
+        `).join('') || '<div class="muted">Hali activity yo\'q</div>';
+      }
+    }
+
+    function renderUsers() {
+      const q = (userSearch?.value || '').toLowerCase();
+      const rows = state.users.filter(u => JSON.stringify(u).toLowerCase().includes(q));
+      const page = getPageSlice(rows, 'userPage');
+      usersBody.innerHTML = page.rows.map(u => `
+        <tr>
+          <td>#${esc(u.id)}</td>
+          <td>${esc(u.ism)} ${esc(u.familya)}</td>
+          <td>${esc(u.gmail || '-')}</td>
+          <td>${esc(u.phoneNumber || '-')}</td>
+          <td><span class="badge${u.isAdmin ? ' admin' : ''}">${u.isAdmin ? 'ADMIN' : 'USER'}</span></td>
+        </tr>
+      `).join('') || '<tr><td colspan="5" class="muted">User yo\'q</td></tr>';
+      updatePager('users', rows.length, page.totalPages, state.userPage);
+    }
+
+    function renderBorrows() {
+      const rows = activeBorrows();
+      const page = getPageSlice(rows, 'borrowPage');
+      borrowsBody.innerHTML = page.rows.map(b => {
+        const fine = b.fineSum ? `<br><span class="muted">Jarima: ${esc(formatSum(b.fineSum))} (${esc(b.overdueDays || 0)} kun)</span>` : '';
+        const status = getBorrowStatus(b);
+        return `
+          <tr>
+            <td>#${esc(b.id)}</td>
+            <td>#${esc(b.userId)}</td>
+            <td>#${esc(b.bookId)}</td>
+            <td>${esc(b.borrowDate || '-')}</td>
+            <td>${statusChip(status)}<br><span class="muted">${esc(b.rentalPlan || '-')} ${b.priceSum ? '· ' + esc(formatSum(b.priceSum)) : ''}</span>${fine}</td>
+            <td>${b.status === 'BORROWED' ? `<button class="btn" onclick="returnBorrow(${b.id})">Qaytarish</button>` : '<span class="muted">-</span>'}</td>
+          </tr>
+        `;
+      }).join('') || '<tr><td colspan="6" class="muted">Aktiv ijara yo\'q</td></tr>';
+      updatePager('borrows', rows.length, page.totalPages, state.borrowPage);
+    }
+
+    function renderReturnReviewBorrows() {
+      const rows = state.returnReviewBorrows || [];
+      const page = getPageSlice(rows, 'returnReviewPage');
+      returnReviewBody.innerHTML = page.rows.map(b => `
+        <tr>
+          <td>#${esc(b.id)}</td>
+          <td>#${esc(b.userId)}</td>
+          <td>#${esc(b.bookId)}</td>
+          <td>${esc(b.borrowDate || '-')}</td>
+          <td>${esc(b.dueDate || '-')}</td>
+          <td>${statusChip(getBorrowStatus(b))}<br><span class="muted">Admin tasdiqlamaguncha jarima yozilmaydi</span></td>
+          <td>
+            <button class="btn" title="Qaytgan" onclick="confirmReturnedNoFine(${b.id})"><i class="ti ti-check"></i></button>
+            <button class="btn danger" title="Qaytmagan, jarimaga tushirish" onclick="rejectReturnedStartFine(${b.id})"><i class="ti ti-x"></i></button>
+          </td>
+        </tr>
+      `).join('') || '<tr><td colspan="7" class="muted">Tekshiruvdagi kitob yo\'q</td></tr>';
+      updatePager('returnReview', rows.length, page.totalPages, state.returnReviewPage);
+    }
+
+    function renderCompletedBorrows() {
+      const rows = completedBorrows();
+      const page = getPageSlice(rows, 'completedPage');
+      const total = rows.reduce((sum, b) => sum + paidTotal(b), 0);
+      if (window.completedTotalPaid) completedTotalPaid.textContent = formatSum(total);
+      completedBody.innerHTML = page.rows.map(b => `
+        <tr>
+          <td>#${esc(b.id)}</td>
+          <td>#${esc(b.userId)}</td>
+          <td>#${esc(b.bookId)}</td>
+          <td>${esc(b.borrowDate || '-')}</td>
+          <td>${esc(b.returnDate || '-')}</td>
+          <td>${esc(b.rentalPlan || '-')}<br><span class="muted">${esc(formatSum(b.priceSum || 0))}</span></td>
+          <td>${esc(formatSum(b.fineSum || 0))}<br><span class="muted">${esc(b.overdueDays || 0)} kun</span></td>
+          <td><b>${esc(formatSum(paidTotal(b)))}</b></td>
+        </tr>
+      `).join('') || '<tr><td colspan="8" class="muted">Tugallangan ijara yo\'q</td></tr>';
+      updatePager('completed', rows.length, page.totalPages, state.completedPage);
+    }
+
+    function renderBooks() {
+      const deleteCol = state.isAdmin
+        ? (b) => `<td><button class="btn" onclick="editBook(${b.id})">Tahrirlash</button> <button class="btn danger" onclick="deleteBook(${b.id})">O'chirish</button></td>`
+        : () => '';
+
+      const page = getPageSlice(state.books, 'bookPage');
+      booksBody.innerHTML = page.rows.map((b, i) => {
+        const url = getStoredCoverUrl(b);
+        const thumb = url
+          ? `<img class="book-cover-img-admin" src="${esc(url)}" alt="" loading="lazy" onerror="this.outerHTML='<span class=\\'muted\\'>—</span>'">`
+          : '<span class="muted">…</span>';
+        return `
+        <tr>
+          <td>#${esc(b.id)}</td>
+          <td>${thumb}</td>
+          <td>${esc(b.book_name)}</td>
+          <td>${esc(b.author)}</td>
+          <td>${esc(b.write_year)}</td>
+          <td>${esc(b.genre)}</td>
+          <td>${esc(b.availableCopies ?? 1)} / ${esc(b.totalCopies ?? 1)}<br><span class="muted">${esc(b.borrowCount || 0)} ijara</span></td>
+          <td>${statusChip(getBookStatus(b.id))}</td>
+          ${state.isAdmin ? deleteCol(b) : ''}
+        </tr>
+      `;
+      }).join('') || '<tr><td colspan="9" class="muted">Kitob yo\'q</td></tr>';
+      updatePager('books', state.books.length, page.totalPages, state.bookPage);
+    }
+
+    function renderAuth() {
+      tokenStat.textContent = state.token ? 1 : 0;
+      tokenBox.textContent = state.token || 'Token yo\'q';
+      payloadBox.textContent = '-';
+      loginMetaBox.textContent = JSON.stringify({
+        userId: state.userId,
+        phoneNumber: state.phoneNumber,
+        isAdmin: state.isAdmin
+      }, null, 2);
+
+      const claims = parseJwt(state.token);
+      if (claims) payloadBox.textContent = JSON.stringify(claims, null, 2);
+    }
+
+    function toast(message, type = 'success') {
+      const el = document.createElement('div');
+      el.className = 'toast ' + type;
+      const isError = type === 'error';
+      const rawMessage = message instanceof Error ? message.message : String(message || '');
+      const status = message instanceof Error ? message.status : null;
+      const path = message instanceof Error ? message.path : '';
+      el.innerHTML = `
+        <div class="toast-title">
+          <span>${esc(isError ? errorTitle(status) : 'Muvaffaqiyatli')}</span>
+          ${status ? `<span class="toast-code">${esc(String(status))}</span>` : ''}
+        </div>
+        <div class="toast-message">${esc(rawMessage)}</div>
+        ${isError && path ? `<div class="toast-code">${esc(path)}</div>` : ''}
+      `;
+      toasts.appendChild(el);
+      setTimeout(() => el.remove(), isError ? 6200 : 3800);
+    }
+
+    bookSearch?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') searchBooks();
+    });
+
+    userSearchInput?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') userSearchBooks();
+    });
+    userSearchInput?.addEventListener('input', () => {
+      if (!state.isAdmin) {
+        state.userCatalogPage = 1;
+        clearTimeout(window.userCatalogSearchTimer);
+        window.userCatalogSearchTimer = setTimeout(() => loadUserBooks(), 350);
+      }
+    });
+    cardLastFourInput?.addEventListener('input', () => {
+      cardLastFourInput.value = cardLastFourInput.value.replace(/\D/g, '').slice(0, 4);
+    });
+    cardExpiryInput?.addEventListener('input', () => {
+      const digits = cardExpiryInput.value.replace(/\D/g, '').slice(0, 4);
+      cardExpiryInput.value = digits.length > 2 ? digits.slice(0, 2) + '/' + digits.slice(2) : digits;
+    });
+    borrowModal?.addEventListener('click', (event) => {
+      if (event.target === borrowModal) closeBorrowModal();
+    });
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+      bookCoverDropzone?.addEventListener(eventName, (event) => {
+        event.preventDefault();
+        bookCoverDropzone.classList.add('dragging');
+      });
+    });
+    ['dragleave', 'drop'].forEach(eventName => {
+      bookCoverDropzone?.addEventListener(eventName, (event) => {
+        if (eventName === 'drop') {
+          handleCoverDrop(event);
+          return;
+        }
+        bookCoverDropzone.classList.remove('dragging');
+      });
+    });
+
+    if (state.token) {
+      syncRoleFromToken();
+      enterAppShell();
+    }
+  </script>
+</body>
+</html>
