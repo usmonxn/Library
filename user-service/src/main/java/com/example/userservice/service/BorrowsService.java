@@ -160,6 +160,7 @@ public class BorrowsService {
                 .filter(b -> String.valueOf(LocalDate.now()).equals(b.getBorrowDate()))
                 .mapToInt(b -> b.getPaidSum() == null ? 0 : b.getPaidSum())
                 .sum();
+        Map<String, Long> weeklyLending = weeklyLendingActivity(borrows);
         Map<Long, Long> popularBooks = new LinkedHashMap<>();
         borrows.stream()
                 .collect(java.util.stream.Collectors.groupingBy(BorrowsEntity::getBookId, java.util.stream.Collectors.counting()))
@@ -181,9 +182,25 @@ public class BorrowsService {
         result.put("todayRevenue", todayRevenue);
         result.put("averagePaid", borrows.isEmpty() ? 0 : revenue / borrows.size());
         result.put("popularBooks", popularBooks);
+        result.put("weeklyLending", weeklyLending);
         result.put("maxActiveBorrows", MAX_ACTIVE_BORROWS);
         result.put("dailyFineSum", DAILY_FINE_SUM);
         return result;
+    }
+
+    private Map<String, Long> weeklyLendingActivity(List<BorrowsEntity> borrows) {
+        String[] labels = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
+        LocalDate today = LocalDate.now();
+        LocalDate weekStart = today.minusDays(today.getDayOfWeek().getValue() - 1L);
+        Map<String, Long> weekly = new LinkedHashMap<>();
+        for (int i = 0; i < labels.length; i++) {
+            String date = String.valueOf(weekStart.plusDays(i));
+            long count = borrows.stream()
+                    .filter(b -> date.equals(b.getBorrowDate()))
+                    .count();
+            weekly.put(labels[i], count);
+        }
+        return weekly;
     }
 
     private void applyFine(BorrowsEntity borrow, LocalDate returnDate) {

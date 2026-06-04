@@ -1145,10 +1145,6 @@
             <div class="title" id="pageTitle">Dashboard</div>
             <div class="subtitle" id="pageSubtitle">Umumiy ko'rinish</div>
           </div>
-          <div style="position:relative;min-width:260px;">
-            <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--admin-muted);">⌕</span>
-            <input class="input" placeholder="Search collection..." style="padding-left:38px;">
-          </div>
         </div>
         <div style="display:flex;align-items:center;gap:12px;">
           <span class="badge" id="roleBadge">USER</span>
@@ -1178,14 +1174,14 @@
                 </div>
                 <button class="btn primary">Weekly</button>
               </div>
-              <div class="admin-chart">
-                <div class="admin-bar"><span style="height:60%"></span><span>Mon</span></div>
-                <div class="admin-bar"><span style="height:45%"></span><span>Tue</span></div>
-                <div class="admin-bar"><span style="height:85%"></span><span>Wed</span></div>
-                <div class="admin-bar"><span style="height:70%"></span><span>Thu</span></div>
-                <div class="admin-bar"><span style="height:100%"></span><span>Fri</span></div>
-                <div class="admin-bar"><span style="height:40%"></span><span>Sat</span></div>
-                <div class="admin-bar"><span style="height:25%"></span><span>Sun</span></div>
+              <div class="admin-chart" id="weeklyLendingChart">
+                <div class="admin-bar"><span style="height:28px"></span><span>Mon<br><b>0</b></span></div>
+                <div class="admin-bar"><span style="height:28px"></span><span>Tue<br><b>0</b></span></div>
+                <div class="admin-bar"><span style="height:28px"></span><span>Wed<br><b>0</b></span></div>
+                <div class="admin-bar"><span style="height:28px"></span><span>Thu<br><b>0</b></span></div>
+                <div class="admin-bar"><span style="height:28px"></span><span>Fri<br><b>0</b></span></div>
+                <div class="admin-bar"><span style="height:28px"></span><span>Sat<br><b>0</b></span></div>
+                <div class="admin-bar"><span style="height:28px"></span><span>Sun<br><b>0</b></span></div>
               </div>
             </div>
             <div class="card" style="background:var(--admin-primary);color:#fff;">
@@ -3167,6 +3163,7 @@
       if (window.dueTomorrowStat) dueTomorrowStat.textContent = analytics.dueTomorrowBorrows ?? 0;
       if (window.todayRevenueStat) todayRevenueStat.textContent = formatCompactSum(analytics.todayRevenue || 0);
       if (window.userStat && analytics.totalUsers != null) userStat.textContent = analytics.totalUsers;
+      renderWeeklyLendingChart(analytics.weeklyLending || {});
       if (window.adminAnalyticsList) {
         const popular = analytics.popularBooks || {};
         const popularRows = Object.entries(popular).map(([bookId, count]) => `Kitob #${esc(bookId)}: ${esc(count)} marta`).join('<br>') || 'Hali statistika yo\'q';
@@ -3191,6 +3188,23 @@
           <div class="activity-item"><span class="activity-dot"></span><div><b>${esc(a.action || 'Audit')}</b><br>${esc(a.details || '-')}</div></div>
         `).join('') || '<div class="muted">Hali activity yo\'q</div>';
       }
+    }
+
+    function renderWeeklyLendingChart(weekly) {
+      if (!window.weeklyLendingChart) return;
+      const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+      const values = labels.map(label => Number(weekly[label] || 0));
+      const max = Math.max(1, ...values);
+      weeklyLendingChart.innerHTML = labels.map((label, index) => {
+        const value = values[index];
+        const height = Math.max(28, Math.round((value / max) * 100));
+        return `
+          <div class="admin-bar" title="${esc(label)}: ${esc(value)} ta ijara">
+            <span style="height:${height}%"></span>
+            <span>${esc(label)}<br><b>${esc(value)}</b></span>
+          </div>
+        `;
+      }).join('');
     }
 
     function renderUsers() {
